@@ -1,0 +1,90 @@
+/* Angular Material */
+
+:host ::ng-deep .mat-mdc-select-arrow {
+  color: #0061ff !important;
+}
+
+:host ::ng-deep .mdc-text-field--filled {
+  border-bottom: 1px solid #0061ff;
+}
+
+.btn {
+  border-radius: 20px;
+  transition: all 0.025s ease;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  color: white;
+  background: #0067fd;
+}
+
+.btn-secondary {
+  color: #0067fd;
+  background: white;
+  border: 1px solid #0067fd;
+}
+
+.btn-secondary:hover {
+  color: #0067fd;
+  background: #e0ecff;
+}
+
+/* Diseño principal del componente */
+
+.buttons {
+  gap: 10px;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.field {
+  width: 100%;
+}
+
+.icon-edit {
+  color: #686868;
+}
+
+.container-center {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.material-icons {
+  margin-right: 10px;
+  color: #212121;
+}
+
+mat-slider {
+  color: #0070f5;
+  opacity: 1;
+  display: flex;
+  margin-left: 0.9%;
+}
+
+.subtitle-styles {
+  font: var(--unnamed-font-style-normal) normal
+    var(--unnamed-font-weight-normal) 16px Nunito;
+  text-align: left;
+  font: normal normal normal 20px Nunito;
+  letter-spacing: 0.15px;
+  color: #282828;
+  opacity: 1;
+}
+
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+}
+
+.multilevel-tooltip {
+  white-space: pre-line !important;
+}

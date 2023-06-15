@@ -1,0 +1,55 @@
+<section class="pt-5 centered-section">
+    <div>
+        <header>
+            <h1>Reconocimientos</h1>
+            <br>
+            <p>Agrega comentarios para celebrar los logros de compañeros o equipos de trabajo</p>
+        </header>
+    </div>
+</section>
+<div *ngIf="{userRecogntion: userRecogntion$ | async } as data">
+    <form [formGroup]="recognitionForm">
+
+        <mat-card class="centered-section">
+            <mat-card-content class="style">
+                <h3>1. ¿A quién quieres realizar un reconocimiento?
+                    <mat-icon matTooltip="Si deseas enviarle un reconocimiento a un compañero o varios compañeros,
+            debes seleccionar la categoria Compañero(s)." matTooltipPosition="after">help</mat-icon>
+                </h3>
+                <mat-radio-group>
+
+                    <mat-radio-button color="primary" value="companeros" checked><b>A
+                            compañero(s)</b></mat-radio-button>
+                    <mat-radio-button color="primary" value="equipos"><b>A equipo(s)</b></mat-radio-button>
+                </mat-radio-group>
+                <br>
+                <br>
+                <h3>2. Selecciona el/los destinatarios a los que deseas enviar el reconocimiento</h3>
+                <mat-form-field appearance="fill" class="field">
+                    <mat-label>Seleccione el/los destinatarios</mat-label>
+                    <mat-select formControlName="listAddressees">
+                        <mat-option *ngFor="let recogntion of data.userRecogntion">
+                            {{recogntion.userName}}
+                            {{recogntion.userLastName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <br>
+                <h3>3. Redacta tu comentario de reconocimiento</h3>
+                <mat-form-field appearance="fill" class="field">
+                    <mat-label>Escribe acá tu comentario</mat-label>
+                    <textarea matInput formControlName="commentDescribe" maxlength="400"></textarea>
+                </mat-form-field>
+            </mat-card-content>
+            <mat-card-actions class="button-container">
+                <button mat-raised-button type="button" color="primary" routerLink="/objectives" class="btn btn-secondary">
+                    Cancelar
+                </button>
+                <button mat-raised-button type="submit" color="primary" class="btn btn-primary">
+                    Crear comentario
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </form>
+</div>
+

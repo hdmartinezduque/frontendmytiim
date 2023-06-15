@@ -1,0 +1,134 @@
+.header-list {
+    padding: 0px 40px 20px 40px;
+    font-family: 'Nunito', sans-serif;
+}
+
+h1 {
+    padding-top: 30px;
+}
+
+b {
+    font-family: 'Nunito', sans-serif;
+}
+
+p {
+    font-family: 'Nunito', sans-serif;
+    font-size: medium;
+}
+
+.container-list {
+    background-color: black;
+    border-bottom: 2px solid #00FFB1;
+    padding-top: 10px;
+}
+
+.text-header {
+    color: white;
+}
+
+/* Iconos */
+
+.actions {
+    button {
+        transform: scale(0.75);
+        background-color: black;
+
+        mat-icon {
+            color: #00FFB9;
+        }
+    }
+}
+
+.mat-column-actions {
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.icon-pencil {
+    background-color: black;
+    height: 20px;
+    width: 20px;
+    position: relative;
+    left: 22px;
+    top: -7px;
+}
+
+.icon-finance {
+    background-color: black;
+    height: 20px;
+    width: 20px;
+    position: relative;
+    left: 20px;
+    top: -7px;
+}
+
+.img-pencil {
+    height: 15px;
+    width: 20px;
+    position: absolute;
+}
+
+.img-finance {
+    height: 15px;
+    width: 20px;
+    position: absolute;
+}
+
+.button-add {
+    padding-top: 50px;
+}
+
+.add-objetive {
+    background-color: #0061ff;
+    border-radius: 50px;
+    color: white !important;
+}
+
+.color-text {
+    color: white !important;
+    width: 15px;
+
+}
+
+.button-icon {
+    width: 25px;
+    height: 25px;
+    margin-top: 4px;
+}
+
+.margin-text {
+    margin-top: 6px;
+    margin-left: 2px;
+}
+
+.flex-container {
+    display: flex;
+
+}
+
+.container {
+    width: 30px;
+    height: 50px;
+    padding-left: 10px;
+    color: black;
+}
+
+.input-search-container {
+    text-align: end;
+
+    .custom-search {
+        width: 30%;
+    }
+}
+
+@media (max-width: '700px') {
+    .input-search-container {
+        text-align: center;
+
+        .custom-search {
+            width: 100%;
+        }
+    }
+}

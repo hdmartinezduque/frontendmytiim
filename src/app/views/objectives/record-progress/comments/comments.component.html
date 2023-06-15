@@ -1,0 +1,90 @@
+<section class="pt-4">
+    <form [formGroup]="commentForm">
+        <h3>
+            Puedes crear un comentario para recibir un feedback de tu
+            líder o brindar más información sobre el avance de tu objetivo.
+        </h3>
+
+        <br>
+
+        <div>
+            <h4 class="title-h4">
+                <b>Elige una categoría para tu comentario</b>
+            </h4>
+        </div>
+        <div *ngIf="{ CommentType:commentType$ | async } as data">
+            <mat-form-field appearance="fill" class="field">
+                <mat-label>Categoría</mat-label>
+                <mat-select formControlName="commentTypeId">
+                    <mat-option>-- Busca aqui tu categoría --</mat-option>
+                    <mat-option *ngFor="let comentario of data.CommentType" [value]="comentario.commentTypeId">
+                        {{comentario.commentTypeDescribe}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <br>
+
+            <mat-form-field appearance="fill" class="field">
+                <mat-label>Escribe acá tu comentario</mat-label>
+                <textarea matInput formControlName="commentDescribe" maxlength="600"></textarea>
+            </mat-form-field>
+            <div class="buttons">
+                <button mat-raised-button type="button" color="primary" routerLink="/objectives"
+                    class="btn btn-secondary">
+                    Cancelar
+                </button>
+                <button mat-raised-button type="submit" color="primary" class="btn btn-primary" (click)="onSumit()">
+                    Crear comentario
+                </button>
+            </div>
+            <div class="flex-container flex-column  center" *ngIf="showError">
+                <app-alert [message]="errorMessage" [type]="'error'"></app-alert>
+            </div>
+            <div class="flex-container flex-column  center" *ngIf="showSucces">
+                <app-alert [message]="successMessage" [type]="'success'"></app-alert>
+            </div>
+        </div>
+    </form>
+    <br>
+    <mat-card class="comments-list px-2 py-3" *ngIf="{CommentView:commentView$ | async} as data">
+        <mat-card-header class="pb-3">
+            <mat-card-title class="title">Ver comentarios de:</mat-card-title>
+            <mat-radio-group aria-label="Select an option" color="primary" class="button-value">
+                <mat-radio-button value="1">Avance</mat-radio-button>
+                <mat-radio-button value="2">Retroalimentación</mat-radio-button>
+            </mat-radio-group>
+        </mat-card-header>
+
+        <div>
+            <mat-card-content>
+                <mat-card class="comment my-3" *ngFor=" let comment of data.CommentView ">
+                    <mat-card-header>
+                        <mat-card-title>
+                            {{ comment.userName }} {{ comment.userLastName }}
+                            <span>{{ comment.commentDate }}</span>
+                        </mat-card-title>
+                        <mat-card-subtitle>{{ comment.commentTypeDescribe }}</mat-card-subtitle>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <p class="pt-3">{{ comment.commentDescribe }}</p>
+                    </mat-card-content>
+                </mat-card>
+                <mat-paginator [pageSizeOptions]="[ 5, 10, 15]" showFirstLastButtons></mat-paginator>
+            </mat-card-content>
+        </div>
+
+
+
+        <mat-card-actions *ngIf="false" align="end">
+            <button mat-raised-button type="button" color="primary" routerLink="/objectives" class="btn btn-secondary">
+                Cancelar
+            </button>
+            <button mat-raised-button type="submit" color="primary" class="btn btn-primary" (click)="onSumit()">
+                Responder
+            </button>
+        </mat-card-actions>
+    </mat-card>
+
+
+</section>

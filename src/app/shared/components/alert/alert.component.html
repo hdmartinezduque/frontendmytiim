@@ -1,0 +1,30 @@
+<mat-card class="alert-style" #alert>
+  <ng-content *ngTemplateOutlet="error;"></ng-content>
+  <ng-content *ngTemplateOutlet="success;"></ng-content>
+  <ng-content *ngTemplateOutlet="info;"></ng-content>
+  <ng-content *ngTemplateOutlet="warning;"></ng-content>
+</mat-card>
+
+<ng-template #error>
+    <mat-card-content class="border-bottom-error text-center" *ngIf="type === 'error'">
+        {{this.message}}
+    </mat-card-content>
+</ng-template>
+
+<ng-template #success>
+    <mat-card-content class="border-bottom-success text-center" *ngIf="type === 'success'">
+        {{this.message}}
+    </mat-card-content>
+</ng-template>
+
+<ng-template #info>
+    <mat-card-content class="border-bottom-info text-center" *ngIf="type === 'info'">
+        {{this.message}}
+    </mat-card-content>
+</ng-template>
+
+<ng-template #warning>
+    <mat-card-content class="border-bottom-warning text-center" *ngIf="type === 'warning'">
+        {{this.message}}
+    </mat-card-content>
+</ng-template>

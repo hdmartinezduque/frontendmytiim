@@ -1,0 +1,43 @@
+
+.flex-container {
+    display: flex;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.center {
+    align-self: center;
+}
+
+.sub-text {
+    background-color: #00ffb1;
+    border: 7px;
+    border-top: 0px;
+    border-radius: 8px;
+}
+
+.texto-bienvenido {
+    letter-spacing: 0.27px;
+    font: var(--unnamed-font-family-nunito);
+}
+
+.texto-bienvenido-content {
+    font-size: 30px;
+    margin-bottom: 100%;
+    margin-top: 300px;
+    margin-left: 30px;
+    // text-align: center;
+}
+
+.margen-renglones {
+    line-height: 26pt;
+}
+
+.img-bienvenido {
+    margin: 198px;
+    margin-bottom: 100%;
+    margin-right: 50px;
+    margin-left: 20px;
+}

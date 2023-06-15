@@ -1,0 +1,66 @@
+<div class="special-container">
+  <header class="header">
+    <h1>Registrar avance</h1>
+    <p>
+      Consulta la información y actualiza el estado de tu objetivo. Actualiza el
+      pórcentaje de cumplimiento de tus compromisos y agrega comentarios
+    </p>
+  </header>
+
+  <div *ngIf="progress$ | async as obj">
+    <mat-card class="style-card">
+      <mat-card-content>
+        <mat-icon>gps_fixed</mat-icon>
+
+        <div>
+          <h2 class="objectiveDescribe-card">
+            {{ obj.objectiveDescribe }}
+          </h2>
+        </div>
+
+        <div class="mat-chip-list-container">
+          <mat-chip-listbox>
+            <mat-chip>
+              {{ obj.objectiveType.objectiveTypeDescribe }}
+            </mat-chip>
+            <mat-chip>
+              {{ obj.status.statusDescribe }}
+            </mat-chip>
+          </mat-chip-listbox>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <br />
+
+  <mat-tab-group animationDuration="0ms">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <img src="assets/icons/list-status.svg" style="margin-top: 0px" /> Mis
+        compromisos
+      </ng-template>
+      <div style="padding-top: 30px">
+        <app-my-compromises></app-my-compromises>
+      </div>
+    </mat-tab>
+
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <img src="assets/icons/comment-check.svg" style="margin: 10px" />
+        Comentarios
+      </ng-template>
+      <app-comments></app-comments>
+    </mat-tab>
+
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <img src="assets/icons/progress-clock.svg" style="margin: 10px" />
+        Actualizar estado
+      </ng-template>
+      <div style="padding-top: 30px">
+        <app-update-status></app-update-status>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

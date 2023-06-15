@@ -1,0 +1,116 @@
+<section>
+  <form (ngSubmit)="onSubmit()" [formGroup]="statusForm">
+    <br />
+    <div>
+      <span class="subtitle-styles"
+        >Actualiza el estado de tu objetivo para conocer su ciclo de
+        cumplimiento</span
+      >
+    </div>
+    <br />
+    <br />
+
+    <h4>
+      <b
+        >Selecciona un estado para tu objetivo
+        <span class="tooltip-container">
+          <mat-icon
+            matTooltip="{{ getToolTipInfo() }}"
+            matTooltipPosition="right"
+            matTooltipClass="multilevel-tooltip"
+            >help</mat-icon
+          >
+        </span>
+      </b>
+    </h4>
+
+    <mat-form-field appearance="fill" class="field">
+      <mat-label>Seleccionar un estado</mat-label>
+
+      <div *ngIf="{ objetiveStatus: objStatus | async } as data">
+        <mat-select
+          formControlName="statusId"
+          (selectionChange)="valorOption = $event.value"
+        >
+          <mat-option>-- Estado de objetivo--</mat-option>
+          <mat-option
+            *ngFor="let status of data.objetiveStatus"
+            [value]="status.statusId"
+          >
+            {{ status.statusDescribe }}
+          </mat-option>
+        </mat-select>
+      </div>
+    </mat-form-field>
+
+    <br />
+
+    <div *ngIf="valorOption !== undefined && valorOption < 5">
+      <ng-content *ngTemplateOutlet="observacion"></ng-content>
+    </div>
+
+    <div *ngIf="valorOption === 5">
+      <ng-content *ngTemplateOutlet="evaluaTuDesempeno"></ng-content>
+
+      <ng-content *ngTemplateOutlet="observacion"></ng-content>
+
+      <div class="flex-container flex-column center" *ngIf="showError">
+        <app-alert [message]="errorMessage" [type]="'error'"></app-alert>
+      </div>
+    </div>
+
+    <ng-template #evaluaTuDesempeno>
+      <h4><b>Evalua tu desempeño*</b></h4>
+      <p>
+        Asigna una puntuación del 1 (Excelente desempeño) al 5 (Poco desempeño)
+        a tu nivel de desempeño cumpliendo este objetivo.
+      </p>
+
+      <mat-form-field appearance="fill" class="field">
+        <mat-label>Asigna una puntuacion</mat-label>
+
+        <mat-select formControlName="objectiveQualify">
+          <mat-option>-- Puntuación nivel de desempeño--</mat-option>
+          <mat-option *ngFor="let number of listOfNumbers" [value]="number">{{
+            number
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </ng-template>
+
+    <ng-template #observacion>
+      <h4><b>Observación (opcional)</b></h4>
+      <p>Agrega una reflexión sobre tu experiencia cumpliendo este objetivo.</p>
+
+      <mat-form-field appearance="fill" class="field">
+        <textarea
+          matInput
+          formControlName="objectiveObservations"
+          placeholder="Agrega aquí una observación para actualizar el estado de tu objetivo"
+          maxlength="400"
+        ></textarea>
+        <mat-icon class="icon-edit" matSuffix>edit</mat-icon>
+      </mat-form-field>
+    </ng-template>
+
+    <div class="buttons">
+      <button
+        mat-raised-button
+        type="button"
+        color="primary"
+        routerLink="/home/objectives/list"
+        class="btn btn-secondary"
+      >
+        Cancelar
+      </button>
+      <button
+        mat-raised-button
+        type="submit"
+        color="primary"
+        class="btn btn-primary"
+      >
+        Actualizar estado
+      </button>
+    </div>
+  </form>
+</section>

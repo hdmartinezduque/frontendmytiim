@@ -1,0 +1,49 @@
+<div class="background-img">
+    <div class="background-img-opacity">
+        <div class="flex-container flex-column">
+            <div class="center">
+                <ng-content *ngTemplateOutlet="iconMytiim;"></ng-content>
+                <div class="center-element"><span class="ingresar-text">Ingresar</span></div>
+                <ng-content *ngTemplateOutlet="loginContent;"></ng-content>
+                <app-alert [message]="errorMessage" [type]="'error'" *ngIf="showError"></app-alert>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #iconMytiim>
+    <div class="logo-mytiim center-element">
+        <img alt="mytiim" src="./../../../assets/icons/atom-logo-primary.svg" title="mytiim">
+    </div>
+</ng-template>
+
+<ng-template #loginContent>
+    <div>
+        <form class="example-form" [formGroup]="loginForm">
+            <mat-form-field class="example-full-width">
+              <button
+                    matPrefix
+                    mat-icon-button
+                    color="primary">
+                    <mat-icon class="icon">account_circle</mat-icon>
+                </button>
+              <input formControlName="username" matInput type="email" placeholder="Usuario">
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <button
+                    matPrefix
+                    mat-icon-button
+                    color="primary">
+                    <mat-icon class="icon">lock</mat-icon>
+                </button>
+                <input formControlName="password"  matInput type="password" placeholder="Clave" >
+              </mat-form-field>
+          </form>
+          <button
+            class="button-inicio-sesion"
+            [disabled]="!validform"
+            mat-button
+            (click)="login()"
+            [matTooltip]="errorMessage">Iniciar Sesión</button>
+    </div>
+</ng-template>

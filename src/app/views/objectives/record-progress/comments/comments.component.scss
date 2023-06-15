@@ -1,0 +1,195 @@
+/* Angular Material */
+
+:host ::ng-deep .mat-mdc-select-arrow {
+    color: #0061ff !important;
+}
+
+:host ::ng-deep .mdc-text-field--filled {
+    border-bottom: 1px solid #0061ff;
+}
+
+/* Clases Auxiliares */
+
+@media (min-width: 1024px) {
+    .special-container {
+        margin: 0 auto;
+        margin-top: 40px;
+        max-width: 67%;
+        display: flex;
+        flex-direction: column;
+        justify-content: stretch;
+        align-content: stretch;
+    }
+}
+
+.mat-extension-panel {
+    margin: 0 auto;
+    width: 100%;
+}
+
+.btn {
+    border-radius: 20px;
+    transition: all 0.025s ease;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn-primary {
+    color: white;
+    background: #0067FD;
+}
+
+.btn-secondary {
+    color: #0067FD;
+    background: white;
+    border: 1px solid #0067FD;
+}
+
+.btn-secondary:hover {
+    color: #0067FD;
+    background: #e0ecff;
+}
+
+/* Diseño principal del componente */
+
+.buttons {
+    gap: 10px;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: flex-end;
+    margin-top: 20px;
+    width: 93%;
+   
+}
+
+.panel {
+    border: 1px solid #0067FD;
+    
+}
+
+.field {
+    width: 85%;
+    
+}
+
+.title-panel {
+    font-family: Roboto;
+}
+
+.icon-mode{
+    color: #686868;
+}
+
+.container-center{
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+    pointer-events: none;
+    opacity: 0.5;
+
+}
+
+.disabled-click {
+    pointer-events: none;
+}
+
+.pt-4{
+    text-align: center;
+    
+}
+
+.title-h4{
+    display: flex;
+    justify-content: stretch;
+    align-content: stretch;
+    margin-left: 60px;
+}
+
+
+h3{
+    text-align: initial;
+    padding-left: 60px;
+    padding-right: 0px;
+    margin: 0 auto;
+    margin-top: 40px;
+    max-width: 100%;
+    font-size: 20px;
+    font-family: 'Nunito', sans-serif;
+    display: flex;
+}
+
+.flex-container{
+    width: 100%;
+    display: flex;
+    margin: 0 auto;
+}
+
+.comments-list {
+    max-width: 95%;
+    margin: 0 auto;
+    
+    mat-card-header {
+        gap: 15px;
+        align-items: center;
+    }
+    
+    mat-card-content {
+        max-height: 250px;
+        overflow-y: scroll;
+    }
+    
+    mat-card-actions {
+        gap: 15px;
+    }
+}
+
+.comment {
+    box-shadow: none;
+    border-radius: 10px;
+    background-color: #f8f8f8;
+    
+    mat-card-header {
+        width: 100%;
+        text-align: start;
+        
+        mat-card-title {
+            font-size: 18px;
+            
+            span {
+                font-weight: normal;
+            }
+        }
+        
+        mat-card-subtitle {
+            font-size: 16px;
+        }
+    }
+    
+    mat-card-content {
+        max-height: inherit;
+        overflow-y: inherit;
+        
+        p {    
+            font-size: 16px;
+            text-align: justify;
+        }
+    }
+}
+
+.mat-mdc-radio-button ~ .mat-mdc-radio-button {
+    margin-left: 16px;
+}
+.card-text{
+    background-color: rgb(247, 242, 242);
+    max-width: 625px;
+    border-radius: 5px;
+}
+
+.title{
+    font-size: 15px;
+    padding-top: 5px;
+}
+

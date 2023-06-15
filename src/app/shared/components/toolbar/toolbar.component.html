@@ -1,0 +1,47 @@
+<mat-toolbar class="mat-toolbar-styles">
+    <ng-content *ngTemplateOutlet="home;"></ng-content>
+    <ng-content *ngTemplateOutlet="userLogged;"></ng-content>
+</mat-toolbar>
+
+<ng-template #home >
+    <div class="header-home" *ngIf="!user">
+        <div class="container">
+            <div>
+                <img src="./../../../../assets/icons/atom-logo-secondary.svg" class="svg-inject" alt="signal" />
+            </div>
+            <div class="right">
+                <button mat-button class="button-iniciar-sesion" (click)="goToLogin()">Iniciar Sesión</button>
+            </div>  
+          </div>
+    </div>
+</ng-template>
+
+<ng-template #userLogged >
+        <div class="header-home" *ngIf="user">
+            <div class="container">
+                <div>
+                    <ng-content *ngTemplateOutlet="elementsUserLogged;"></ng-content>
+                </div>
+                <div class="right">
+                    <ng-content *ngTemplateOutlet="buttonLogout;"></ng-content>
+                </div>
+            </div>
+        </div>
+    
+</ng-template>
+
+<ng-template #elementsUserLogged >
+    <div class="header-logged">
+        <div>
+            <img src="./../../../../assets/icons/atom-logo-secondary.svg" class="icon-logo-secundary" alt="signal" (click)="onClick()" />
+        </div>
+        <!-- <button mat-icon-button (click)="onClick()">
+            <mat-icon>menu</mat-icon>
+        </button> -->
+        <!-- <span>Bienvenido a Mytiim</span> -->
+    </div>
+</ng-template>
+
+<ng-template #buttonLogout >
+        <button mat-button class="button-iniciar-sesion" (click)="logout()">Cerrar Sesión</button>
+</ng-template>

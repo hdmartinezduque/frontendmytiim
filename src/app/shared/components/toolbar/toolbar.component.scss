@@ -1,0 +1,85 @@
+.mat-toolbar-styles {
+    background: #282828;
+    // position: fixed;
+    // z-index: 1000;
+}
+
+.header-logged {
+    color: white;
+}
+
+.header-home {
+    width: 100%;
+}
+
+.align-button {
+    margin-left: auto;
+}
+
+.button-iniciar-sesion {
+    background-color: #0058eb;
+    color: white !important;
+    border-radius: 30px;
+}
+
+.flex-container {
+    display: flex;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.container{
+    display:flex;
+    margin-left: 0px;
+}
+  
+.right{
+    display:flex;
+    margin-left: auto;
+}
+
+.icon-logo-secundary {
+    cursor: pointer;
+}
+
+
+HTML CSSResult Skip Results Iframe
+EDIT ON
+.flex-row {
+  width: 300px;
+  display: flex; 
+  flex-direction: row; 
+  background: whitesmoke;
+  height: 50px; 
+  padding: 10px 5px;
+}
+
+.box {
+  background-color: darkmagenta;
+  color: white;
+  margin-right: 10px; 
+  height: 50px;
+  width: 50px; 
+  font-size: 30px; 
+  line-height: 50px;
+  text-align: center;
+}
+
+.box--end {
+  margin-left: auto;
+}
+
+.flex-row--reverse {
+  flex-direction: row-reverse;
+}
+
+.flex-row--reverse .box--end {
+  margin-right: auto;
+  margin-left: 0;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+  }

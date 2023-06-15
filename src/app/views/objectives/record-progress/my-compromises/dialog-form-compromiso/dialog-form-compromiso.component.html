@@ -1,0 +1,114 @@
+
+<div *ngIf="{metricas: metricas$ | async} as data" class="container-dialog">
+  <ng-content *ngTemplateOutlet="form;"></ng-content>
+  <ng-content *ngTemplateOutlet="gestionar;"></ng-content>
+  
+  <ng-content *ngTemplateOutlet="alertError;"></ng-content>
+</div>
+
+<ng-template #form>
+  <div *ngIf="{metricas: metricas$ | async} as data">
+    <div *ngIf="compromisos?.type !== 'managment'">
+      <div class="header-text-container">
+        <span class="header-text">{{!compromisos?.type ? 'Agregar Compromiso' : 'Editar Compromiso'}}</span>
+      </div>
+      <form [formGroup]="formCompromiso" (ngSubmit)="submitCompromise()">
+
+        <mat-form-field appearance="fill" class="field">
+            <!-- <mat-label>Redacta aquí tu  compromiso</mat-label> -->
+            <textarea matInput formControlName="commitmentDescribe" placeholder="Redacta aquí tu compromiso"></textarea>
+            <mat-icon class="icon-edit" matSuffix>edit</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill"  class="field">
+            <mat-label>Elige una fecha estimada del cumplimiento</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="commitmentDate" [min]="today"> 
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        
+        <mat-form-field appearance="fill" >
+          <mat-label>Selecciona una metrica</mat-label>
+          <mat-select formControlName="measureId">
+            <mat-option>-- Busca aqui tu métrica --</mat-option>
+            <mat-option *ngFor="let metrica of data.metricas" [value]="metrica?.measureId">
+              {{ metrica?.measureDescribe }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="space-between-inputs">
+            <mat-label>Avance inicial</mat-label>
+            <input matInput placeholder="Avance Inicial %#$..." value="" formControlName="commitmentAdvance" type="number">
+        </mat-form-field>
+
+        <mat-form-field >
+            <mat-label>Meta</mat-label>
+            <input matInput placeholder="Meta" value="" formControlName="commitmentGoal" type="number">
+        </mat-form-field>
+      
+        <ng-content *ngTemplateOutlet="buttons;"></ng-content>
+      
+      </form>
+      </div>
+  </div>
+</ng-template>
+
+<ng-template #gestionar>
+  <div *ngIf="{metricas: metricas$ | async} as data">
+    <div *ngIf="compromisos && compromisos?.type === 'managment'">
+      <div class="header-text-container">
+        <div class="center">
+          <span class="header-text">Gestionar Compromiso</span>
+          <br>
+          <span class="subtitle-text">Actualiza los indicadores de avance de compromiso</span>
+        </div>
+        
+      </div>
+      <mat-card class="style-card">
+        <mat-card-content>
+            <span>
+              <mat-icon>list_check</mat-icon> <span class="title-text-card">{{compromisos.commitmentDescribe}}</span>
+              <br>
+              <span class="subtext-date"> <strong>Fecha estimada de cumplimiento</strong> {{compromisos.commitmentDate}}</span>
+            </span>
+        </mat-card-content>    
+      </mat-card>
+      <div class="center">
+        <span ><strong>¿Cuanto has avanzado con tu compromiso?</strong></span>
+        <div class="flex-container">
+            <div class="square-info">
+              <strong>Metrica de medicion</strong> {{ compromisos.measureId | getMetricaDescription : data?.metricas || []}}
+            </div>
+            <div class="square-info">
+              <strong>Meta a alcanzar</strong> {{ compromisos.commitmentGoal}}
+            </div>
+        </div>
+        
+      </div>
+      <div class="center-flex">
+        <form [formGroup]="formManagement" (ngSubmit)="submitCompromise()">
+          <mat-form-field class="field-Initial-advance">
+            <mat-label>Avance inicial</mat-label>
+            <input matInput placeholder="Avance Inicial %#$..." value="" formControlName="commitmentAdvance" type="number">
+          </mat-form-field>
+        <ng-content *ngTemplateOutlet="buttons;"></ng-content>
+        </form>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #buttons>
+  <div class="flex-direction-end">
+    <button mat-button color="primary" class="btn-primary" type="submit" cdkTrapFocus>
+      {{ compromisos?.type ? 'Actualizar' : 'Crear compromiso' }}
+    </button>
+    <button mat-raised-button class="button-cancel" (click)="closeDialog()" type="button">Cancelar</button>
+  </div>
+ 
+</ng-template>
+
+<ng-template #alertError>
+  <app-alert *ngIf="showError" [message]="messageError" [type]="'error'"></app-alert>
+</ng-template>

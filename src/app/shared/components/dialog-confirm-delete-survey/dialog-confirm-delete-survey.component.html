@@ -1,0 +1,25 @@
+
+<div  class="container-dialog"  >
+  <div class="flex-button">
+    <button class="button-close" mat-icon-button (click)="closeDialog()">
+      <mat-icon class="icon-close" style="font-weight: bold;" matSuffix>close</mat-icon>
+    </button>
+  </div>
+  <img class="icon-dialog" src="../../../../../assets/icons/warning-img.png">
+  <div  class="mat-dialog-title">
+  </div>
+  <div mat-dialog-content class="mat-typography text-center">
+    <h3 class="message">{{ data.message }}</h3>
+  </div>
+  <ng-content *ngTemplateOutlet="buttons;"></ng-content>
+</div>
+
+
+<ng-template #buttons>
+  <div class="flex-direction-end">
+    <button mat-button color="primary" class="btn-primary" (click)="closeDialog(true)" type="button">
+      Eliminar
+    </button>
+    <button mat-raised-button class="button-cancel" (click)="closeDialog()" type="button">Cancelar</button>
+  </div>
+</ng-template>

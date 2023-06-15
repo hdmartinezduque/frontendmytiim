@@ -1,0 +1,58 @@
+.flex-button {
+    display: flex;
+    align-items: flex-end;
+    direction: rtl;
+}
+
+.title{
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+    font-size: 32px; 
+    color: #282828;
+     
+}
+
+.message{
+    font-size: 21px;
+    color:#282828 ;
+    margin-top: 0px;
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+    
+}  
+
+.icon-dialog{
+    display:flex;
+    margin: auto;
+}
+
+.mat-typography{
+    position: relative;
+    top: -15px;
+}
+
+.mat-dialog-title{
+    position: relative;
+    top: 15px;
+}
+
+.icon-close{
+   position: relative;
+    font-size: 20px;
+}
+
+.button-close{
+    top: 20px;
+    right: 20px;
+    font-weight: 600;
+    color: black;
+    background: #FFFFFF;
+}
+
+.container-dialog{
+    width: 459px;
+    height: 249px;
+    color: #FFFFFF;
+}

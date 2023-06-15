@@ -1,0 +1,24 @@
+{
+    "types": [
+      { "typeId": 1, "typeName": "Individual" },
+      { "typeId": 2, "typeName": "Grupal" }
+    ],
+    "objective": [
+        {
+            "objectiveId": 1,
+            "objectiveDescribe": "Obj 1",
+            "objectiveTypeId": 1,
+            "objectiveUserId": 1,
+            "objectiveGrupoId": 1,
+            "objectiveStatusId": 1
+        },
+        {
+            "objectiveId": 2,
+            "objectiveDescribe": "Obj 2",
+            "objectiveTypeId": 2,
+            "objectiveUserId": 2,
+            "objectiveGrupoId": 2,
+            "objectiveStatusId": 2
+        }
+    ]
+}

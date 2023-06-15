@@ -1,0 +1,166 @@
+/* Angular Material */
+
+:host ::ng-deep .mat-mdc-select-arrow {
+    color: #0061ff !important;
+}
+
+:host ::ng-deep .mdc-text-field--filled {
+    border-bottom: 1px solid #0061ff;
+}
+
+
+
+/* Clases Auxiliares */
+
+@media (min-width: 1024px) {
+    .special-container {
+        margin: 0 auto;
+        padding-top: 30px;
+        max-width: 67%;
+        display: flex;
+        flex-direction: column;
+        justify-content: stretch;
+        align-content: stretch;
+    }
+}
+
+.mat-extension-panel {
+    margin: 0 auto;
+    width: 100%;
+}
+
+.btn {
+    border-radius: 20px;
+    transition: all 0.025s ease;
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+.btn-primary {
+    color: white;
+    background: #0067FD;
+}
+
+.btn-secondary {
+    color: #0067FD;
+    background: white;
+    border: 1px solid #0067FD;
+}
+
+.btn-secondary:hover {
+    color: #0067FD;
+    background: #e0ecff;
+}
+
+/* Diseño principal del componente */
+
+.buttons {
+    gap: 10px;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: flex-end;
+    margin-top: 20px;
+
+}
+
+.panel {
+    border: 1px solid #0067FD;
+
+}
+
+.field {
+    width: 100%;
+}
+
+.title-panel {
+    font-family: Roboto;
+
+}
+
+.icon-edit {
+    color: #686868;
+}
+
+.container-center {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    pointer-events: none;
+    opacity: 0.5;
+
+}
+
+.disabled-click {
+    pointer-events: none;
+}
+
+
+
+subtitle-styles {
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 20px/17px Nunito;
+    text-align: left;
+    font: normal normal normal 20px/17px Nunito;
+    letter-spacing: 0.15px;
+    color: #282828;
+    opacity: 1;
+}
+
+
+.button-rounded-blue {
+    background-color: #0061FF;
+    border-radius: 20px;
+    color: white !important;
+    opacity: 1;
+}
+
+.flex-container{
+    display: flex;
+}
+
+.button-icon{
+    width: 25px;
+    height: 25px;
+    margin-top: 4px;
+}
+
+.margin-text{
+    margin-top: 6px; 
+    margin-left: 2px;
+}
+
+.button-add-position {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.header-table {
+    background-color: black;
+    border-bottom: 2px solid #00FFB1;
+    padding-top: 10px;
+}
+
+.header-table-cell {
+    color: white;
+}
+
+.action {
+    button {
+        transform: scale(0.75);
+        background-color: black;
+
+        mat-icon {
+            color: #00FFB9;
+        }
+    }
+}
+
+.date-is-expired {
+    background-color: #FFCCCB;
+}
+
+
+
+

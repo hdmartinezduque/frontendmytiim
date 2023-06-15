@@ -1,0 +1,84 @@
+.flex-container {
+    display: flex;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.center {
+    align-self: center;
+}
+
+.logo-mytiim {
+    margin-top: 192px;
+}
+
+.background-img {
+    background-image: url("./../../assets/img/gente-tiro-medio-celebrando-juntos.png");
+    width: 100%;
+    height: 850px;
+    top: 0px;
+    background-size:cover;
+    left: 0px;
+    mix-blend-mode: multiply;
+}
+
+.background-img-opacity {
+    background:  rgba(0, 0, 0, 0.5) 0% 0% no-repeat padding-box;
+    width: 100%;
+    height: 850px;
+}
+
+.center-element {
+    text-align: center;
+}
+
+.ingresar-text {
+    top: 319px;
+    left: 575px;
+    width: 130px;
+    height: 46px;
+    /* UI Properties */
+    font: var(--unnamed-font-style-normal) normal bold 34px/var(--unnamed-line-spacing-112) var(--unnamed-font-family-nunito);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: left;
+    font: normal normal bold 34px/112px Nunito;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+.example-full-width {
+    width: 100%;
+}
+
+.button-inicio-sesion {
+    background-color: #0058eb;
+    color: white !important;
+    border-radius: 30px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.button-cambiar-contraseña{
+    background-color: #0058eb;
+    color: white !important;
+    border-radius: 30px;
+    width: 100%;
+    cursor: pointer;
+    position: relative;
+    top: 10px;
+    
+}
+
+.icon {
+    color: #0058eb;
+    
+}

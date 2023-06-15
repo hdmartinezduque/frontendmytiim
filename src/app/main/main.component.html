@@ -1,0 +1,15 @@
+<mat-sidenav-container autosize>
+
+    <mat-sidenav #sidenav mode="side" class="sidenav-styles">
+        <app-sidenav></app-sidenav>
+    </mat-sidenav>
+    
+    <mat-sidenav-content>
+        <app-toolbar [sidenav]="sidenav"></app-toolbar>
+
+        <main class="main-view">
+            <app-presentation></app-presentation>
+        </main>
+    </mat-sidenav-content>
+
+</mat-sidenav-container>

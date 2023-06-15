@@ -1,0 +1,97 @@
+<div *ngIf="{questions: questions$ | async, periods: periods$ | async, viewPeriods: viewPeriods$ | async} as data" class="flexbox-container">
+    <div class="flex-center">
+      <div class="space-between-title">
+        <span class="title">Encuesta de cierre del periodo </span>
+      </div>
+      <div>
+        <span>Elije la pregunta que quieres incluir en la encuesta</span>
+      </div>
+      <div>
+        <ng-content *ngTemplateOutlet="formSurveyC; context: data"></ng-content>
+      </div>
+      <div>
+        <ng-content *ngTemplateOutlet="tableSurvey; context: data"></ng-content>
+      </div>
+    </div>
+</div>
+
+<ng-template #formSurveyC let-questions="questions" let-periods="periods">
+    <form [formGroup]="closeSurvey"  class="field">
+        <mat-form-field appearance="fill" class="field">
+            <mat-label>Lista de preguntas</mat-label>
+            <mat-select formControlName="questionId">
+              <mat-option>-- Elije una pregunta --</mat-option>
+              <mat-option *ngFor="let question of questions" [value]="question?.questionId" >
+                {{  question?.describe }}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="field">
+          <mat-label>Lista de periodos</mat-label>
+          <mat-select formControlName="periodId">
+            <mat-option>-- Elije un período --</mat-option>
+            <mat-option *ngFor="let period of periods" [value]="period?.periodId">
+              {{  period?.describe }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+          <mat-slide-toggle labelPosition="before" formControlName="isRequired" class="toggle-class" color="primary">Pregunta obligatoria</mat-slide-toggle>
+          <div class="left-flex">
+            <button mat-button color="primary" class="btn-primary" type="submit" cdkTrapFocus>
+              Agregar pregunta
+            </button>
+          </div>
+    </form>
+</ng-template>
+
+<ng-template #tableSurvey let-questions="questions" let-periods="periods" let-viewPeriods="viewPeriods">
+  <div>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef class="header-table-cell"> Código</th>
+          <td mat-cell *matCellDef="let element"> {{element.codigoId}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="idPeriod">
+          <th mat-header-cell *matHeaderCellDef class="header-table-cell"> Período </th>
+          <td mat-cell *matCellDef="let element"> {{element.periodDiscribe}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="questionDescribe" >
+            <th mat-header-cell *matHeaderCellDef class="header-table-cell"> Enunciado de la pregunta</th>
+            <td mat-cell *matCellDef="let element" > 
+                <span matTooltip="" matTooltipPosition="right" >
+                    {{element.question}}
+                </span>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="isRequired" >
+          <th mat-header-cell *matHeaderCellDef class="header-table-cell"> Obligatoria </th>
+          <td mat-cell *matCellDef="let element"> 
+              <span matTooltip="" matTooltipPosition="right" >
+                  {{element.isRequired ? 'SI': 'NO'}}
+              </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+            <th mat-header-cell *matHeaderCellDef class="header-table-cell"> Acciones</th>
+            <td mat-cell *matCellDef="let element">
+                <div class="actions">
+                    <button mat-icon-button matTooltip="Eliminar Pregunta" (click)="popConfirmDelete(element.id)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns" class="header-table"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <div *matNoDataRow>
+        No hay datos disponibles para mostrar
+    </div>
+    <mat-paginator [pageSizeOptions]="[ 10, 15, 20]" showFirstLastButtons></mat-paginator>
+    <app-alert *ngIf="showAlert" [message]="messageAlert" [type]="alertType"></app-alert>
+  </div>  
+</ng-template>

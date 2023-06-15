@@ -1,0 +1,64 @@
+.container-component {
+    margin-top: 20px;
+}
+
+.subtitle-styles {
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 20px/17px Nunito;
+    text-align: left;
+    font: normal normal normal 20px/17px Nunito;
+    letter-spacing: 0.15px;
+    color: #282828;
+    opacity: 1;
+}
+
+.button-rounded-blue {
+    background-color: #0061ff;
+    border-radius: 50px;
+    color: white !important;
+}
+
+.flex-container{
+    display: flex;
+}
+
+.button-icon{
+    width: 25px;
+    height: 25px;
+    margin-top: 4px;
+}
+
+.margin-text{
+    margin-top: 6px; 
+    margin-left: 2px;
+}
+
+.button-add-position {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.header-table {
+    background-color: #282828;
+    border-bottom: 2px solid #00FFB1;
+    padding-top: 10px;
+    color: white;
+}
+
+.header-table-cell {
+    color: white;
+}
+
+.actions {    
+    button {
+        transform: scale(0.75);
+        background-color: black;
+        
+        mat-icon {
+            color: #00FFB9;
+        }
+    }
+}
+
+.date-is-expired {
+    background-color: #FFCCCB;
+}

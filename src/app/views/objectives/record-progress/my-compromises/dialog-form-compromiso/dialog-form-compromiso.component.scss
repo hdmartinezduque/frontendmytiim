@@ -1,0 +1,111 @@
+.header-text {
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-bold) 32px/32px Nunito;
+    text-align: center;
+    font: normal normal bold 32px/32px Nunito;
+    letter-spacing: 0.58px;
+    color: #282828;
+    opacity: 1;   
+}
+
+.header-text-container {
+    margin-bottom: 20px;
+}
+
+.field {
+    width: 100%;
+}
+
+.icon-edit{
+    color: #686868;
+}
+
+.container-dialog {
+    margin: 20px;
+}
+
+.space-between-inputs {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+.style-card {
+     border: 2px solid #292929;
+     border-radius: 15px;
+     opacity: 1;
+ }
+
+.subtext-date {
+    text-align: left;
+    font: normal normal bold 14px/19px Roboto;
+    letter-spacing: 0px;
+    color: #000000DE;
+    margin-left: 24px;
+}
+
+.subtitle-text {
+    text-align: center;
+    font: normal normal normal 16px/22px Nunito;
+    letter-spacing: 0.12px;
+    color: #282828;
+    opacity: 1;
+}
+
+.title-text-card {
+    font-size: 20px;
+    position: relative;
+    bottom: 5px;
+}
+
+.center {
+    text-align: center;
+}
+
+.square-info {
+    border: 1px solid #707070;
+    border-radius: 4px;
+    opacity: 1; 
+    width: 45%;
+    margin: 10px;
+}
+
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 500px;
+}
+
+.center-flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.field-Initial-advance {
+    width: 100%
+}
+
+// .btn {
+//     border-radius: 20px;
+//     transition: all 0.025s ease;
+// }
+
+// .btn:active {
+//     transform: scale(0.98);
+// }
+.flex-direction-end {
+    display: flex;
+    flex-direction: row-reverse;
+    // justify-content: space-between;
+}
+.btn-primary {
+    color: white;
+    background: #0067FD;
+    border-radius: 20px;
+    margin-left: 20px;
+}
+
+.button-cancel {
+    border-radius: 20px;
+    background-color: white;
+    color: #0067FD;
+    border: 1px solid #0067FD;
+}

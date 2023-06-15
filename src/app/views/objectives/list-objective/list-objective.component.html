@@ -1,0 +1,98 @@
+<header class="header-list">
+  <h1> Objetivos </h1>
+
+  <p>Consulta información y realiza acciones como editar y hacer seguimiento a tus objetivos.</p>
+
+  <div class="button-add">
+    <button mat-button routerLink="add" class="add-objetive">
+      <div class="flex-container">
+        <div>
+          <mat-icon class="button-icon">add_circle</mat-icon>
+        </div>
+        <div class="margin-text">
+          Agregar objetivo
+        </div>
+      </div>
+    </button>
+  </div>
+
+</header>
+
+<section class="header-list">
+
+  <div class="input-search-container">
+    <mat-form-field class="custom-search">
+      <input matInput [(ngModel)]="searchTerm" (input)="applyFilter()" placeholder="Buscar...">
+    </mat-form-field>
+  </div>
+
+  <div class="row-list">
+
+    <!-- Tabla -->
+    <table mat-table [dataSource]="tbDataSource" matSort matSortActive="objectiveId" matSortDirection="desc">
+
+      <!-- Id Column -->
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef>
+          <p class="text-header"> Id </p>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let objective"> {{ objective.objectiveId }} </mat-cell>
+      </ng-container>
+
+      <!-- Description Column -->
+      <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef mat-sort-header="objectiveDescribe">
+          <p class="text-header"> Descripción del objetivo </p>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let objective"> {{ objective.objectiveDescribe }} </mat-cell>
+      </ng-container>
+
+      <!-- Category Column -->
+      <ng-container matColumnDef="category">
+        <mat-header-cell *matHeaderCellDef mat-sort-header="objectiveType.objectiveTypeDescribe">
+          <p class="text-header"> Categoría </p>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let objective"> {{ objective.objectiveType.objectiveTypeDescribe }} </mat-cell>
+      </ng-container>
+
+      <!-- State Column -->
+      <ng-container matColumnDef="state" >
+        <mat-header-cell *matHeaderCellDef mat-sort-header="status.statusDescribe">
+          <p class="text-header"> Estado </p>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let objective" > {{ objective.status.statusDescribe }} </mat-cell>
+      </ng-container>
+
+      <!-- Actions -->
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>
+          <p class="text-header"> Acciones </p>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let objective">
+          <div class="actions">
+            <button mat-icon-button routerLink="edit/{{objective.objectiveId}}" matTooltip="Editar objetivo">
+              <mat-icon>edit</mat-icon>
+            </button>
+
+            <button mat-icon-button routerLink="progress/{{objective.objectiveId}}" matTooltip="Registrar avance del objetivo">
+              <mat-icon>auto_graph</mat-icon>
+            </button>
+          </div>
+
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns" class="container-list"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+      <div *matNoDataRow>
+        No hay datos disponibles para mostrar
+      </div>
+
+    </table>
+  </div>
+
+  <!-- Mat Paginator -->
+  <mat-paginator [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons></mat-paginator>
+
+</section>

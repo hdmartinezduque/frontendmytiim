@@ -1,0 +1,88 @@
+/* Angular Material */
+
+:host ::ng-deep .mdc-tab-indicator--active {
+  .mdc-tab-indicator__content {
+    opacity: 0;
+  }
+  border-bottom: 6px solid #00ffab;
+  border-radius: 4px;
+}
+
+:host ::ng-deep .mdc-tab__text-label {
+  font-size: 20px;
+}
+
+:host
+  ::ng-deep
+  .mat-mdc-tab:not(.mat-mdc-tab-disabled).mdc-tab--active
+  .mdc-tab__text-label,
+.mat-mdc-tab-link:not(.mat-mdc-tab-disabled).mdc-tab--active
+  .mdc-tab__text-label {
+  color: #000000de;
+}
+
+/* Clases Auxiliares */
+
+@media (min-width: 1024px) {
+  .special-container {
+    margin: 0 auto;
+    margin-top: 40px;
+    max-width: 67%;
+    display: flex;
+    flex-direction: column;
+    justify-content: stretch;
+    align-content: stretch;
+  }
+}
+
+/* Diseño principal del componente */
+
+.field {
+  width: 100%;
+}
+
+.icon-edit {
+  color: #686868;
+}
+
+.container-center {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.material-icons {
+  margin-right: 10px;
+  color: #212121;
+}
+
+.style-card {
+  border: 2px solid #292929;
+  border-radius: 15px;
+  opacity: 1;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  display: flex;
+  background-color: #c4c4c419;
+}
+
+.objectiveDescribe-card {
+  margin-left: 30px;
+  margin-top: -30px;
+  display: flex;
+}
+
+.mat-chip-list-container {
+  margin-top: 25px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: left;
+}
+
+.mat-tab {
+  // width: 766px;
+  height: 44px;
+  top: 519px;
+  // left: 322px;
+  display: flex;
+}

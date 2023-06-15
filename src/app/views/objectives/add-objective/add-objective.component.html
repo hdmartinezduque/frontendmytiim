@@ -1,0 +1,124 @@
+<div class="special-container">
+  <header>
+    <h1 class="titulo">{{ (!objId) ? 'Crear': 'Editar' }} objetivos</h1>
+    <p class="parrafo">
+      {{
+      (!objId) ?
+      'Crea tus objetivos de desarrollo personal o de equipo.' :
+      'Edita la información de tu objetivo. Recuerda guardar los cambios para actualizar la información'
+      }}
+    </p>
+  </header>
+
+  <section class="pt-4">
+    <mat-accordion>
+      <mat-expansion-panel class="panel" [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title> <b>1. Redacta tu objetivo*</b></mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <ng-content *ngTemplateOutlet="redactarEditarObjetivo;"></ng-content>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel class="panel">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <b>2. Crea compromisos*</b>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <ng-content *ngTemplateOutlet="crearCompromisos;"></ng-content>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel class="panel" [disabled]="disabledPanel">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <b>3. Alinea tu objetivo (opcional)</b>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <ng-container *ngTemplateOutlet="alinearObjetivos;"></ng-container>
+      </mat-expansion-panel>
+
+    </mat-accordion>
+  </section>
+
+  <div class="pt-4 buttons">
+    <button mat-button type="button" color="primary" routerLink="home/objectives/list" class="btn btn-secondary">
+      Cancelar
+    </button>
+    <button mat-button type="submit" color="primary" class="btn btn-primary" (click)="onSubmit()" cdkTrapFocus>
+      {{ (!objId) ? 'Crear objetivo' : 'Guardar cambios' }}
+    </button>
+  </div>
+</div>
+
+<ng-template #redactarEditarObjetivo>
+  <form [formGroup]="objectiveForm">
+    <h4 class="place-holder">
+      <b>Selecciona una categoría para tu objetivo*</b>
+      <mat-icon matTooltip="Objetivos grupales - Objetivos por equipo" matTooltipPosition="right">help</mat-icon>
+    </h4>
+
+    <mat-form-field appearance="fill" class="field">
+      <mat-select formControlName="objectiveTypeId" class="line-select" (selectionChange)="onSelectChange($event)">
+        <mat-option>-- Selecciona una opción --</mat-option>
+        <mat-option *ngFor="let objType of objTypes" [value]="objType.objectiveTypeId">
+          {{ objType.objectiveTypeDescribe }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <h4><b>Redacta tu objetivo*</b></h4>
+    <mat-form-field appearance="fill" class="field">
+      <textarea matInput formControlName="objectiveDescribe" maxlength="600"></textarea>
+      <mat-icon class="icon-edit" matSuffix>edit</mat-icon>
+    </mat-form-field>
+
+
+  </form>
+</ng-template>
+
+<ng-template #crearCompromisos>
+  <app-my-compromises *ngIf="typeComponentMyCompromises" [type]="typeComponentMyCompromises" [objectiveId]='objId' (onAddCompromise)="onAddCompromise($event)"></app-my-compromises>
+</ng-template>
+
+<ng-template #alinearObjetivos>
+  <div *ngIf="{
+    gruposObjetivo: gruposObjetivo$ | async,
+    creadoresObjetivo: creadoresObjetivo$ | async,
+    objetivos: objetivos$ | async
+  } as data">
+    <p>Contribuye al objetivo principal de tu Equipo,alineando tu objetivo.</p>
+    <form [formGroup]="formAlinearObjetivo">
+      <mat-form-field appearance="fill" class="field">
+        <mat-label>Seleccionar un grupo</mat-label>
+        <mat-select formControlName="grupo">
+          <mat-option>-- Busca aqui tu equipo --</mat-option>
+          <mat-option *ngFor="let grupo of data.gruposObjetivo" [value]="grupo.groupId">
+            {{ grupo.groupDescribe }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="field">
+        <mat-label>Seleccionar un creador</mat-label>
+        <mat-select formControlName="creadorObjetivo">
+          <mat-option>-- Busca aqui el creador del objetivo --</mat-option>
+          <mat-option *ngFor="let creador of data.creadoresObjetivo" [value]="creador.userId">
+            {{ creador.userName }} {{ creador.userLastName }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="field">
+        <mat-label>Seleccionar un objetivo</mat-label>
+        <mat-select formControlName="objetivo">
+          <mat-option>-- Busca aqui el creador del objetivo --</mat-option>
+          <mat-option *ngFor="let objetivo of data.objetivos" [value]="objetivo.objectiveId">
+            {{ objetivo.objectiveDescribe }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </form>
+  </div>
+</ng-template>
