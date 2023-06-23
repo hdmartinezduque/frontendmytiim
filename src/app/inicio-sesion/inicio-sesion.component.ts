@@ -1,11 +1,12 @@
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { InicioSesionService } from 'src/app/shared/services/inicio-sesion/inicio-sesion.service';
 import { ResponseData } from 'src/app/shared/interfaces/http-request';
-import { LoginRequest } from '../shared/services/login/login';
+import { LoginRequest } from '../shared/interfaces/login/login';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-inicio-sesion',
@@ -16,8 +17,6 @@ export class InicioSesionComponent implements OnInit {
   errorMessage: string = '';
   showError: boolean = false;
   validform: boolean = false;
- 
-  
 
   constructor(
     private router: Router,
@@ -59,10 +58,7 @@ export class InicioSesionComponent implements OnInit {
           this.showError = true;
           this.errorMessage = 'No se ha generado el token correctamente.';
         } else {
-          // if (response.data.status.statusId == 7) {
-          //   this.dialog.open(ChangePasswordComponent, { disableClose: true, panelClass: 'dialog-overlay' });
-          // }
-          this.router.navigate(['home'])
+          this.redirect()
         }
       },
       () => {
@@ -70,6 +66,12 @@ export class InicioSesionComponent implements OnInit {
         this.errorMessage = 'Ocurrió un error al intentar iniciar sesión, por favor intentalo de nuevo';
       }
     )
+  }
+
+  private redirect() {
+    const previousRoute = this.loginService.getPreviousRoute();
+    console.log('navigate to: ', previousRoute)
+    this.router.navigate([previousRoute])
   }
 }
 

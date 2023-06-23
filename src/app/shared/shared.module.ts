@@ -9,6 +9,7 @@ import { PresentationComponent } from './components/presentation/presentation.co
 import { GetMetricaDescriptionPipe } from './pipe/getMetricaDescription/get-metrica-description.pipe';
 import { PaginatorCardDatePipe } from './pipe/paginatorCardDate/paginator-card-date.pipe';
 import { ValidateFechaCumplimientoPipe } from './pipe/validateFechaCumplimiento/validate-fecha-cumplimiento.pipe';
+import { ChooseRecognitionPipe } from './chooseRecognition/choose-recognition.pipe';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ValidateFechaCumplimientoPipe } from './pipe/validateFechaCumplimiento/
     PresentationComponent,
     GetMetricaDescriptionPipe,
     PaginatorCardDatePipe,
-    ValidateFechaCumplimientoPipe
+    ValidateFechaCumplimientoPipe,
+    ChooseRecognitionPipe
   ],
   imports: [
     CommonModule,
@@ -33,7 +35,8 @@ import { ValidateFechaCumplimientoPipe } from './pipe/validateFechaCumplimiento/
     PresentationComponent,
     GetMetricaDescriptionPipe,
     PaginatorCardDatePipe,
-    ValidateFechaCumplimientoPipe
+    ValidateFechaCumplimientoPipe,
+    ChooseRecognitionPipe
   ]
 })
 export class SharedModule { }

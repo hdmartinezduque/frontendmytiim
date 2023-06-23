@@ -23,7 +23,8 @@ export class ContinuousSurveyComponent implements OnInit{
   public questions$: Observable<Array<Question>> | undefined;
   public formSurvey: FormGroup = this.formBuilder.group({
     questionId: [null, Validators.required],
-    isRequired: [false]
+    isRequired: [false],
+    pollTypeId: [1]
   })
   public displayedColumns = ['id', 'questionDescribe', 'isRequired', 'acciones'];
   public dataSource: any;
@@ -37,7 +38,7 @@ export class ContinuousSurveyComponent implements OnInit{
     this.questions$ = this.continuousSurveyService.getQuestions()
 
     this.dataTableQuestions$ = this.loadDataTable$.pipe(
-      exhaustMap(() => this.continuousSurveyService.getPollQuestions()),
+      exhaustMap(() => this.continuousSurveyService.getPollQuestions(1)),
       shareReplay()
     );
 

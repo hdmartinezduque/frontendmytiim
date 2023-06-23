@@ -27,7 +27,6 @@ export class AddObjectiveComponent implements OnInit {
   objId: string | undefined;
   objective: Objective | undefined;
   objTypes: ObjectiveType[] = [];
-  // a esta variable se le debe programar de acuerdo a lo que se quiere hacer, es el unico paso que falta... (Willian)
   public typeComponentMyCompromises: string | undefined;
   public displayedColumns = ['commitmentDescribe', 'commitmentDate', 'commitmentAdvance', 'action'];
   public gruposObjetivo$: Observable<Array<GrupoObjetivo>> | undefined;
@@ -38,7 +37,7 @@ export class AddObjectiveComponent implements OnInit {
   public creadorObjetivo: number | undefined = undefined;
   public objetivo: number | undefined = undefined;
   public comprimisesAdded: Array<Compromise> = [];
-  
+
   disabledPanel = false;
 
   constructor(

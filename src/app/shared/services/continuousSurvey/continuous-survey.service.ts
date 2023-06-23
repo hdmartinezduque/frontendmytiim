@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+
+import { HttpRequestService } from '../http-request/http-request.service';
+
 import { Question } from '../../interfaces/survey/survey';
-import { HttpRequestService } from 'src/app/shared/services/http-request/http-request.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -16,11 +19,12 @@ export class ContinuousSurveyService {
     return this.http.get({endpoint: 'questions'})
   }
 
-  public getPollQuestions(): Observable<Array<Question>> {
-    return this.http.get({endpoint: 'poll-questions'})
+  public getPollQuestions(typePollId: number): Observable<Array<Question>> {
+    return this.http.get({endpoint: `poll-questions/${typePollId}`})
   }
 
   public setPollQuestion(body: any): Observable<any> {
+    console.log(body)
     return this.http.post({ body , endpoint: 'poll-questions'})
   }
 

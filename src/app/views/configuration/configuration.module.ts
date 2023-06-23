@@ -21,12 +21,6 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CloseSurveyComponent } from './components/follow-up/close-survey/close-survey/close-survey.component';
 
-
-
-
-
-
-
 @NgModule({
   declarations: [
     FollowUpComponent,

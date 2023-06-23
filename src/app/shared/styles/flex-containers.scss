@@ -1,0 +1,14 @@
+.flexbox-container {
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+}
+
+.flex-center {
+    align-self: center;
+}
+
+.flex-direction-end {
+    display: flex;
+    flex-direction: row-reverse;
+}

@@ -1,0 +1,22 @@
+.chip-color {
+    border: 1px solid #D4D4D4;
+    border-radius: 16px;
+    opacity: 1;
+    background-color: white!important;
+}
+
+.space-between {
+    margin: 20px;
+    margin-left: 0px;
+}
+
+.field {
+    width: 711px;
+}
+
+.vertical-radio-button {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
+    align-items: flex-start;
+}

@@ -30,11 +30,11 @@
                 <textarea matInput formControlName="commentDescribe" maxlength="600"></textarea>
             </mat-form-field>
             <div class="buttons">
-                <button mat-raised-button type="button" color="primary" routerLink="/objectives"
-                    class="btn btn-secondary">
+                <button mat-raised-button type="button" routerLink="/objectives"
+                    class="btn-cancel">
                     Cancelar
                 </button>
-                <button mat-raised-button type="submit" color="primary" class="btn btn-primary" (click)="onSumit()">
+                <button mat-raised-button type="submit" class="btn-primary" (click)="onSumit()">
                     Crear comentario
                 </button>
             </div>
@@ -56,7 +56,7 @@
             </mat-radio-group>
         </mat-card-header>
 
-        <div>
+        
             <mat-card-content>
                 <mat-card class="comment my-3" *ngFor=" let comment of data.CommentView ">
                     <mat-card-header>
@@ -72,15 +72,15 @@
                 </mat-card>
                 <mat-paginator [pageSizeOptions]="[ 5, 10, 15]" showFirstLastButtons></mat-paginator>
             </mat-card-content>
-        </div>
+        
 
 
 
         <mat-card-actions *ngIf="false" align="end">
-            <button mat-raised-button type="button" color="primary" routerLink="/objectives" class="btn btn-secondary">
+            <button mat-raised-button type="button" routerLink="/objectives" class="btn-cancel">
                 Cancelar
             </button>
-            <button mat-raised-button type="submit" color="primary" class="btn btn-primary" (click)="onSumit()">
+            <button mat-raised-button type="submit" class="btn btn-primary" (click)="onSumit()">
                 Responder
             </button>
         </mat-card-actions>

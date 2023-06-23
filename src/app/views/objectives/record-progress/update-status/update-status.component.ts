@@ -48,7 +48,7 @@ export class UpdateStatusComponent implements OnInit {
     private ro: Router,
     private objetiveService: ObjetiveServicesService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.objStatus = this.objetiveService.getStatus({ endpoint: 'status/O' });
@@ -80,20 +80,15 @@ export class UpdateStatusComponent implements OnInit {
   }
 
   onSubmit() {
-    const { objectiveQualify } = this.statusForm.value;
-    // console.log (this.statusForm.value)
-    // console.log(typeof objectiveQualify)
-    // console.log (objectiveQualify)
-
+    const { objectiveQualify } = this.statusForm.value
     if (objectiveQualify === null && this.statusForm.value.statusId === 5) {
       this.showError = true;
       this.errorMessage = 'Debes seleccionar una puntuación';
-      setTimeout(() => (this.showError = false), 4000);
+      setTimeout(() => this.showError = false, 4000)
     } else if (this.statusForm.valid) {
-      this.updateStatusObjective();
+      this.updateStatusObjective()
     }
   }
-
   getToolTipInfo() {
     return 'Estados de objetivo: \n\n - En proceso: Objetivo que se encuentra a tiempo de ser cumplido según la fecha límite asignada \n - Atrasado: Objetivo que no ha tenido un avance significativo según la fecha límite asignada. \n - En riesgo: Objetivo que está al límite de no cumplirse según la fecha límite asignada. \n - En pausa: Objetivo que no se trabajará en el momento, pero que no se eliminará para darle continuidad en el futuro cercano. \n - Cerrado: Incluye objetivos que se han cerrado debido a su cumplimiento o vencimiento de la fecha límite asignada.';
   }

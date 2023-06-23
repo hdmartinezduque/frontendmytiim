@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { RecognitionComponent } from './recognition/recognition.component';
 import { HomeComponent } from './home/home.component';
 import { ViewsComponent } from './views.component';
+import { PendingsComponent } from './pendings/pendings.component';
+import { FillOutSurveyComponent } from './fill-out-survey/fill-out-survey.component';
 
 
 const routes: Routes = [
@@ -16,6 +18,9 @@ const routes: Routes = [
       {
         path:'recognition', component: RecognitionComponent
       },
+      {
+        path:'pendings', component: PendingsComponent
+      },
       { 
         path: 'objectives', 
         loadChildren: () => import('./objectives/objectives.module').then(m => m.ObjectivesModule),
@@ -24,6 +29,10 @@ const routes: Routes = [
         path: 'configuration', 
         loadChildren: () => import('./configuration/configuration.module').then(m => m.ConfigurationModule)
       },
+      {
+        path: 'encuesta/:id',
+        component: FillOutSurveyComponent
+      }
     ]
   },
   { path: '**', redirectTo: '' }

@@ -27,30 +27,16 @@
     width: 100%;
 }
 
-.btn {
-    border-radius: 20px;
-    transition: all 0.025s ease;
-}
 
-.btn:active {
-    transform: scale(0.98);
-}
 
-.btn-primary {
-    color: white;
-    background: #0067FD;
-}
+// .btn:active {
+//     transform: scale(0.98);
+// }
 
-.btn-secondary {
-    color: #0067FD;
-    background: white;
-    border: 1px solid #0067FD;
-}
-
-.btn-secondary:hover {
-    color: #0067FD;
-    background: #e0ecff;
-}
+// .btn-secondary:hover {
+//     color: #0067FD;
+//     background: #e0ecff;
+// }
 
 /* Diseño principal del componente */
 

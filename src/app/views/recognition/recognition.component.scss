@@ -1,61 +1,134 @@
 :host ::ng-deep .mdc-text-field--filled {
   border-bottom: 1px solid #0061ff;
 }
+:host ::ng-deep .mat-mdc-select-arrow {
+  color: #0061ff !important;
+}
+
 
 .field {
   width: 100%;
 }
 
-
 .centered-section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .style{
-    width: 790px;
-  }
-
-  //Estilos botones
-
-  .btn-primary {
-    color: white;
-    background: #0067FD;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.btn-secondary {
-    color: #0067FD;
-    background: white;
-    border: 1px solid #0067FD;
-    
+.style {
+  width: 790px;
 }
 
-.btn-secondary:hover {
-    color: #0067FD;
-    background: #e0ecff;
-}
+//Estilos botones
 
-.btn {
-  border-radius: 20px;
-  transition: all 0.025s ease;
-}
 
-.btn:active {
-  transform: scale(0.98);
-}
-
-// .buttons {
-//   gap: 10px;
-//   display: flex;
-//   align-items: center;
-//   align-content: center;
-//   justify-content: flex-end;
-//   margin-top: 20px;
+// .btn-secondary:hover {
+//   color: #0067FD;
+//   background: #e0ecff;
 // }
+
+// .btn {
+//   border-radius: 20px;
+//   transition: all 0.025s ease;
+// }
+
+// .btn:active {
+//   transform: scale(0.98);
+// }
+
 .button-container {
-  
   justify-content: flex-end;
 }
 
+.comments-list {
+  max-width: 95%;
+  margin: 0 auto;
+  
+  mat-card-header {
+      gap: 15px;
+      align-items: center;
+  }
+  
+  mat-card-content {
+      max-height: 250px;
+      overflow-y: scroll;
+  }
+  
+  mat-card-actions {
+      gap: 15px;
+  }
+}
 
+.comment {
+  box-shadow: none;
+  border-radius: 10px;
+  background-color: #f8f8f8;
+  
+  mat-card-header {
+      width: 100%;
+      text-align: start;
+      
+      mat-card-title {
+          font-size: 18px;
+          
+          span {
+              font-weight: normal;
+          }
+      }
+      
+      mat-card-subtitle {
+          font-size: 16px;
+      }
+  }
+  
+  mat-card-content {
+      max-height: inherit;
+      overflow-y: inherit;
+      
+      p {    
+          font-size: 16px;
+          text-align: justify;
+      }
+  }
+}
+
+.mat-mdc-radio-button ~ .mat-mdc-radio-button {
+  margin-left: 16px;
+}
+.card-text{
+  background-color: rgb(247, 242, 242);
+  max-width: 625px;
+  border-radius: 5px;
+}
+
+.title{
+  font-size: 15px;
+  padding-top: 5px;
+}
+
+.flex-container{
+  width: 750px;
+  display: flex;
+  margin: 0 auto;
+
+}
+
+.tooltip-container {
+  position: relative;
+  display: inline-block;
+}
+
+.multilevel-tooltip {
+  white-space: pre-line !important;
+}
+
+.style-recognition {
+  width: 800px;
+  overflow: auto;
+    
+}
+
+.link {
+  color: blue;
+}

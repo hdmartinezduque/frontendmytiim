@@ -101,10 +101,10 @@
 
 <ng-template #buttons>
   <div class="flex-direction-end">
-    <button mat-button color="primary" class="btn-primary" type="submit" cdkTrapFocus>
+    <button mat-button class="btn-primary" type="submit" cdkTrapFocus>
       {{ compromisos?.type ? 'Actualizar' : 'Crear compromiso' }}
     </button>
-    <button mat-raised-button class="button-cancel" (click)="closeDialog()" type="button">Cancelar</button>
+    <button mat-raised-button class="btn-cancel" (click)="closeDialog()" type="button">Cancelar</button>
   </div>
  
 </ng-template>

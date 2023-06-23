@@ -31,17 +31,21 @@
 </ng-template>
 
 <ng-template #elementsUserLogged >
-    <div class="header-logged">
+    <div class="header-logged" *ngIf="isMenuOpen">
         <div>
             <img src="./../../../../assets/icons/atom-logo-secondary.svg" class="icon-logo-secundary" alt="signal" (click)="onClick()" />
         </div>
-        <!-- <button mat-icon-button (click)="onClick()">
-            <mat-icon>menu</mat-icon>
-        </button> -->
-        <!-- <span>Bienvenido a Mytiim</span> -->
     </div>
 </ng-template>
 
 <ng-template #buttonLogout >
-        <button mat-button class="button-iniciar-sesion" (click)="logout()">Cerrar Sesión</button>
+    <button mat-button [matMenuTriggerFor]="menu" style="cursor: pointer;">
+        <mat-chip style="background-color: #282828; cursor: pointer;">
+            <img matChipAvatar  src="https://material.angular.io/assets/img/examples/shiba1.jpg" alt="Photo of a Shiba Inu"/>
+            <span style="color: white; cursor: pointer;" >{{userName}}</span>
+        </mat-chip>
+    </button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="logout()">Cerrar Sesión</button>
+    </mat-menu>
 </ng-template>

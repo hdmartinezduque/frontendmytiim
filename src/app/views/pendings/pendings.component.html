@@ -1,0 +1,62 @@
+<section class="pt-5 centered-section">
+
+    <div>
+        <header>
+            <h1>Mis pendientes</h1>
+            <br>
+            <p>Acá puedes ver actividades que tienes pendientes por realizar.</p>
+        </header>
+
+        <br>
+
+        <mat-accordion>
+            <mat-expansion-panel class="panel" [expanded]="false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title> <b> Seguimiento continuo</b></mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <ng-content *ngTemplateOutlet="seguimientoContinuo;"></ng-content>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel class="panel" [expanded]="false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title> <b> Cierre del periodo</b></mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <ng-content *ngTemplateOutlet="cierreDelPeriodo;"></ng-content>
+            </mat-expansion-panel>
+
+        </mat-accordion>
+
+    </div>
+
+</section>
+
+
+<ng-template #seguimientoContinuo>
+    
+    <mat-card *ngIf="{PendingsSurvey:pendingsSurvey$ | async} as data">
+        <mat-card-content *ngFor="let pendingsSurvey of data.PendingsSurvey">
+            <mat-card-subtitle>{{ pendingsSurvey.codigoEncuesta }} {{pendingsSurvey.nombreEncuesta}}
+                <button mat-raised-button type="button" routerLink="/home/encuesta/1" class="btn-primary">
+                    Responder encuesta
+                </button>
+            </mat-card-subtitle>
+        </mat-card-content>
+    </mat-card>
+
+</ng-template>
+
+<ng-template #cierreDelPeriodo>
+
+    <mat-card *ngIf="{PendingsSurvey:pendingsSurvey$ | async} as data">
+        <mat-card-content *ngFor="let pendingsSurvey of data.PendingsSurvey">
+            <mat-card-subtitle>{{ pendingsSurvey.codigoEncuesta }} {{pendingsSurvey.nombreEncuesta}}
+                <button mat-raised-button type="button" routerLink="/home/encuesta/1" class="btn-primary">
+                    Responder encuesta
+                </button>
+            </mat-card-subtitle>
+        </mat-card-content>
+    </mat-card>
+
+</ng-template>

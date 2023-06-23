@@ -1,7 +1,7 @@
 <div *ngIf="{questions: questions$ | async} as data" class="flexbox-container" >
     <div class="flex-center">
       <div class="space-between-title">
-        <span class="title">Encuesta de seguimiento continuo</span>
+        <span class="text-title-1">Encuesta de seguimiento continuo</span>
       </div>
       <div>
         <span>Elije la pregunta que quieres incluir en la encuesta</span>
@@ -28,7 +28,7 @@
           </mat-form-field>
           <mat-slide-toggle labelPosition="before" formControlName="isRequired" class="toggle-class">Pregunta obligatoria</mat-slide-toggle>
           <div class="left-flex">
-            <button mat-button color="primary" class="btn-primary" type="submit" cdkTrapFocus>
+            <button mat-button class="btn-primary" type="submit" cdkTrapFocus>
               Agregar pregunta
             </button>
           </div>

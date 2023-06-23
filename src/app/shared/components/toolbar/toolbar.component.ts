@@ -1,6 +1,6 @@
 import { InicioSesionService } from '../../services/inicio-sesion/inicio-sesion.service';
 import { Router } from '@angular/router';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 
 
@@ -11,8 +11,11 @@ import { MatSidenav } from '@angular/material/sidenav';
 })
 export class ToolbarComponent implements OnInit{
   user: string = '';
+  userName: string = '';
   
-  @Input() sidenav!: MatSidenav
+  @Input() sidenav!: MatSidenav;
+  @Input() isMenuOpen: boolean | undefined;
+  @Output() onSidenavChanged = new EventEmitter<boolean>();
 
   constructor(
     private router: Router,
@@ -23,10 +26,13 @@ export class ToolbarComponent implements OnInit{
     this.router.events.subscribe((event: any) => {
       this.user = sessionStorage.getItem('token') || '';
     })
+    this.userName = sessionStorage.getItem('userName') || '';
+    
   }
   
   onClick() {
-    this.sidenav.toggle();
+    // this.sidenav.toggle();
+    this.onSidenavChanged.emit(!this.isMenuOpen)
   }
 
   public goToLogin(): void {

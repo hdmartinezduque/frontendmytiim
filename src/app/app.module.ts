@@ -14,6 +14,8 @@ import { MainComponent } from './main/main.component';
 
 
 
+
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -27,7 +29,7 @@ import { MainComponent } from './main/main.component';
         BrowserAnimationsModule,
         HttpClientModule,
         SharedModule,
-        MaterialModule,
+        MaterialModule
     ],
     exports: [
     ],

@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { Router } from '@angular/router';
-import { ChangePasswordRequest } from '../../../shared/services/login/login';
+import { ChangePasswordRequest } from '../../../shared/interfaces/login/login';
 import { Observable } from 'rxjs/internal/Observable';
 import { InicioSesionService } from '../../../shared/services/inicio-sesion/inicio-sesion.service';
 import { PutParams } from 'src/app/shared/interfaces/http-request';

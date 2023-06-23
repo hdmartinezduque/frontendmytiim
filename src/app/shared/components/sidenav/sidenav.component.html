@@ -1,14 +1,18 @@
-<div class="sidenav-container">
+<div class="sidenav-container" (click)="clickedEventSidenavA(true)">
     <mat-nav-list>
         <ng-content *ngTemplateOutlet="mytiimLogo"></ng-content>
         <ng-content *ngTemplateOutlet="objectives"></ng-content>
         <ng-content *ngTemplateOutlet="recognition"></ng-content>
+        <ng-content *ngTemplateOutlet="pendings"></ng-content>
         <ng-content *ngTemplateOutlet="configuracion"></ng-content>
     </mat-nav-list>
 </div>
 
 <ng-template #mytiimLogo>
-    <div class="flex-column">
+    <div mat-stroked-button class="button-top-menu"*ngIf="!isMenuOpen">
+        <img src="./../../../../assets/icons/atom-logo-secondary.svg" class="icon-logo-secundary" alt="signal" />
+    </div>
+    <div class="flex-column" *ngIf="isMenuOpen">
         <div class="center-logo-primary">
             <img alt="mytiim" src="./../../../assets/icons/atom-logo-primary.svg" title="mytiim"
                 style="margin-bottom: 20px;">
@@ -19,7 +23,8 @@
 <ng-template #objectives>
     <div mat-stroked-button class="button-menu position" (click)="alDarClickSidebar('home/objectives/list')">
         <span class="text-button-menu">
-            <img src="assets/icons/atom-icon-objective.svg" class="icons-sidenav-styles "> Objetivos
+            <img src="assets/icons/atom-icon-objective.svg" class="icons-sidenav-styles ">
+            <span *ngIf="isMenuOpen">Objetivos</span>
         </span>
     </div>
 </ng-template>
@@ -27,21 +32,38 @@
 <ng-template #recognition>
     <div mat-stroked-button class="button-menu position" (click)="alDarClickSidebar('home/recognition')">
         <span class="text-button-menu">
-            <img src="../../../../assets/icons/Path - star-circle.svg" class="icons-sidenav-styles "> Reconocimientos
+            <img src="../../../../assets/icons/Path - star-circle.svg" class="icons-sidenav-styles "> 
+            <span *ngIf="isMenuOpen">Reconocimientos</span>
+        </span>
+    </div>
+</ng-template>
+
+<ng-template #pendings>
+    <div mat-stroked-button class="button-menu position" (click)="alDarClickSidebar('home/pendings')">
+        <span class="text-button-menu">
+            <img src="../../../../assets/icons/Path - bell.svg" class="icons-sidenav-styles ">
+            <span *ngIf="isMenuOpen">Mis pendientes</span>
         </span>
     </div>
 </ng-template>
 
 <ng-template #configuracion>
-    <mat-expansion-panel class="styles-expansion-panel icon-arrow">
+    <div mat-stroked-button class="button-menu position" *ngIf="!isMenuOpen">
+        <span class="text-button-menu">
+            <img src="assets/icons/configuration-icon.svg" class="icons-sidenav-styles">
+            <span *ngIf="isMenuOpen">Configuración</span>
+        </span>
+    </div>
+    <mat-expansion-panel class="styles-expansion-panel icon-arrow" *ngIf="isMenuOpen">
         <mat-expansion-panel-header >
             <div mat-stroked-button class="button-menu">
                 <span class="text-button-menu">
-                    <img src="assets/icons/configuration-icon.svg" class="icons-sidenav-styles"> Configuración
+                    <img src="assets/icons/configuration-icon.svg" class="icons-sidenav-styles">
+                    <span >Configuración</span>
                 </span>
             </div>
         </mat-expansion-panel-header>
-        <mat-nav-list>
+        <mat-nav-list >
             <mat-expansion-panel class="styles-expansion-panel icon-arrow">
                 <mat-expansion-panel-header>
                     <div mat-stroked-button class="button-menu">

@@ -74,6 +74,7 @@ export class CommentsComponent implements OnInit {
       this.dataSource = new MatTableDataSource(res));
       this.dataSource.paginator = this.paginator;
       this.paginator.pageSize = 5;
+      
   }
 
   onSumit() {

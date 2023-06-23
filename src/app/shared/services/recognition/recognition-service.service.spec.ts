@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 
-import { RecognitionServiceService } from './recognition-service.service';
+import { RecognitionServiceService } from '../../services/recognition/recognition-service.service';
 
-describe('RecognitionServiceService', () => {
+describe('RecognitionServicesService', () => {
   let service: RecognitionServiceService;
 
   beforeEach(() => {

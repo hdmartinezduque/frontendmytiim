@@ -1,11 +1,22 @@
 <mat-sidenav-container autosize>
 
-    <mat-sidenav #sidenav mode="side" class="sidenav-styles">
-        <app-sidenav></app-sidenav>
+    <mat-sidenav
+        #sidenav
+        id="sidenav"
+        mode="side"
+        class="sidenav-styles"
+        [class.menu-open]="isMenuOpen"
+        [class.menu-close]="!isMenuOpen"
+        opened>
+        <app-sidenav [isMenuOpen]="isMenuOpenCopy" (clickedEventSidenav)="onSidenavChanged($event)"></app-sidenav>
     </mat-sidenav>
     
-    <mat-sidenav-content>
-        <app-toolbar [sidenav]="sidenav"></app-toolbar>
+    <mat-sidenav-content
+        #matsidenav
+        id="matsidenav"
+        [class.menu-open-matsidenav]="isMenuOpen"
+        [class.menu-close-matsidenav]="!isMenuOpen">
+        <app-toolbar [sidenav]="sidenav" (onSidenavChanged)="onSidenavChanged($event)" [isMenuOpen]="isMenuOpen"></app-toolbar>
 
         <main class="main-view">
             <router-outlet></router-outlet>

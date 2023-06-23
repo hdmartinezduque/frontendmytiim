@@ -1,7 +1,10 @@
 export interface Question {
     id?: number;
     questionId: number;
-    describe: String;
+    questionDescribe: string;
+    pollTypeId: number;
+    periodId: number;
+    isRequired: boolean;
 }
 
 export interface Period {
@@ -10,9 +13,9 @@ export interface Period {
 }
 
 export interface ViewPeriod{
-    
-    codigoId: number;
-    periodDiscribe: string;
-    question: string;
-    isRequired: string;
+    id: number;
+    questionDescribe: string;
+    questionId: string;
+    isRequired: boolean;
+    periodDescribe: string;
 }

@@ -1,11 +1,43 @@
 .main-view {
-    background-color: #f2f7f9 !important;
+    background-color: #ffffff !important;
     height: 1000px;
+    transition-property: transform,margin-left,margin-right;
 }
 
 .sidenav-styles {
     background-color: #282828;
-    width: 349px;
-    // position: fixed;
-    // z-index: 1000;
+}
+
+#sidenav.menu-close {
+    transition:  200ms;
+    width: 103px !important;
+    // transition-duration: 300ms
+    // transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+    // transition-property: transform,margin-left,margin-right;
+   
+}
+
+#matsidenav.menu-close-matsidenav {
+    transition:  200ms;
+    margin-left: 103px !important;
+    // transition-duration: 300ms
+    // transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+    // transition-property: transform,margin-left,margin-right;
+   
+}
+
+#sidenav.menu-open {
+    transition: 200ms;
+    // transition-duration: 300ms;
+    // transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+    // transition-property: margin-right;
+    width: 349px !important;
+}
+
+#matsidenav.menu-open-matsidenav {
+    transition: 200ms;
+    // transition-duration: 300ms;
+    // transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+    // transition-property: margin-right;
+    margin-left: 349px !important;
 }

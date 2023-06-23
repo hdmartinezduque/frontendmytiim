@@ -1,0 +1,57 @@
+<div *ngIf="{survey: survey$ | async} as data" class="flexbox-container" >
+    <div class="flex-center">
+        <div class="space-between">
+            <span class="text-title-1">Encuesta de seguimiento continuo <mat-chip class="chip-color"> #{{data.survey?.pollId}}</mat-chip></span>
+        </div>
+        <div class="space-between">
+            <span class="text-subtext-1">Fecha maxima de diligenciamiento {{data.survey?.endDate}}</span>
+        </div>
+        <div>
+            <span class="text-description-1">{{data.survey?.describe}}</span>
+        </div>
+        <div class="space-between" *ngIf="data.survey">
+            <mat-card>
+                <mat-card-content>
+                    <ng-content *ngTemplateOutlet="questions; context: data"></ng-content>
+                    <ng-content *ngTemplateOutlet="buttons; context: data"></ng-content>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>
+
+<ng-template #questions let-survey="survey">
+
+    <div *ngFor="let question of survey.questions">
+        <div *ngIf="{formControlName: createDynamicQuestionForm(question)} as dataQuestion">
+            <form [formGroup]="formSurvey">
+                <div>
+                    <span>{{question.describe}}</span>
+                </div>
+                <div *ngIf="question.answerTypeId === 1">
+                    <mat-form-field appearance="fill" class="field">
+                        <textarea matInput [formControlName]="dataQuestion.formControlName" placeholder="Campo de respuesta"></textarea>
+                        <mat-icon class="icon-edit" matSuffix>edit</mat-icon>
+                    </mat-form-field>
+                </div>
+                <div *ngIf="question.answerTypeId === 2 || question.answerTypeId === 3">
+                    <mat-radio-group color="primary" class="vertical-radio-button" aria-label="Select an option" [formControlName]="dataQuestion.formControlName">
+                     <mat-radio-button  [value]="option" *ngFor="let option of question.options">{{option}}</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+</ng-template>
+
+<ng-template #buttons let-survey="survey">
+    <div class="flex-direction-end">
+        <button mat-button color="primary" class="btn-primary-2" cdkTrapFocus (click)="finalizarEncuesta(survey.pollId)">
+            Finalizar encuesta
+        </button>
+      <button mat-raised-button class="btn-cancel" type="button" routerLink="/home/pendings">Cancelar</button>
+      
+    </div>
+   
+</ng-template>

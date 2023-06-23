@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError, map } from 'rxjs';
 import { GetParams, PostParams, ErrorServicio, DeleteParamas } from '../../interfaces/http-request';
 import { environment as env } from '../../../../environments/environment';
-import { UserService } from '../user/user.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -73,7 +73,6 @@ export class HttpRequestService {
   }
 
   processError(error: ErrorServicio) {
-      console.log(error);
       const httpMessageError = {
         errorProtocolo: 'Ocurrió un error con la conexión, por favor, verifica la conexión de internet e intentalo de nuevo'
       };

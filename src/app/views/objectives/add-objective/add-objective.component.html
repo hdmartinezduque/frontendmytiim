@@ -42,10 +42,10 @@
   </section>
 
   <div class="pt-4 buttons">
-    <button mat-button type="button" color="primary" routerLink="home/objectives/list" class="btn btn-secondary">
+    <button mat-button type="button" routerLink="home/objectives/list" class="btn-cancel">
       Cancelar
     </button>
-    <button mat-button type="submit" color="primary" class="btn btn-primary" (click)="onSubmit()" cdkTrapFocus>
+    <button mat-button type="submit"  class="btn-primary" (click)="onSubmit()" cdkTrapFocus>
       {{ (!objId) ? 'Crear objetivo' : 'Guardar cambios' }}
     </button>
   </div>

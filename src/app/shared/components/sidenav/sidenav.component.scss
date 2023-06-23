@@ -8,32 +8,20 @@
     box-shadow: none;
 }
 
-.button-menu {
+
+
+.button-top-menu {
     border-radius: 30px;
     cursor: pointer;
     width: 100%;
     border-style: none;
-    padding: 10px;
+    padding: 9px;
     padding-right: 0px;
-    padding-left: 20px;
-    margin-right: 10px;
+    padding-left: 35px;
+    margin-right: 0px;
+    height: 121px;
 }
 
-.button-menu:hover {
-    border-radius: 30px;
-    cursor: pointer;
-    background-color: #4d6e64;
-    width: 90%;
-    border: 1px solid #00FFB1;
-    margin-right: 10px;
-    .text-button-menu {
-        color: #00ffb1;
-    }
-    .icons-sidenav-styles {
-        filter: brightness(0) saturate(100%) invert(83%) sepia(47%) saturate(3374%) hue-rotate(103deg) brightness(101%) contrast(105%);
-    }
-
-}
 .style-icon {
     width: 24px;
     height: 24px;
