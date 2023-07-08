@@ -6,41 +6,50 @@ import { ViewsComponent } from './views.component';
 import { PendingsComponent } from './pendings/pendings.component';
 import { FillOutSurveyComponent } from './fill-out-survey/fill-out-survey.component';
 
-
 const routes: Routes = [
-  { 
+  {
     path: '',
     component: ViewsComponent,
     children: [
-      { path: '',
-        component: HomeComponent,
+      { path: '', component: HomeComponent },
+      {
+        path: 'recognition',
+        component: RecognitionComponent,
       },
       {
-        path:'recognition', component: RecognitionComponent
+        path: 'pendings',
+        component: PendingsComponent,
       },
       {
-        path:'pendings', component: PendingsComponent
-      },
-      { 
-        path: 'objectives', 
-        loadChildren: () => import('./objectives/objectives.module').then(m => m.ObjectivesModule),
-      },
-      { 
-        path: 'configuration', 
-        loadChildren: () => import('./configuration/configuration.module').then(m => m.ConfigurationModule)
+        path: 'objectives',
+        loadChildren: () =>
+          import('./objectives/objectives.module').then(
+            (m) => m.ObjectivesModule
+          ),
       },
       {
-        path: 'encuesta/:id',
-        component: FillOutSurveyComponent
-      }
-    ]
+        path: 'configuration',
+        loadChildren: () =>
+          import('./configuration/configuration.module').then(
+            (m) => m.ConfigurationModule
+          ),
+      },
+      {
+        path: 'encuesta/:id/:type',
+        component: FillOutSurveyComponent,
+      },
+      {
+        path: 'metrics',
+        loadChildren: () =>
+          import('./metrics/metrics.module').then((m) => m.MetricsModule),
+      },
+    ],
   },
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '' },
 ];
-
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class ViewsRoutingModule { }
+export class ViewsRoutingModule {}

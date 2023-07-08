@@ -1,0 +1,25 @@
+<div
+  style="
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    margin: auto;
+  "
+  *ngIf="showCards"
+>
+  <mat-grid-list colspan:2 rowspan=2 cols="2" rowHeight="600px">
+    <mat-grid-tile style="height: fit-content" *ngFor="let card of chartCards">
+      <app-chart-card
+        style="margin: auto; width: 100%; height: 100%"
+        [chartCardData]="card.chartcardData"
+        [searchCategories]="periodsMapList"
+        [chartData]="card.chartDataLabels"
+        [multiple]="card.multiple"
+        (searchData)="searchByLapses($event)"
+        (downLoadFile)="downloadFile($event)"
+      >
+      </app-chart-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

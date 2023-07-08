@@ -1,77 +1,172 @@
-<div  
-
-    class="container-component">
-    <div>
-        <span class="subtitle-styles">Actualiza el avance o edita la información de tus compromisos</span>
-    </div>
-    <div class="button-add-position">
-        <button mat-button class="button-rounded-blue" (click)="showDialog('create')">
-            <div class="flex-container">
-                <div>
-                    <mat-icon class="button-icon">add_circle</mat-icon>
-                </div>
-                <div class="margin-text">
-                    Agregar compromiso
-                </div>
-            </div>
-        </button>
-    </div>
-    <div *ngIf="{
-        metricas: metricas$ | async
-      } as data">
-        <table *ngIf="data.metricas && dataSource" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-            <ng-container matColumnDef="commitmentDescribe">
-              <th mat-header-cell *matHeaderCellDef class="header-table-cell"> Nombre del compromiso </th>
-              <td mat-cell *matCellDef="let element" [ngClass]="{'date-is-expired': element.commitmentDate | validateFechaCumplimiento}"> {{element.commitmentDescribe}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="commitmentDate">
-                <th mat-header-cell *matHeaderCellDef class="header-table-cell"> Fecha del cumplimiento </th>
-                <td mat-cell *matCellDef="let element" [ngClass]="{'date-is-expired': element.commitmentDate | validateFechaCumplimiento}">
-                    {{type !== 'services' ? (element.commitmentDate | date : 'dd/MM/yyyy') : element.commitmentDate}}
-                </td>
-            </ng-container>
-
-            <ng-container matColumnDef="measureDescribe">
-                <th mat-header-cell *matHeaderCellDef class="header-table-cell"> Tipo de medición </th>
-                <td mat-cell *matCellDef="let element" [ngClass]="{'date-is-expired': element.commitmentDate | validateFechaCumplimiento}"> {{element.measureId  | getMetricaDescription  : data?.metricas}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="commitmentAdvance" >
-                <th mat-header-cell *matHeaderCellDef class="header-table-cell"> Avance (%)</th>
-                <td mat-cell *matCellDef="let element" [ngClass]="{'date-is-expired': element.commitmentDate | validateFechaCumplimiento}"> 
-                    <span matTooltip="{{element.commitmentAdvance}} / {{element.commitmentGoal}}" matTooltipPosition="right" >
-                        {{element.percentageAvance}}
-                    </span>
-                </td>
-            </ng-container>
-
-            <ng-container matColumnDef="acciones">
-                <th mat-header-cell *matHeaderCellDef class="header-table-cell"> Acciones</th>
-                <td mat-cell *matCellDef="let element" [ngClass]="{'date-is-expired': element.commitmentDate | validateFechaCumplimiento}">
-                    <div class="actions">
-                        <button *ngIf="type === 'services'"   mat-icon-button (click)="showDialog('edit', element)" matTooltip="Editar compromiso">
-                          <mat-icon>edit</mat-icon>
-                        </button>
-                        
-                        <button *ngIf="type === 'services'" mat-icon-button (click)="showDialog('managment', element)" matTooltip="Gestionar compromiso">
-                          <mat-icon>auto_graph</mat-icon>
-                        </button>
-
-                        <button *ngIf="type !== 'services'" mat-icon-button (click)="deleteCompromise(element)" matTooltip="Eliminar">
-                            <mat-icon>delete</mat-icon>
-                        </button>
-                      </div>
-                </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns" class="header-table"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-        <div *matNoDataRow>
-            No hay datos disponibles para mostrar
+<div class="container-component">
+  <div>
+    <span class="subtitle-styles"
+      >Actualiza el avance o edita la información de tus compromisos</span
+    >
+  </div>
+  <div class="button-add-position">
+    <button
+      mat-button
+      class="button-rounded-blue"
+      (click)="showDialog('create')"
+    >
+      <div class="flex-container">
+        <div>
+          <mat-icon class="button-icon">add_circle</mat-icon>
         </div>
-        <mat-paginator [pageSizeOptions]="[ 5, 10, 15]" showFirstLastButtons></mat-paginator>
-        <app-alert *ngIf="showSuccess" [message]="messageSuccess" [type]="'success'"></app-alert>
-    </div>    
-</div>
+        <div class="margin-text">Agregar compromiso</div>
+      </div>
+    </button>
+  </div>
+  <div
+    *ngIf="{
+      metricas: metricas$ | async
+    } as data"
+  >
+    <table
+      *ngIf="data.metricas && dataSource"
+      mat-table
+      [dataSource]="dataSource"
+      class="mat-elevation-z8"
+    >
+      <ng-container matColumnDef="commitmentDescribe">
+        <th mat-header-cell *matHeaderCellDef class="header-table-cell">
+          Nombre del compromiso
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          [ngClass]="{
+            'date-is-expired':
+              element.commitmentDate | validateFechaCumplimiento,
+            'date-is-at-risk': element | validateRiskDatetoAchive
+          }"
+        >
+          {{ element.commitmentDescribe }}
+        </td>
+      </ng-container>
 
+      <ng-container matColumnDef="commitmentDate">
+        <th mat-header-cell *matHeaderCellDef class="header-table-cell">
+          Fecha del cumplimiento
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          [ngClass]="{
+            'date-is-expired':
+              element.commitmentDate | validateFechaCumplimiento,
+            'date-is-at-risk': element | validateRiskDatetoAchive
+          }"
+        >
+          {{
+            type !== "services"
+              ? (element.commitmentDate | date : "dd/MM/yyyy")
+              : element.commitmentDate
+          }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="measureDescribe">
+        <th mat-header-cell *matHeaderCellDef class="header-table-cell">
+          Tipo de medición
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          [ngClass]="{
+            'date-is-expired':
+              element.commitmentDate | validateFechaCumplimiento,
+            'date-is-at-risk': element | validateRiskDatetoAchive
+          }"
+        >
+          {{ element.measureId | getMetricaDescription : data?.metricas }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="commitmentAdvance">
+        <th mat-header-cell *matHeaderCellDef class="header-table-cell">
+          Avance (%)
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          [ngClass]="{
+            'date-is-expired':
+              element.commitmentDate | validateFechaCumplimiento,
+            'date-is-at-risk': element | validateRiskDatetoAchive
+          }"
+        >
+          <span
+            matTooltip="{{ element.commitmentAdvance }} / {{
+              element.commitmentGoal
+            }}"
+            matTooltipPosition="right"
+          >
+            {{ element.percentageAvance }}
+          </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef class="header-table-cell">
+          Acciones
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          [ngClass]="{
+            'date-is-expired':
+              element.commitmentDate | validateFechaCumplimiento,
+            'date-is-at-risk': element | validateRiskDatetoAchive
+          }"
+        >
+          <div class="actions">
+            <button
+              *ngIf="type === 'services'"
+              mat-icon-button
+              (click)="showDialog('edit', element)"
+              matTooltip="Editar compromiso"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+
+            <button
+              *ngIf="type === 'services'"
+              mat-icon-button
+              (click)="showDialog('managment', element)"
+              matTooltip="Gestionar compromiso"
+            >
+              <mat-icon>auto_graph</mat-icon>
+            </button>
+
+            <button
+              *ngIf="type !== 'services'"
+              mat-icon-button
+              (click)="deleteCompromise(element)"
+              matTooltip="Eliminar"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+      <tr
+        mat-header-row
+        *matHeaderRowDef="displayedColumns"
+        class="header-table"
+      ></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <div *matNoDataRow>No hay datos disponibles para mostrar</div>
+    <mat-paginator
+      [pageSizeOptions]="[5, 10, 15]"
+      showFirstLastButtons
+    ></mat-paginator>
+    <app-alert
+      *ngIf="showSuccess"
+      [message]="messageSuccess"
+      [type]="'success'"
+    ></app-alert>
+  </div>
+</div>

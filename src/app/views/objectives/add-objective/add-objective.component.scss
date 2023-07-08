@@ -55,8 +55,8 @@
 
 }
 
-.field {
-    width: 100%;
+.fieldObj {
+    width: 99%;
 }
 
 .title-panel {
@@ -145,6 +145,14 @@ subtitle-styles {
     background-color: #FFCCCB;
 }
 
+// ----------------------------------------------
 
+.fields {
+    display: flex;
+}
 
+.field {
+    display: flex;
+    width: 97%;
+}
 

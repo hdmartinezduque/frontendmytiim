@@ -1,11 +1,14 @@
 <div class="background-img">
     <div class="background-img-opacity">
         <div class="flex-container flex-column">
+            
             <div class="center">
                 <ng-content *ngTemplateOutlet="iconMytiim;"></ng-content>
+                <div class="alert-container">
+                    <app-alert [message]="errorMessage" [type]="'error'" *ngIf="showError"></app-alert>
+                </div>
                 <div class="center-element"><span class="ingresar-text">Ingresar</span></div>
                 <ng-content *ngTemplateOutlet="loginContent;"></ng-content>
-                <app-alert [message]="errorMessage" [type]="'error'" *ngIf="showError"></app-alert>
             </div>
         </div>
     </div>
@@ -47,3 +50,4 @@
             [matTooltip]="errorMessage">Iniciar Sesión</button>
     </div>
 </ng-template>
+

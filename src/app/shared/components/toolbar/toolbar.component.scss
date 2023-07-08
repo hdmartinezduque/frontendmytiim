@@ -6,6 +6,8 @@
 
 .header-logged {
     color: white;
+    width: 40px;
+    height: 40px;
 }
 
 .header-home {
@@ -32,11 +34,12 @@
 
 .container{
     display:flex;
-    margin-left: 0px;
+    margin-right: 0px;
+    max-width: 1400px;
 }
   
 .right{
-    display:flex;
+    // display:flex;
     margin-left: auto;
 }
 
@@ -56,20 +59,20 @@ EDIT ON
   padding: 10px 5px;
 }
 
-.box {
-  background-color: darkmagenta;
-  color: white;
-  margin-right: 10px; 
-  height: 50px;
-  width: 50px; 
-  font-size: 30px; 
-  line-height: 50px;
-  text-align: center;
-}
+// .box {
+//   background-color: darkmagenta;
+//   color: white;
+//   margin-right: 10px; 
+//   height: 50px;
+//   width: 50px; 
+//   font-size: 30px; 
+//   line-height: 50px;
+//   text-align: center;
+// }
 
-.box--end {
-  margin-left: auto;
-}
+// .box--end {
+//   margin-left: auto;
+// }
 
 .flex-row--reverse {
   flex-direction: row-reverse;
@@ -82,4 +85,11 @@ EDIT ON
 
 .example-spacer {
     flex: 1 1 auto;
+  }
+
+  .box {
+    display: flex;
+  }
+  .push {
+      margin-left: auto;
   }

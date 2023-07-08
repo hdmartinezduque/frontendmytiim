@@ -49,7 +49,7 @@ export class CloseSurveyComponent implements OnInit {
 
   ngOnInit(): void {
     this.questions$ = this.closeSurveyService.getQuestions()
-    this.periods$ = this.periodSurveyService.getPeriods()
+    this.periods$ = this.periodSurveyService.getPeriods(1)
 
     this.dataTableQuestions$ = this.loadDataTable$.pipe(
       exhaustMap(() => this.closeSurveyService.getPollQuestions(2)),

@@ -132,3 +132,49 @@ p {
         }
     }
 }
+
+
+// ---------------------------------------
+
+mat-expansion-panel {
+    width: 95%;
+    margin: 0 auto 1.5rem;
+    
+    mat-icon {
+        color: #0067fd;
+        margin-right: 10px;
+    }
+}
+
+.fields {
+    row-gap: 5px;
+    column-gap: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: center;
+    justify-content: stretch;
+}
+
+.field {
+    gap: 8px;
+    width: calc(50% - 20px);
+    display: flex;
+    flex-direction: column;
+    
+    label {
+        font-weight: 700;
+    }
+}
+
+.buttons {
+    gap: 10px;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: flex-end;
+}
+
+::ng-deep .mat-mdc-select-arrow {
+    color: #0067fd;
+}

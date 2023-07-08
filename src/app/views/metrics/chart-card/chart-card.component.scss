@@ -1,0 +1,49 @@
+:host ::ng-deep .mat-mdc-select-arrow {
+  color: #0061ff !important;
+}
+
+:host ::ng-deep .mdc-text-field--filled {
+  border-bottom: 1px solid #0061ff;
+}
+
+.card-main-style {
+  padding: 22px 32px 16px 32px;
+  min-width: 520px;
+  height: 80%;
+  background-color: white;
+}
+
+.card-header-style-div {
+  display: flex;
+  align-items: start;
+  text-align: left;
+  min-height: max-content;
+  width: inherit;
+  margin-bottom: 21px;
+  font: normal normal 300 16px Roboto;
+}
+
+.card-header-style {
+  align-items: start;
+  text-align: left;
+  width: 100%;
+}
+
+.additional-selection {
+  opacity: 0.75;
+  font-size: 0.75em;
+}
+
+.btn-download-style {
+  background-color: #282828;
+  max-width: 60px;
+  max-height: 60px;
+  margin: auto;
+}
+
+.btn-search-style {
+  background-color: #282828;
+  max-width: 60px;
+  max-height: 60px;
+  margin-bottom: 15px;
+}

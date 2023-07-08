@@ -15,14 +15,103 @@
       </div>
     </button>
   </div>
-
 </header>
+  
+<mat-expansion-panel *ngIf="{listObjetives:listObjetives$ | async, groupObjetives:groupObjetives$ | async, statusObjectives:statusObjectives$ | async } as data">
+  
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      <mat-icon>tune</mat-icon> Filtrar búsquedas
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  
+  <form [formGroup]="filterObjective" (ngSubmit)="applyFilters() ">
+    
+    <div class="fields">
+      <div class="field">
+        <label for="category">Categoría del objetivo</label>
+        
+        <mat-form-field>
+          <mat-select id="category" formControlName="objectiveTypeId">
+            <mat-option>-- Seleccione una categoría --</mat-option>
+            <mat-option *ngFor="let listObjetive of data.listObjetives" [value]="listObjetive.objectiveTypeId">
+              {{listObjetive.objectiveTypeDescribe}}               
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      
+      <div class="field">
+        <label for="team">Equipo</label>
+        
+        <mat-form-field>
+          <mat-select id="team" formControlName="groupId">
+            <mat-option>-- Seleccione un equipo --</mat-option>
+            <mat-option *ngFor="let groupObjetive of data.groupObjetives" [value]="groupObjetive.groupId">
+              {{groupObjetive.groupDescribe}}               
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      
+      <div class="field">
+        <label for="author">Creador</label>
+        
+        <mat-form-field>
+          <input matInput id="author" formControlName="userId" type="text"
+          [matAutocomplete]="auto">
+  
+          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayAutocomplete" >
+            <mat-option *ngIf="userCounts?.length == 0; else list">
+              No se encuentra ningún usuario
+            </mat-option>
+          
+            <ng-template #list>
+              <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                  {{ option.userFullname }}
+              </mat-option>
+            </ng-template>
+          </mat-autocomplete>
+  
+          <span matSuffix>
+            <mat-icon>arrow_drop_down</mat-icon>
+          </span>
+        </mat-form-field>
+      </div>
+      
+      <div class="field">
+        <label for="status">Estado del objetivo</label>
+        
+        <mat-form-field>
+          <mat-select id="status" formControlName="statusId">
+            <mat-option>-- Seleccione un estado --</mat-option>
+            <mat-option *ngFor="let statusObjective of data.statusObjectives" [value]="statusObjective.statusId">
+              {{statusObjective.statusDescribe}}               
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+    
+    <div class="buttons">
+      <button mat-raised-button (click)="applyFilterReset()" type="reset" class="btn-cancel">
+        Limpiar filtro
+      </button>
+      
+      <button mat-raised-button type="submit" color="primary" class="btn btn-primary">
+        Aplicar filtro
+      </button>
+    </div>
+  </form>
+  
+</mat-expansion-panel>
+
 
 <section class="header-list">
 
   <div class="input-search-container">
     <mat-form-field class="custom-search">
-      <input matInput [(ngModel)]="searchTerm" (input)="applyFilter()" placeholder="Buscar...">
+      <input matInput [(ngModel)]="searchTerm" (input)="applySearchFilter()" placeholder="Buscar...">
     </mat-form-field>
   </div>
 

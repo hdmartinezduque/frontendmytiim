@@ -4,8 +4,6 @@ import { Observable } from 'rxjs';
 import { HttpRequestService } from '../http-request/http-request.service';
 
 import { Question } from '../../interfaces/survey/survey';
-
-
 @Injectable({
   providedIn: 'root'
 })

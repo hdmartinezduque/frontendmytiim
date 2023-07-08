@@ -1,14 +1,45 @@
 .centered-section {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
   }
 
-//   .btn {
-//     border-radius: 20px;
-//     transition: all 0.025s ease;
-// }
+  .start-section {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+  }
 
-// .btn:active {
-//     transform: scale(0.98);
-// }
+.button-counter {
+  width: 20px;
+  height: 20px;
+  background-color: black;
+  color: #03ffb1;
+  margin: 20px;
+}
+
+.item-list-pendings {
+  border-style: solid;
+    border-color: white;
+    border-bottom-color: #e7e7e7;
+}
+
+.color-text-code {
+  margin-top: 20px;
+  margin-right:10px;
+  color: #408dfd;
+}
+
+.container {
+  display: flex;
+  flex-direction: row; 
+}
+
+.left-aligh {
+  margin-left: auto;
+}
+
+.text-describe {
+  margin-top: 20px;
+}

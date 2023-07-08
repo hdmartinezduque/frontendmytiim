@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 export class FillOutSurveyComponent implements OnInit {
   public survey$: Observable<FillOutSurvey> | undefined;
   public formSurvey = this.formBuilder.group({})
+  type: string = '';
 
   constructor(
     private fillOutSurveyService: FillOutSurveyService,
@@ -21,10 +22,9 @@ export class FillOutSurveyComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // cuando este listo el paso previo se debe obtener el pollId Para enviarlo al servicio
-    const pollId = window.location.pathname.split('/')[window.location.pathname.split('/').length -1];
-    this.survey$ = this.fillOutSurveyService.getFillOutSurvey(pollId)
-    this.survey$.subscribe((res: any) => console.log(res) )
+    this.type = window.location.pathname.split('/')[window.location.pathname.split('/').length -1];
+    const pollId = window.location.pathname.split('/')[window.location.pathname.split('/').length -2];
+    this.survey$ = this.fillOutSurveyService.getFillOutSurvey(pollId);
   }
 
   public createDynamicQuestionForm(question: FillOutQuestion): string {
@@ -50,8 +50,7 @@ export class FillOutSurveyComponent implements OnInit {
         answers
       }
       this.fillOutSurveyService.setFillOutSurvey(request).subscribe(() => {
-        // esta ruta se cambaira cuando la parte de 'ver mis pendientes' este listo.
-        const route = 'home';
+        const route = 'home/pendings';
         this.router.navigate([route])
       })
     }

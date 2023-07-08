@@ -1,19 +1,19 @@
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NavigationEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { InicioSesionService } from 'src/app/shared/services/inicio-sesion/inicio-sesion.service';
 import { ResponseData } from 'src/app/shared/interfaces/http-request';
 import { LoginRequest } from '../shared/interfaces/login/login';
-import { filter } from 'rxjs';
+
 
 @Component({
   selector: 'app-inicio-sesion',
   templateUrl: './inicio-sesion.component.html',
   styleUrls: ['./inicio-sesion.component.scss']
 })
-export class InicioSesionComponent implements OnInit {
+export class  InicioSesionComponent implements OnInit {
   errorMessage: string = '';
   showError: boolean = false;
   validform: boolean = false;
@@ -74,5 +74,3 @@ export class InicioSesionComponent implements OnInit {
     this.router.navigate([previousRoute])
   }
 }
-
-

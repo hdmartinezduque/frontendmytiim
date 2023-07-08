@@ -9,6 +9,7 @@ import {
   Status,
   Compromise,
   ObjectiveRequest,
+  ListFilter,
 } from '../../interfaces/objectives/objective.interface';
 
 import { Observable, of } from 'rxjs';
@@ -89,6 +90,7 @@ export class ObjetiveServicesService {
     const body: ObjectiveRequest = {
       objectiveTypeId: form.objectiveTypeId,
       objectiveDescribe: form.objectiveDescribe,
+      periodId: form.periodId,
       userId: Number(sessionStorage.getItem("userId")),
       commitments
     }
@@ -108,6 +110,7 @@ export class ObjetiveServicesService {
       objectiveId: Number(id),
       objectiveTypeId: form.objectiveTypeId,
       objectiveDescribe: form.objectiveDescribe,
+      periodId: form.periodId,
       status: {
         statusId: 1,
       },
@@ -131,5 +134,9 @@ export class ObjetiveServicesService {
 
   putStatusObjective(request: PutParams): Observable<ResponseData> {
     return this.http.put(request);
+  }
+
+  public getListFilter(body: any): Observable<Objective[]> {
+    return this.http.post({endpoint: 'objective/list', body})
   }
 }

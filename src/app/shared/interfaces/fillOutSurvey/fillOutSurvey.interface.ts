@@ -26,3 +26,13 @@ export interface FillOutQuestion {
 }
 
 
+export interface PollsToDo {
+    follow: Array<PollData>;
+    closures: Array<PollData>;
+}
+
+export interface PollData {
+    pollId: number;
+    code: string;
+    describe: string;
+}

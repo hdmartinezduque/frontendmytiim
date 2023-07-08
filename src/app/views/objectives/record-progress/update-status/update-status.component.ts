@@ -24,6 +24,7 @@ import { DialogSuccessComponent } from 'src/app/shared/components/dialog-success
   styleUrls: ['./update-status.component.scss'],
 })
 export class UpdateStatusComponent implements OnInit {
+  
   objId: string | undefined;
   objective: Objective | undefined;
   public objStatus: Observable<Array<Status>> | undefined;
@@ -53,7 +54,8 @@ export class UpdateStatusComponent implements OnInit {
   ngOnInit(): void {
     this.objStatus = this.objetiveService.getStatus({ endpoint: 'status/O' });
     this.objStatus.subscribe((res) => console.log('res:', res));
-    this.ar.params.subscribe((params) => {
+    this.ar.params.subscribe((
+      params) => {
       this.objId = params['id'];
     });
   }

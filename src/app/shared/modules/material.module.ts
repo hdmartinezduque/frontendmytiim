@@ -11,13 +11,12 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 
-
 import { MatDialogModule } from '@angular/material/dialog';
 
 import { MatSliderModule } from '@angular/material/slider';
 import { MatChipsModule } from '@angular/material/chips';
-import {MatListModule} from '@angular/material/list';
-import {MatExpansionModule} from '@angular/material/expansion';
+import { MatListModule } from '@angular/material/list';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -26,7 +25,11 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [],
@@ -50,13 +53,17 @@ import {MatMenuModule} from '@angular/material/menu';
     MatFormFieldModule,
     MatIconModule,
     ReactiveFormsModule,
-    MatPaginatorModule, 
+    MatPaginatorModule,
     MatDatepickerModule,
     MatNativeDateModule,
     FormsModule,
     MatSortModule,
     MatSlideToggleModule,
+    MatGridListModule,
+    MatAutocompleteModule,
     MatMenuModule,
-  ]
+    MatBadgeModule,
+    MatProgressSpinnerModule,
+  ],
 })
-export class MaterialModule { }
+export class MaterialModule {}

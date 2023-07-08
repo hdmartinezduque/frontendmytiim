@@ -4,6 +4,7 @@
         <ng-content *ngTemplateOutlet="objectives"></ng-content>
         <ng-content *ngTemplateOutlet="recognition"></ng-content>
         <ng-content *ngTemplateOutlet="pendings"></ng-content>
+        <ng-content *ngTemplateOutlet="indicators"></ng-content>
         <ng-content *ngTemplateOutlet="configuracion"></ng-content>
     </mat-nav-list>
 </div>
@@ -39,10 +40,26 @@
 </ng-template>
 
 <ng-template #pendings>
-    <div mat-stroked-button class="button-menu position" (click)="alDarClickSidebar('home/pendings')">
+    <div *ngIf="{pendingsSurvey: updatePendingsSurvey$ | async} as data" mat-stroked-button class="button-menu position" (click)="alDarClickSidebar('home/pendings')">
         <span class="text-button-menu">
-            <img src="../../../../assets/icons/Path - bell.svg" class="icons-sidenav-styles ">
-            <span *ngIf="isMenuOpen">Mis pendientes</span>
+            <div style="display: flex; flex-direction: row;">
+                <div [matBadge]="data.pendingsSurvey" matBadgeColor="warn" style="width: 20px;">
+                    <img src="../../../../assets/icons/Path - bell.svg" class="icons-sidenav-styles">
+                </div>
+                <div style="margin-left: 34px;">
+                    <span *ngIf="isMenuOpen">Mis pendientes</span>
+                </div>
+            </div>
+        </span>
+    </div>
+</ng-template>
+
+
+<ng-template #indicators>
+    <div mat-stroked-button class="button-menu position" (click)="alDarClickSidebar('home/metrics')">
+        <span class="text-button-menu">
+            <img src="../../../../assets/icons/Path - chart-timeline-variant.svg" class="icons-sidenav-styles "> 
+            <span *ngIf="isMenuOpen">Indicadores</span>
         </span>
     </div>
 </ng-template>

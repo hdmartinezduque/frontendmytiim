@@ -8,6 +8,8 @@ import { ObjetiveServicesService } from '../../../shared/services/objetive-servi
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DialogSuccessComponent } from '../../../shared/components/dialog-success/dialog-success.component';
 import { DialogFormCompromisoComponent } from '../record-progress/my-compromises/dialog-form-compromiso/dialog-form-compromiso.component';
+import { CloseSurveyService } from 'src/app/shared/services/closeSurvey/close-survey.service';
+import { Period } from 'src/app/shared/interfaces/survey/survey';
 
 @Component({
   selector: 'app-add-objective',
@@ -17,7 +19,8 @@ import { DialogFormCompromisoComponent } from '../record-progress/my-compromises
 export class AddObjectiveComponent implements OnInit {
   objectiveForm: FormGroup = this.fb.group({
     objectiveTypeId: [null, [Validators.required]],
-    objectiveDescribe: [null, [Validators.required]]
+    objectiveDescribe: [null, [Validators.required]],
+    periodId: [null, [Validators.required]],
   });
   formAlinearObjetivo: FormGroup = this.fb.group({
     grupo: [null, Validators.required],
@@ -27,6 +30,7 @@ export class AddObjectiveComponent implements OnInit {
   objId: string | undefined;
   objective: Objective | undefined;
   objTypes: ObjectiveType[] = [];
+  
   public typeComponentMyCompromises: string | undefined;
   public displayedColumns = ['commitmentDescribe', 'commitmentDate', 'commitmentAdvance', 'action'];
   public gruposObjetivo$: Observable<Array<GrupoObjetivo>> | undefined;
@@ -37,6 +41,7 @@ export class AddObjectiveComponent implements OnInit {
   public creadorObjetivo: number | undefined = undefined;
   public objetivo: number | undefined = undefined;
   public comprimisesAdded: Array<Compromise> = [];
+  public periods$: Observable<Array<Period>> | undefined;
 
   disabledPanel = false;
 
@@ -45,10 +50,14 @@ export class AddObjectiveComponent implements OnInit {
     private fb: FormBuilder,
     private ro: Router,
     private objectiveService: ObjetiveServicesService,
+    private periodSurveyService: CloseSurveyService,
     private dialog: MatDialog
   ) { }
 
   ngOnInit() {
+
+    this.periods$ = this.periodSurveyService.getPeriods(1);
+
     this.managementAlenarObjetivos();
     this.objectiveService.getObjectiveType().subscribe(resp => this.objTypes = resp);
 
@@ -95,6 +104,7 @@ export class AddObjectiveComponent implements OnInit {
         this.objectiveForm.reset({
           objectiveTypeId: obj.objectiveType.objectiveTypeId,
           objectiveDescribe: obj.objectiveDescribe,
+          periodId:obj.periodId,
         })
       });
   }
@@ -102,11 +112,12 @@ export class AddObjectiveComponent implements OnInit {
   onSubmit() {
     const id = this.objId;
     const form = this.objectiveForm;
-
+    
     if (form.invalid) {
       window.confirm('El formulario es inválido, revise los campos');
       form.markAllAsTouched();
       return;
+      
     }
 
     if (!id) {
@@ -148,6 +159,10 @@ export class AddObjectiveComponent implements OnInit {
   public onAddCompromise(compromises: Array<Compromise>) {
     console.log('compromisos: ', compromises)
     this.comprimisesAdded = compromises;
+  }
+
+  getToolTipInfo() {
+    return 'Desarrollo personal: Son aquellos generados para que las personas alcancen su máximo potencial tanto dentro como fuera de la organización. No necesariamente están alineados con otros objetivos organizacionales. \n\n Objetivo de equipo: Son aquellos que se crean asociados y alineados con otros objetivos del equipo y la organización, buscan maximizar los resultados colectivos y alcanzar los propósitos superiores.';
   }
 
 }

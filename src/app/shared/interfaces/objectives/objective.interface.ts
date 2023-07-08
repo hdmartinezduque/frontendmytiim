@@ -4,6 +4,7 @@ export interface Objective {
     objectiveDescribe: string;
     objectiveUserId: number;
     objectiveGrupoId: number;
+    periodId: number;
     status: Status;
     objectiveType: ObjectiveType;
 }
@@ -12,6 +13,7 @@ export interface ObjectiveRequest {
     objectiveDescribe: string ;
     objectiveTypeId: number;
     userId: number;
+    periodId: number;
     commitments: Array<Compromise>;
 }
 
@@ -29,6 +31,7 @@ export interface ObjectiveType {
 export interface ObjectiveForm {
     objectiveTypeId: number;
     objectiveDescribe: string;
+    periodId: number;
 }
 
 export interface GrupoObjetivo {
@@ -124,6 +127,14 @@ export interface CreateCommitment {
         commitmentGoal: number;
 
     }
+}
+
+export interface ListFilter {
+    statusId:number,
+    objectiveTypeId:number,
+    userId: number,
+    groupId: number,
+
 }
 
 

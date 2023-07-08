@@ -1,0 +1,95 @@
+<div style="width: 90%; height: 100%; margin-top: 40px; margin-left: 30px">
+  <mat-card class="card-main-style">
+    <mat-card-header class="card-header-style">
+      <div class="card-header-style-div">
+        <div style="width: 85%; margin: auto">
+          {{ this.chartCardData.title }}
+        </div>
+        <div style="width: 15%; align-items: end; text-align: end">
+          <button
+            mat-mini-fab
+            class="btn-download-style"
+            (click)="downloadFile()"
+            matTooltip="Descargar"
+          >
+            <mat-icon style="color: #00ffb1">download</mat-icon>
+          </button>
+        </div>
+      </div>
+    </mat-card-header>
+    <mat-card-content style="width: 100%; height: 100%">
+      <form [formGroup]="filtersForm" (ngSubmit)="search()">
+        <div style="display: flex">
+          <div style="width: 85%; margin: auto">
+            <mat-form-field style="width: 100%">
+              <mat-label>Periodos</mat-label>
+              <mat-select
+                formControlName="filters"
+                [multiple]="multiple"
+                color="primary"
+              >
+                <mat-select-trigger>
+                  {{
+                    filtersForm.value.filters != null &&
+                    filtersForm.value.filters.length > 0
+                      ? filtersForm.value.filters[0].name
+                      : filtersForm.value.filters != null &&
+                        filtersForm.value.filters != ""
+                      ? filtersForm.value.filters.name
+                      : ""
+                  }}
+                  <span
+                    *ngIf="
+                      ((filtersForm.value.filters != null &&
+                        filtersForm.value.filters.length) ||
+                        0) > 1
+                    "
+                    class="additional-selection"
+                  >
+                    (+{{ (filtersForm.value?.filters.length || 0) - 1 }}
+                    {{
+                      filtersForm.value?.filters.length === 2
+                        ? "otro"
+                        : "otros"
+                    }})
+                  </span>
+                </mat-select-trigger>
+                <mat-option
+                  *ngFor="let cat of searchCategories"
+                  [value]="cat"
+                  >{{ cat.name }}</mat-option
+                >
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div
+            style="width: 15%; align-items: end; text-align: end; margin: auto"
+          >
+            <button mat-mini-fab class="btn-search-style" matTooltip="Buscar">
+              <mat-icon style="color: #00ffb1">search</mat-icon>
+            </button>
+          </div>
+        </div>
+      </form>
+
+      <div
+        style="
+          width: 100%;
+          height: 265px;
+          margin-top: 30px;
+          margin-bottom: 10px;
+        "
+      >
+        <canvas
+          baseChart
+          [data]="chartData"
+          [options]="barChartOptions"
+          [plugins]="barChartPlugins"
+          [legend]="barChartLegend"
+          [type]="'bar'"
+        >
+        </canvas>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -16,7 +16,10 @@ export class CloseSurveyService {
     private http: HttpRequestService 
   ) { }
    
-  public getPeriods(): Observable<Array<Period>> {
-    return this.http.get({endpoint: 'periods'})
+  public getPeriods(periodId?: number): Observable<Array<Period>> {
+    if(!periodId){
+      periodId = 0;
+    }
+    return this.http.get({endpoint: `periods?active=`+periodId})
   }
 }

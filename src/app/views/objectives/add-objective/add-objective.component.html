@@ -54,21 +54,40 @@
 <ng-template #redactarEditarObjetivo>
   <form [formGroup]="objectiveForm">
     <h4 class="place-holder">
-      <b>Selecciona una categoría para tu objetivo*</b>
-      <mat-icon matTooltip="Objetivos grupales - Objetivos por equipo" matTooltipPosition="right">help</mat-icon>
+      <b>Selecciona una categoría y un período para tu objetivo*</b>
+      <span class="tooltip-container">
+        <mat-icon matTooltip="{{ getToolTipInfo() }}" matTooltipPosition="right"
+            matTooltipClass="multilevel-tooltip">help</mat-icon>
+      </span>
     </h4>
 
-    <mat-form-field appearance="fill" class="field">
-      <mat-select formControlName="objectiveTypeId" class="line-select" (selectionChange)="onSelectChange($event)">
-        <mat-option>-- Selecciona una opción --</mat-option>
-        <mat-option *ngFor="let objType of objTypes" [value]="objType.objectiveTypeId">
-          {{ objType.objectiveTypeDescribe }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+     <div class="fields">
+      <div class="field">
+        <mat-form-field appearance="fill" class="field">
+          <mat-label> Categoría </mat-label>
+          <mat-select formControlName="objectiveTypeId" class="line-select" (selectionChange)="onSelectChange($event)">
+            <mat-option>-- Selecciona una opción --</mat-option>
+            <mat-option *ngFor="let objType of objTypes" [value]="objType.objectiveTypeId">
+              {{ objType.objectiveTypeDescribe }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="field" *ngIf="{periods : periods$ | async} as data">
+        <mat-form-field appearance="fill" class="field">
+          <mat-label> Período </mat-label>
+          <mat-select formControlName="periodId" class="line-select" (selectionChange)="onSelectChange($event)">
+            <mat-option>-- Selecciona una opción --</mat-option>
+            <mat-option *ngFor="let period of data.periods" [value]="period.periodId">
+              {{period.describe}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div> 
+    </div>
 
     <h4><b>Redacta tu objetivo*</b></h4>
-    <mat-form-field appearance="fill" class="field">
+    <mat-form-field appearance="fill" class="fieldObj">
       <textarea matInput formControlName="objectiveDescribe" maxlength="600"></textarea>
       <mat-icon class="icon-edit" matSuffix>edit</mat-icon>
     </mat-form-field>

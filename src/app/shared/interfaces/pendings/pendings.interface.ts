@@ -1,4 +1,5 @@
 export interface PendingsSurvey {
-   codigoEncuesta: number;
-    nombreEncuesta: string;
+    pollId: number;
+    code: string;
+    describe: string;
 }

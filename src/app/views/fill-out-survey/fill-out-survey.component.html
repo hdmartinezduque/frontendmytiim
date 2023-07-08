@@ -1,7 +1,7 @@
 <div *ngIf="{survey: survey$ | async} as data" class="flexbox-container" >
     <div class="flex-center">
         <div class="space-between">
-            <span class="text-title-1">Encuesta de seguimiento continuo <mat-chip class="chip-color"> #{{data.survey?.pollId}}</mat-chip></span>
+            <span class="text-title-1">{{type === 'follow' ? 'Encuesta de seguimiento continuo' : 'Encuesta de cierre de periodo'}} <mat-chip class="chip-color"> #{{data.survey?.pollId}}</mat-chip></span>
         </div>
         <div class="space-between">
             <span class="text-subtext-1">Fecha maxima de diligenciamiento {{data.survey?.endDate}}</span>
@@ -47,7 +47,7 @@
 
 <ng-template #buttons let-survey="survey">
     <div class="flex-direction-end">
-        <button mat-button color="primary" class="btn-primary-2" cdkTrapFocus (click)="finalizarEncuesta(survey.pollId)">
+        <button mat-button class="btn-primary" cdkTrapFocus (click)="finalizarEncuesta(survey.pollId)">
             Finalizar encuesta
         </button>
       <button mat-raised-button class="btn-cancel" type="button" routerLink="/home/pendings">Cancelar</button>

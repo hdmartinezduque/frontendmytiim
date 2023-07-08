@@ -19,7 +19,7 @@
 <ng-template #userLogged >
         <div class="header-home" *ngIf="user">
             <div class="container">
-                <div>
+                <div class="left">
                     <ng-content *ngTemplateOutlet="elementsUserLogged;"></ng-content>
                 </div>
                 <div class="right">
@@ -27,14 +27,11 @@
                 </div>
             </div>
         </div>
-    
 </ng-template>
 
 <ng-template #elementsUserLogged >
-    <div class="header-logged" *ngIf="isMenuOpen">
-        <div>
-            <img src="./../../../../assets/icons/atom-logo-secondary.svg" class="icon-logo-secundary" alt="signal" (click)="onClick()" />
-        </div>
+    <div class="header-logged" >
+        <img [hidden]="!isMenuOpen" src="./../../../../assets/icons/atom-logo-secondary.svg" class="icon-logo-secundary" alt="signal" (click)="onClick()" />
     </div>
 </ng-template>
 
