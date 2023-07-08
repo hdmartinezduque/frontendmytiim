@@ -9,17 +9,17 @@ import { ViewPercentages } from '../../interfaces/charts/charts.interface';
 export class MetricsService {
   constructor(private http: HttpRequestService) { }
 
-  public percentageUserPeriodObjectivesCSV() {
+  public percentageUserPeriodObjectivesCSV(periodId: string | undefined) {
     return this.http.get({
-      endpoint: 'indicators/download-csv',
+      endpoint: 'indicators/downloadObjective-csv/'+periodId,
       responseType: 'blob' as 'json',
       getCompleteResponse: true,
     });
   }
 
-  public percentageUserPeriodCommitmentsCSV() {
+  public percentageUserPeriodCommitmentsCSV(periodId: string | undefined) {
     return this.http.get({
-      endpoint: 'indicators/downloadCommitment-csv/1',
+      endpoint: 'indicators/downloadCommitment-csv/'+periodId,
       responseType: 'blob' as 'json',
       getCompleteResponse: true,
     });

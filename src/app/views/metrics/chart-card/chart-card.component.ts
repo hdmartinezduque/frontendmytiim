@@ -58,6 +58,20 @@ export class ChartCardComponent {
   }
 
   downloadFile() {
+    const filters =
+      this.filtersForm.value.filters == null
+        ? []
+        : this.filtersForm.value.filters.length
+        ? this.filtersForm.value.filters.map((filter: FilterSelectData) => {
+            return filter.key;
+          })
+        : [this.filtersForm.value.filters.key];
+
+    if(filters[0] == undefined){
+      filters[0] = 0;
+    }
+    
+    this.chartCardData.periodId = filters[0];
     this.downLoadFile.emit(this.chartCardData);
   }
 }

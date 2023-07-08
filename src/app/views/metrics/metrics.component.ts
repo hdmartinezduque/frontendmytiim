@@ -236,10 +236,9 @@ export class MetricsComponent {
   }
 
   downloadFile(data: ChartCardData) {
-
     if (data.table == 'users' && data.type == 'create-objetives') {
       this.metricsService
-        .percentageUserPeriodObjectivesCSV()
+        .percentageUserPeriodObjectivesCSV(data.periodId) 
         .subscribe((res) => {
           const blob = new Blob([res], { type: 'application/csv' });
 
@@ -252,9 +251,9 @@ export class MetricsComponent {
     }
 
     if (
-      data.table == 'period' && data.type == 'resolve-objectives') {
+      data.table == 'objectives' && data.type == 'resolve-objectives') {
       this.metricsService
-        .percentageUserPeriodCommitmentsCSV()
+        .percentageUserPeriodCommitmentsCSV(data.periodId)
         .subscribe((res) => {
           const blob = new Blob([res], { type: 'application/csv' });
 

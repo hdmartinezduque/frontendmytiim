@@ -25,6 +25,7 @@ export interface ChartCardData {
   title: string;
   table: string;
   type: string;
+  periodId?: string;
 }
 
 export interface ChartCardParentInfo {

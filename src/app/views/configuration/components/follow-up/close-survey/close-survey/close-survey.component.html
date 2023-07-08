@@ -41,6 +41,9 @@
               Agregar pregunta
             </button>
           </div>
+          <div class="pb-2">
+            <app-alert *ngIf="showAlert" [message]="messageAlert" [type]="alertType"></app-alert>
+          </div>
     </form>
 </ng-template>
 
@@ -52,9 +55,9 @@
           <td mat-cell *matCellDef="let element"> {{element.id}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="idPeriod">
+        <ng-container matColumnDef="periodDescribe">
           <th mat-header-cell *matHeaderCellDef class="header-table-cell"> Período </th>
-          <td mat-cell *matCellDef="let element"> {{element.periodId}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.periodDescribe}} </td>
           
         </ng-container>
 
@@ -93,6 +96,6 @@
         No hay datos disponibles para mostrar
     </div>
     <mat-paginator [pageSizeOptions]="[ 10, 15, 20]" showFirstLastButtons></mat-paginator>
-    <app-alert *ngIf="showAlert" [message]="messageAlert" [type]="alertType"></app-alert>
+    
   </div>  
 </ng-template>

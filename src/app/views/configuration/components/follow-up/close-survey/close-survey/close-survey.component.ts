@@ -9,8 +9,6 @@ import { CloseSurveyService } from 'src/app/shared/services/closeSurvey/close-su
 import { ContinuousSurveyService } from 'src/app/shared/services/continuousSurvey/continuous-survey.service';
 import { DialogConfirmDeleteSurveyComponent } from 'src/app/shared/components/dialog-confirm-delete-survey/dialog-confirm-delete-survey.component';
 
-
-
 @Component({
   selector: 'app-close-survey',
   templateUrl: './close-survey.component.html',
@@ -32,20 +30,20 @@ export class CloseSurveyComponent implements OnInit {
   public viewPeriods$: Observable<Array<ViewPeriod>> | undefined;
 
   public closeSurvey: FormGroup = this.formBuilder.group({
-    questionId: [null, Validators.required],
-    periodId: [null, Validators.required],
+    questionId: ['', Validators.required],
+    periodId: ['', Validators.required],
     isRequired: [false],
     pollTypeId: [2]
-  })
+  });
 
   public dataSource: any;
-  public displayedColumns = ['id', 'idPeriod', 'questionDescribe', 'isRequired', 'acciones'];
+  public displayedColumns = ['id', 'periodDescribe', 'questionDescribe', 'isRequired', 'acciones'];
   public dataTableQuestions$: Observable<Array<Question>> | undefined;
   public loadDataTable$ = new BehaviorSubject<void>(undefined);
   public messageAlert = '';
   public showAlert = false;
   public alertType = 'success';
-
+  initialFormValue: any;
 
   ngOnInit(): void {
     this.questions$ = this.closeSurveyService.getQuestions()
@@ -61,19 +59,21 @@ export class CloseSurveyComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.paginator.pageSize = 10;
     });
+
+    this.initialFormValue = this.closeSurvey.value;
   }
 
   public submitSurvey() {
+    this.closeSurvey.controls['questionId'].enable();
+    this.closeSurvey.controls['periodId'].enable();
     const formValues = this.closeSurvey.value;
     const repeatedQuestion: boolean = !!this.dataSource.data.find((question: Question) => question.questionId === formValues.questionId)
-
+    
     if (this.closeSurvey.valid && !repeatedQuestion) {
-      this.closeSurveyService.setPollQuestion(this.closeSurvey.value).subscribe(() => {
+      this.closeSurveyService.setPollQuestion(formValues).subscribe(() => {
         this.loadDataTable$.next();
         this.messageSuccess('La pregunta se ha agregado con exito');
-        this.closeSurvey.reset();        
-        this.closeSurvey.controls['questionId'].setErrors(null);
-        this.closeSurvey.controls['periodId'].setErrors(null);
+        this.resetForm();        
       }, () => this.messageError('Ocurrio un error al intentar agregar la pregunta, por favor intentalo de nuevo.'))
     }
 
@@ -92,16 +92,15 @@ export class CloseSurveyComponent implements OnInit {
       disableClose: true,
       panelClass: 'dialog-overlay', data: { message }
     });
-
-    dialogRef.afterClosed().subscribe((confirm: boolean) => confirm && this.deleteQuestion(questionId))
-
+    dialogRef.afterClosed().subscribe((confirm: boolean) => confirm && this.deleteQuestion(questionId));
   }
 
   deleteQuestion(questionId: string) {
     this.closeSurveyService.delleteQuestion(questionId).subscribe(() => {
       this.loadDataTable$.next();
       this.messageSuccess('La pregunta se ha eliminado con exito');
-    }, () => this.messageError('Ocurrio un error al intentar eliminar la pregunta, por favor intentalo de nuevo.'))
+      this.resetForm();
+    }, () => this.messageError('Ocurrio un error al intentar eliminar la pregunta, por favor intentalo de nuevo.'));
   }
 
   messageSuccess(message: string) {
@@ -116,6 +115,12 @@ export class CloseSurveyComponent implements OnInit {
     this.messageAlert = message;
     this.alertType = 'error';
     setTimeout(() => { this.showAlert = false }, 5000)
+  }
+
+  resetForm(){
+    this.closeSurvey.reset(this.initialFormValue);
+    this.closeSurvey.controls['questionId'].setErrors(null);
+    this.closeSurvey.controls['periodId'].setErrors(null);
   }
 
 }
