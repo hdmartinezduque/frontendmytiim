@@ -32,7 +32,7 @@ export class MetricsComponent {
   constructor(
     private periodSurveyService: CloseSurveyService,
     private metricsService: MetricsService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.periods$ = this.periodSurveyService.getPeriods();
@@ -41,30 +41,30 @@ export class MetricsComponent {
         return { name: period.describe, key: period.periodId.toString() };
       });
       this.showCards = true;
-    });
 
-    this.searchByLapses({
-      table: 'users',
-      type: 'create-objetives',
-      lapses: [],
-    });
+      this.searchByLapses({
+        table: 'users',
+        type: 'create-objetives',
+        lapses: [],
+      });
 
-    this.searchByLapses({
-      table: 'objectives',
-      type: 'resolve-objectives',
-      lapses: [],
-    });
+      this.searchByLapses({
+        table: 'objectives',
+        type: 'resolve-objectives',
+        lapses: [],
+      });
 
-    this.searchByLapses({
-      table: 'tracing',
-      type: 'continuous-monitoring',
-      lapses: [],
-    });
+      this.searchByLapses({
+        table: 'tracing',
+        type: 'continuous-monitoring',
+        lapses: [],
+      });
 
-    this.searchByLapses({
-      table: 'period',
-      type: 'period-end',
-      lapses: [],
+      this.searchByLapses({
+        table: 'period',
+        type: 'period-end',
+        lapses: [],
+      });
     });
   }
 
@@ -81,34 +81,38 @@ export class MetricsComponent {
         this.filterUserCreateObjetives(filters, index);
       }
 
-      if (filters.table == 'objectives' && filters.type == 'resolve-objectives') {
+      if (
+        filters.table == 'objectives' &&
+        filters.type == 'resolve-objectives'
+      ) {
         this.filterCommitmentsObjetives(filters, index);
       }
 
-      if (filters.table == 'tracing' && filters.type == 'continuous-monitoring') {
+      if (
+        filters.table == 'tracing' &&
+        filters.type == 'continuous-monitoring'
+      ) {
         this.filterContinuousTracing(filters, index);
       }
 
       if (filters.table == 'period' && filters.type == 'period-end') {
-        this.filterContinuousTracing(filters, index);
+        this.filterPeriodEnd(filters, index);
       }
     }
   }
-
 
   filterUserCreateObjetives(filters: ChartFilter, index: number) {
     if (index == -1) {
       return;
     }
-    const lapseName =
-      this.periodsMapList && this.periodsMapList.length > 0
-        ? this.periodsMapList.find((period) => period.key == filters.lapses[0])
-          ?.name
-        : '';
     this.viewPercentage$ = this.metricsService.viewPercentagesPeriodObjective(
       filters.lapses.length == 0 ? undefined : filters.lapses[0]
     );
     this.viewPercentage$.subscribe((res) => {
+      const periodDescription = this.periodsMapList?.find(
+        (period) => period.key == res.periodId
+      )?.name;
+
       const chartDataLabels = {
         labels: ['% Objetivos creados', '% Objetivos no creados'],
         datasets: [
@@ -117,12 +121,9 @@ export class MetricsComponent {
               parseFloat(res.percentageCreated.toFixed(2)),
               parseFloat(res.percentageNoCreated.toFixed(2)),
             ],
-            label:
-              filters.lapses.length != 0 && lapseName && lapseName != ''
-                ? lapseName
-                : this.periodsMapList && this.periodsMapList.length > 0
-                  ? this.periodsMapList[this.periodsMapList.length - 1].name
-                  : 'Sin Periodos Disponibles',
+            label: periodDescription
+              ? periodDescription
+              : 'Sin Periodos Disponibles',
             backgroundColor: BASE_CHART_COLORS.BLUE,
           },
         ],
@@ -131,19 +132,55 @@ export class MetricsComponent {
     });
   }
 
+  // filterUserCreateObjetives(filters: ChartFilter, index: number) {
+  //   if (index == -1) {
+  //     return;
+  //   }
+  //   const lapseName =
+  //     this.periodsMapList && this.periodsMapList.length > 0
+  //       ? this.periodsMapList.find((period) => period.key == filters.lapses[0])?.name
+  //       : '';
+  //   // Comprobar si periodsMapList no es undefined antes de acceder a length
+  //   if (this.periodsMapList) {
+  //     this.periodsMapList.sort((a, b) => parseInt(a.key) - parseInt(b.key));
+  //     const firstPeriod = this.periodsMapList.length ? this.periodsMapList[0] : undefined
+
+  //     this.viewPercentage$ = this.metricsService.viewPercentagesPeriodObjective(
+  //       filters.lapses.length == 0 ? undefined : filters.lapses[0]
+  //     );
+  //     this.viewPercentage$.subscribe((res) => {
+  //       const chartDataLabels = {
+  //         labels: ['% Objetivos creados', '% Objetivos no creados'],
+  //         datasets: [
+  //           {
+  //             data: [
+  //               parseFloat(res.percentageCreated.toFixed(2)),
+  //               parseFloat(res.percentageNoCreated.toFixed(2)),
+  //             ],
+  //             label:
+  //               filters.lapses.length != 0 && lapseName && lapseName != ''
+  //                 ? lapseName
+  //                 : firstPeriod ? firstPeriod.name : 'Sin Periodos Disponibles',
+  //             backgroundColor: BASE_CHART_COLORS.BLUE,
+  //           },
+  //         ],
+  //       };
+  //       this.chartCards[index].chartDataLabels = chartDataLabels;
+  //     });
+  //   }
+  // }
+
   filterCommitmentsObjetives(filters: ChartFilter, index: number) {
     if (index == -1) {
       return;
     }
-    const lapseName =
-      this.periodsMapList && this.periodsMapList.length > 0
-        ? this.periodsMapList.find((period) => period.key == filters.lapses[0])
-          ?.name
-        : '';
     this.viewPercentage$ = this.metricsService.viewPercentagesPeriodCommitments(
       filters.lapses.length == 0 ? undefined : filters.lapses[0]
     );
     this.viewPercentage$.subscribe((res) => {
+      const periodDescription = this.periodsMapList?.find(
+        (period) => period.key == res.periodId
+      )?.name;
       const chartDataLabels = {
         labels: ['% Compromisos cumplidos', '%  Compromisos no cumplidos'],
         datasets: [
@@ -152,12 +189,9 @@ export class MetricsComponent {
               parseFloat(res.percentageCreated.toFixed(2)),
               parseFloat(res.percentageNoCreated.toFixed(2)),
             ],
-            label:
-              filters.lapses.length != 0 && lapseName && lapseName != ''
-                ? lapseName
-                : this.periodsMapList && this.periodsMapList.length > 0
-                  ? this.periodsMapList[this.periodsMapList.length - 1].name
-                  : 'Sin Periodos Disponibles',
+            label: periodDescription
+              ? periodDescription
+              : 'Sin Periodos Disponibles',
             backgroundColor: BASE_CHART_COLORS.BLUE,
           },
         ],
@@ -170,29 +204,27 @@ export class MetricsComponent {
     if (index == -1) {
       return;
     }
-    const lapseName =
-      this.periodsMapList && this.periodsMapList.length > 0
-        ? this.periodsMapList.find((period) => period.key == filters.lapses[0])
-          ?.name
-        : '';
     this.viewPercentage$ = this.metricsService.viewPercentagesPeriodTracing(
       filters.lapses.length == 0 ? undefined : filters.lapses[0]
     );
     this.viewPercentage$.subscribe((res) => {
+      const periodDescription = this.periodsMapList?.find(
+        (period) => period.key == res.periodId
+      )?.name;
       const chartDataLabels = {
-        labels: ['% Seguimientos continuos creados', '% Seguimientos continuos no creados'],
+        labels: [
+          '% Seguimientos continuos creados',
+          '% Seguimientos continuos no creados',
+        ],
         datasets: [
           {
             data: [
               parseFloat(res.percentageCreated.toFixed(2)),
               parseFloat(res.percentageNoCreated.toFixed(2)),
             ],
-            label:
-              filters.lapses.length != 0 && lapseName && lapseName != ''
-                ? lapseName
-                : this.periodsMapList && this.periodsMapList.length > 0
-                  ? this.periodsMapList[this.periodsMapList.length - 1].name
-                  : 'Sin Periodos Disponibles',
+            label: periodDescription
+              ? periodDescription
+              : 'Sin Periodos Disponibles',
             backgroundColor: BASE_CHART_COLORS.BLUE,
           },
         ],
@@ -205,29 +237,27 @@ export class MetricsComponent {
     if (index == -1) {
       return;
     }
-    const lapseName =
-      this.periodsMapList && this.periodsMapList.length > 0
-        ? this.periodsMapList.find((period) => period.key == filters.lapses[0])
-          ?.name
-        : '';
     this.viewPercentage$ = this.metricsService.viewPercentagesPeriodEnd(
       filters.lapses.length == 0 ? undefined : filters.lapses[0]
     );
     this.viewPercentage$.subscribe((res) => {
+      const periodDescription = this.periodsMapList?.find(
+        (period) => period.key == res.periodId
+      )?.name;
       const chartDataLabels = {
-        labels: ['% Cierres de periodo creados', '% Cierres de periodo no creados'],
+        labels: [
+          '% Cierres de periodo creados',
+          '% Cierres de periodo no creados',
+        ],
         datasets: [
           {
             data: [
               parseFloat(res.percentageCreated.toFixed(2)),
               parseFloat(res.percentageNoCreated.toFixed(2)),
             ],
-            label:
-              filters.lapses.length != 0 && lapseName && lapseName != ''
-                ? lapseName
-                : this.periodsMapList && this.periodsMapList.length > 0
-                  ? this.periodsMapList[this.periodsMapList.length - 1].name
-                  : 'Sin Periodos Disponibles',
+            label: periodDescription
+              ? periodDescription
+              : 'Sin Periodos Disponibles',
             backgroundColor: BASE_CHART_COLORS.BLUE,
           },
         ],
@@ -239,10 +269,9 @@ export class MetricsComponent {
   downloadFile(data: ChartCardData) {
     if (data.table == 'users' && data.type == 'create-objetives') {
       this.metricsService
-        .percentageUserPeriodObjectivesCSV(data.periodId) 
+        .percentageUserPeriodObjectivesCSV(data.periodId)
         .subscribe((res) => {
           const blob = new Blob([res], { type: 'application/csv' });
-
           const downloadURL = window.URL.createObjectURL(blob);
           const link = document.createElement('a');
           link.href = downloadURL;
@@ -251,13 +280,11 @@ export class MetricsComponent {
         });
     }
 
-    if (
-      data.table == 'objectives' && data.type == 'resolve-objectives') {
+    if (data.table == 'objectives' && data.type == 'resolve-objectives') {
       this.metricsService
         .percentageUserPeriodCommitmentsCSV(data.periodId)
         .subscribe((res) => {
           const blob = new Blob([res], { type: 'application/csv' });
-
           const downloadURL = window.URL.createObjectURL(blob);
           const link = document.createElement('a');
           link.href = downloadURL;
@@ -266,13 +293,11 @@ export class MetricsComponent {
         });
     }
 
-    if (
-      data.table == 'tracing' && data.type == 'continuous-monitoring') {
+    if (data.table == 'tracing' && data.type == 'continuous-monitoring') {
       this.metricsService
         .percentageUserPeriodTracingCSV(data.periodId)
         .subscribe((res) => {
           const blob = new Blob([res], { type: 'application/csv' });
-
           const downloadURL = window.URL.createObjectURL(blob);
           const link = document.createElement('a');
           link.href = downloadURL;
@@ -281,20 +306,17 @@ export class MetricsComponent {
         });
     }
 
-    // if (
-    //   data.table == 'period' && data.type == 'period-end') {
-    //   this.metricsService
-    //     .percentageUserPeriodEndCSV()
-    //     .subscribe((res) => {
-    //       const blob = new Blob([res], { type: 'application/csv' });
-
-    //       const downloadURL = window.URL.createObjectURL(blob);
-    //       const link = document.createElement('a');
-    //       link.href = downloadURL;
-    //       link.download = `${data.title}.csv`;
-    //       link.click();
-    //     });
-    // }
-
+    if (data.table == 'period' && data.type == 'period-end') {
+      this.metricsService
+        .percentageUserPeriodEndCSV(data.periodId)
+        .subscribe((res) => {
+          const blob = new Blob([res], { type: 'application/csv' });
+          const downloadURL = window.URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = downloadURL;
+          link.download = `${data.title}.csv`;
+          link.click();
+        });
+    }
   }
 }

@@ -19,6 +19,7 @@ export interface ViewPercentages {
   totalUsers: number;
   percentageCreated: number;
   percentageNoCreated: number;
+  periodId?: string;
 }
 
 export interface ChartCardData {
