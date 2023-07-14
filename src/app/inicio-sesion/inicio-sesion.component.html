@@ -4,12 +4,11 @@
             
             <div class="center">
                 <ng-content *ngTemplateOutlet="iconMytiim;"></ng-content>
-                <div class="alert-container">
-                    <app-alert [message]="errorMessage" [type]="'error'" *ngIf="showError"></app-alert>
-                </div>
+                
                 <div class="center-element"><span class="ingresar-text">Ingresar</span></div>
                 <ng-content *ngTemplateOutlet="loginContent;"></ng-content>
             </div>
+
         </div>
     </div>
 </div>
@@ -41,7 +40,12 @@
                 </button>
                 <input formControlName="password"  matInput type="password" placeholder="Clave" >
               </mat-form-field>
+
+              <div class="alert-container">
+                <app-alert [message]="errorMessage" [type]="'error'" *ngIf="showError"></app-alert>
+              </div>
           </form>
+
           <button
             class="button-inicio-sesion"
             [disabled]="!validform"

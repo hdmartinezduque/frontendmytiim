@@ -44,6 +44,9 @@ export interface GetRecognition {
   commentTypeId: number;
   commentDescribe: string;
   user: string;
+  groupId: number;
+  countFeedback: number;
+  opened?: boolean;
 }
 
 export interface FilterRecognition {
@@ -52,4 +55,14 @@ export interface FilterRecognition {
   groupId: number | null;
   commentDateInit: any | null;
   commentDateFinal: any | null;
+}
+
+export interface GetRecognitionResponse {
+    commentFeedbackId: number;
+    userId: number;
+    userName: string;
+    userLastName: string;
+    commentFeedbackDate: string;
+    commentFeedbackType: number;
+    commentFeedbackDescribe: string;
 }

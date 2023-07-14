@@ -77,11 +77,14 @@
       button {
         transform: scale(0.75);
         background-color: black;
+        margin-left: 350px;
+        
         mat-icon {
           color: #00ffb9;
         }
-        margin-left: 350px;
+  
       }
+
     }
 
     mat-card-subtitle {
@@ -101,8 +104,66 @@
     .field {
       width: 96%;
     }
+
+    .underline-button {
+      mat-icon {
+        color: #0067FD;
+        }
+        text-decoration: underline;
+        margin-left: 550px;
+        
+      }
   }
 }
+
+.responseComment {
+  box-shadow: none;
+  border-radius: 10px;
+  background-color: #f8f8f8;
+  width:730px;
+  margin-left:24px;
+
+
+  mat-card-header {
+    width: 100%;
+    text-align: start;
+
+    mat-card-title {
+      font-size: 18px;
+
+      span {
+        font-weight: normal;
+      }
+
+    }
+
+    mat-card-subtitle {
+      font-size: 16px;
+    }
+  }
+
+  mat-card-content {
+    max-height: inherit;
+    overflow-y: inherit;
+
+    p {
+      font-size: 16px;
+      text-align: justify;
+    }
+
+    .field {
+      width: 96%;
+    }
+
+  }
+
+  mat-divider {
+    margin-top: 10px;
+    margin-right: 40px;
+    }
+  
+}
+
 
 .mat-mdc-radio-button ~ .mat-mdc-radio-button {
   margin-left: 16px;
@@ -137,6 +198,7 @@
   width: 800px;
   overflow: auto;
 }
+
 
 .link {
   color: blue;

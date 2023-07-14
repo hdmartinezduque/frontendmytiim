@@ -61,9 +61,22 @@
 }
 
 .date-is-expired {
-  background-color: #ffcccb;
+    background-color: #FFCCCB;
 }
 
+.style-card {
+    border: 2px solid #292929;
+    border-radius: 15px;
+    opacity: 1;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    display: flex;
+    background-color: #c4c4c419;
+  }
+
+.container-my-compromises {
+    margin: 20px;
+}
 .date-is-at-risk {
   background-color: #ffeadd;
 }

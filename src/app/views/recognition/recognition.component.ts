@@ -13,6 +13,7 @@ import {
 import {
   FilterRecognition,
   GetRecognition,
+  GetRecognitionResponse,
   PostRecognition,
   PostRecognitionResponse,
   Recognition,
@@ -21,12 +22,11 @@ import {
 } from '../../shared/interfaces/recognition/recognition';
 import { combineLatest } from 'rxjs';
 import { RecognitionServiceService } from '../../shared/services/recognition/recognition-service.service';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { LoadingSpinnerComponent } from 'src/app/shared/components/loading-spinner/loading-spinner.component';
+
 
 @Component({
   selector: 'app-recognition',
@@ -70,6 +70,7 @@ export class RecognitionComponent implements OnInit {
     | Observable<PostRecognitionResponse>
     | undefined;
   public recognitionView$: Observable<GetRecognition[]> | undefined;
+  public recognitionResponseView$: Observable<GetRecognitionResponse[]> | undefined;
   public dataTableQuestions$: Observable<Array<GetRecognition>> | undefined;
   public loadDataTable$ = new BehaviorSubject<void>(undefined);
   public dataSource: any = [];
@@ -78,7 +79,12 @@ export class RecognitionComponent implements OnInit {
   filteredOptions: Observable<RecognitionUser[]> | undefined = of([]);
   userCounts: RecognitionUser[] = [];
 
+  recognitionList?: GetRecognition[];
+  recognitionListPaginator?: GetRecognition[];
+
   initialFormValue: any;
+
+  public showResponse: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -200,12 +206,16 @@ export class RecognitionComponent implements OnInit {
           this.showSucces = true;
           this.successMessage = 'La respuesta se ha agregado con éxito';
           setTimeout(() => (this.showSucces = false), 5000);
+          this.loadDataTable$.next();
           this.recognitionResponseForm.reset();
           this.showForm = false;
+          // console.log(res);
         }
       });
     }
   }
+
+  
 
   getToolTipInfo() {
     return 'Si deseas enviarle un reconocimiento a un compañero o varios compañeros, debes seleccionar la categoria Compañero(s). \n\n Si quieres enviar un reconocimiento a un equipo o varios equipos de trabajo debes seleccionar la categoria Equipo(s).';
@@ -218,6 +228,27 @@ export class RecognitionComponent implements OnInit {
 
   closeForm() {
     this.showForm = false;
+    this.recognitionResponseForm.reset();
+  }
+
+  showRecognitionResponse(recognition: GetRecognition) {
+    const { commentId } = recognition;
+    this.recognitionListPaginator = this.recognitionListPaginator?.map((recognitionA: GetRecognition) => {
+      if (recognitionA.commentId === commentId) {
+        recognitionA.opened = !recognitionA.opened;
+      } else {
+        recognitionA.opened = false;
+      }
+      return recognitionA;
+    });
+    if (commentId && recognition.opened) {
+      this.recognitionResponseView$ = this.loadDataTable$.pipe(
+        exhaustMap(() => this.recognitionServiceService.viewRecognitionResponse(commentId)),
+        shareReplay()
+      );
+    } else {
+      this.recognitionResponseView$ = undefined;
+    }
   }
 
   searchFilters() {
@@ -244,7 +275,8 @@ export class RecognitionComponent implements OnInit {
       shareReplay()
     );
     this.recognitionView$.subscribe((res) => {
-      console.log(res);
+      this.recognitionList = res;
+      this.recognitionListPaginator = this.recognitionList?.slice(0, 5);
     });
   }
 
@@ -274,6 +306,12 @@ export class RecognitionComponent implements OnInit {
   private _filter(value: string): RecognitionUser[] {
     return this.userCounts.filter((option: RecognitionUser) =>
       option.userFullname?.toLowerCase().includes(value?.toLowerCase())
+    );
+  }
+  handlePageEvent(event: PageEvent) {
+    this.recognitionListPaginator = this.recognitionList?.slice(
+      event.pageIndex * event.pageSize,
+      event.pageIndex * event.pageSize + event.pageSize
     );
   }
 

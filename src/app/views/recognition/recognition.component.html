@@ -10,37 +10,24 @@
     </header>
   </div>
 </section>
-<div
-  *ngIf="{
+<div *ngIf="{
     recognitionGeneral: combineUserTeam$ | async,
-    RecognitionView: recognitionView$ | async
-  } as data"
->
+    RecognitionView: recognitionView$ | async,
+    RecognitionResponseView: recognitionResponseView$ | async
+  } as data">
   <mat-card class="centered-section">
     <mat-card-content class="style">
       <h3>
         1. ¿A quién quieres realizar un reconocimiento?
         <span class="tooltip-container">
-          <mat-icon
-            matTooltip="{{ getToolTipInfo() }}"
-            matTooltipPosition="right"
-            matTooltipClass="multilevel-tooltip"
-            >help</mat-icon
-          >
+          <mat-icon matTooltip="{{ getToolTipInfo() }}" matTooltipPosition="right"
+            matTooltipClass="multilevel-tooltip">help</mat-icon>
         </span>
       </h3>
-      <form
-        (ngSubmit)="f.form.valid && onSubmit(f)"
-        #f="ngForm"
-        [formGroup]="recognitionForm"
-      >
+      <form (ngSubmit)="f.form.valid && onSubmit(f)" #f="ngForm" [formGroup]="recognitionForm">
         <mat-radio-group formControlName="buttonList">
-          <mat-radio-button color="primary" [value]="1"
-            ><b>A compañero(s)</b></mat-radio-button
-          >
-          <mat-radio-button color="primary" [value]="2"
-            ><b>A equipo(s)</b></mat-radio-button
-          >
+          <mat-radio-button color="primary" [value]="1"><b>A compañero(s)</b></mat-radio-button>
+          <mat-radio-button color="primary" [value]="2"><b>A equipo(s)</b></mat-radio-button>
         </mat-radio-group>
         <br />
         <br />
@@ -49,43 +36,33 @@
           reconocimiento
         </h3>
 
-        <mat-form-field
-          appearance="fill"
-          class="field"
-          *ngIf="data.recognitionGeneral"
-        >
+        <mat-form-field appearance="fill" class="field" *ngIf="data.recognitionGeneral">
           <mat-label>Seleccione el/los destinatarios</mat-label>
           <mat-select formControlName="listAddressees" multiple>
             <mat-select-trigger>
               {{
-                recognitionForm.value?.listAddressees != null &&
-                recognitionForm.value?.listAddressees.length > 0
-                  ? recognitionForm.value?.listAddressees[0].description
-                  : ""
+              recognitionForm.value?.listAddressees != null &&
+              recognitionForm.value?.listAddressees.length > 0
+              ? recognitionForm.value?.listAddressees[0].description
+              : ""
               }}
-              <span
-                *ngIf="
+              <span *ngIf="
                   ((recognitionForm.value?.listAddressees != null &&
                     recognitionForm.value?.listAddressees.length) ||
                     0) > 1
-                "
-                class="example-additional-selection"
-              >
+                " class="example-additional-selection">
                 (+{{ (recognitionForm.value?.listAddressees.length || 0) - 1 }}
                 {{
-                  recognitionForm.value?.listAddressees.length === 2
-                    ? "otro"
-                    : "otros"
+                recognitionForm.value?.listAddressees.length === 2
+                ? "otro"
+                : "otros"
                 }})
               </span>
             </mat-select-trigger>
-            <mat-option
-              *ngFor="
+            <mat-option *ngFor="
                 let recognition of data.recognitionGeneral
                   | chooseRecognition : recognitionForm.value?.buttonList
-              "
-              [value]="recognition"
-            >
+              " [value]="recognition">
               {{ recognition.description }}
             </mat-option>
           </mat-select>
@@ -95,21 +72,12 @@
         <h3>3. Redacta tu comentario de reconocimiento</h3>
         <mat-form-field appearance="fill" class="field">
           <mat-label>Escribe acá tu comentario</mat-label>
-          <textarea
-            matInput
-            formControlName="commentDescribe"
-            maxlength="400"
-          ></textarea>
+          <textarea matInput formControlName="commentDescribe" maxlength="400"></textarea>
         </mat-form-field>
         <mat-card-actions class="button-container">
-          <button
-          mat-raised-button
-          type="button"
-          class="btn-cancel"
-          (click)="resetForm()"
-        >
-          Cancelar
-        </button>
+          <button mat-raised-button type="button" class="btn-cancel" (click)="resetForm()">
+            Cancelar
+          </button>
           <button mat-raised-button type="submit" class="btn-primary">
             Crear comentario
           </button>
@@ -120,7 +88,7 @@
       </form>
     </mat-card-content>
 
-    <mat-card>
+    <mat-card *ngIf="recognitionListPaginator && recognitionList">
       <div class="filters-area">
         <div class="filters-title">Filtrar búsqueda</div>
         <form [formGroup]="recognitionFilterForm" (ngSubmit)="searchFilters()">
@@ -128,22 +96,9 @@
             <div class="filters-fields">
               <mat-form-field appearance="fill" *ngIf="data.recognitionGeneral">
                 <mat-label>Personas</mat-label>
-                <input
-                  type="text"
-                  placeholder="Personas"
-                  formControlName="user"
-                  matInput
-                  [matAutocomplete]="auto"
-                />
-                <mat-autocomplete
-                  autoActiveFirstOption
-                  #auto="matAutocomplete"
-                  [displayWith]="displayAutocomplete"
-                >
-                  <mat-option
-                    *ngFor="let option of filteredOptions | async"
-                    [value]="option"
-                  >
+                <input type="text" placeholder="Personas" formControlName="user" matInput [matAutocomplete]="auto" />
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayAutocomplete">
+                  <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
                     {{ option.userFullname }}
                   </mat-option>
                 </mat-autocomplete>
@@ -153,13 +108,10 @@
               <mat-form-field>
                 <mat-label>Equipo</mat-label>
                 <mat-select formControlName="team">
-                  <mat-option
-                    *ngFor="
+                  <mat-option *ngFor="
                       let recognition of data.recognitionGeneral
                         | chooseRecognition : 2
-                    "
-                    [value]="recognition"
-                  >
+                    " [value]="recognition">
                     {{ recognition.description }}
                   </mat-option>
                 </mat-select>
@@ -169,33 +121,17 @@
               <mat-form-field>
                 <mat-label>Elegir rango de fechas</mat-label>
                 <mat-date-range-input [rangePicker]="picker">
-                  <input
-                    matStartDate
-                    placeholder="Fecha Inicial"
-                    formControlName="dateStart"
-                  />
-                  <input
-                    matEndDate
-                    placeholder="Fecha Final"
-                    formControlName="dateEnd"
-                  />
+                  <input matStartDate placeholder="Fecha Inicial" formControlName="dateStart" />
+                  <input matEndDate placeholder="Fecha Final" formControlName="dateEnd" />
                 </mat-date-range-input>
                 <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
-                <mat-datepicker-toggle
-                  matIconSuffix
-                  [for]="picker"
-                ></mat-datepicker-toggle>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-date-range-picker #picker></mat-date-range-picker>
               </mat-form-field>
             </div>
           </div>
           <div class="filters-actions">
-            <button
-              mat-raised-button
-              type="button"
-              class="btn-cancel"
-              (click)="resetFilters()"
-            >
+            <button mat-raised-button type="button" class="btn-cancel" (click)="resetFilters()">
               Limpiar filtro
             </button>
             <button mat-raised-button type="submit" class="btn-primary">
@@ -206,73 +142,77 @@
       </div>
       <div>
         <mat-card-content class="style-recognition">
-          <mat-card
-            class="comment my-3"
-            *ngFor="let recognition of data.RecognitionView"
-          >
+          <mat-card class="comment my-3" *ngFor="let recognition of recognitionListPaginator">
             <mat-card-header>
               <mat-card-title>
                 {{ recognition.userName }} {{ recognition.userLastName }}
                 <span>{{ recognition.commentDate }}</span>
 
-                <button
-                  mat-icon-button
-                  (click)="recognitionResponse(recognition.commentId)"
-                  matTooltip="Responder"
-                >
+                <button mat-icon-button (click)="recognitionResponse(recognition.commentId)" matTooltip="Responder">
                   <mat-icon>mode_comment</mat-icon>
                 </button>
               </mat-card-title>
-              <mat-card-subtitle
-                ><strong>Reconocimiento</strong></mat-card-subtitle
-              >
+              <mat-card-subtitle><strong>Reconocimiento</strong></mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
               <p class="pt-2 link">{{ "@" + recognition.user }}</p>
               <p>{{ recognition.commentDescribe }}</p>
 
+
+              <mat-card-footer>
+                <button mat-button color="primary" class="underline-button"
+                  (click)="showRecognitionResponse(recognition)" *ngIf="recognition.countFeedback !== 0">
+                  <mat-icon>visibility</mat-icon>
+                  {{recognition.opened ? "Ver menos" : (recognition.countFeedback === 1 ? "Ver " +
+                  recognition.countFeedback + " respuesta" : "Ver " + recognition.countFeedback + " respuestas")}}
+                </button>
+              </mat-card-footer>
+
               <form [formGroup]="recognitionResponseForm">
-                <ng-container
-                  *ngIf="
+                <ng-container *ngIf="
                     showForm &&
                     responseTextArea &&
                     responseTextArea === recognition.commentId
-                  "
-                >
+                  ">
                   <mat-form-field appearance="fill" class="field">
-                    <textarea
-                      matInput
-                      formControlName="commentFeedbackDescribe"
-                      maxlength="400"
-                    ></textarea>
+                    <textarea matInput formControlName="commentFeedbackDescribe" maxlength="400"></textarea>
                   </mat-form-field>
 
                   <mat-card-actions class="button-container">
-                    <button
-                      mat-raised-button
-                      type="button"
-                      class="btn-cancel"
-                      (click)="closeForm()"
-                    >
+                    <button mat-raised-button type="button" class="btn-cancel" (click)="closeForm()">
                       Cancelar
                     </button>
-                    <button
-                      mat-raised-button
-                      class="btn-primary"
-                      (click)="responseRecognition()"
-                    >
+                    <button mat-raised-button class="btn-primary" (click)="responseRecognition()">
                       Responder
                     </button>
                   </mat-card-actions>
                 </ng-container>
               </form>
             </mat-card-content>
+
+            <mat-card-content class="style-recognition" *ngIf="recognition.opened">
+              <mat-card class="responseComment my-3" *ngFor="let recognitionResponse of data.RecognitionResponseView">
+                <mat-card-header>
+                  <mat-card-title>
+                   Respuesta de: {{ recognitionResponse.userName }} {{ recognitionResponse.userLastName }}
+                    <span>{{ recognitionResponse.commentFeedbackDate }}</span>
+                  </mat-card-title>
+                  <mat-card-subtitle><strong>Reconocimiento</strong></mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                  <p></p>
+                  <p>{{ recognitionResponse.commentFeedbackDescribe }}</p>
+                </mat-card-content>
+                <mat-divider *ngIf="recognition.countFeedback > 1"></mat-divider>
+              </mat-card>
+            </mat-card-content>
+
           </mat-card>
-          <mat-paginator
-            [pageSizeOptions]="[5, 10, 15]"
-            showFirstLastButtons
-          ></mat-paginator>
+
+          <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons [length]="recognitionList.length"
+            (page)="handlePageEvent($event)"></mat-paginator>
         </mat-card-content>
+
       </div>
     </mat-card>
   </mat-card>

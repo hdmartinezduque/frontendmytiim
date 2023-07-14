@@ -1,3 +1,6 @@
+<div *ngIf="showError">
+    <app-alert [message]="errorMessage" [type]="'error'" ></app-alert>
+</div>
 <div class="flex-container flex-column">
     <div class="center">
         <div class="flex-container">

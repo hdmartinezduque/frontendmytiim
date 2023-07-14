@@ -5,6 +5,9 @@ import { HomeComponent } from './home/home.component';
 import { ViewsComponent } from './views.component';
 import { PendingsComponent } from './pendings/pendings.component';
 import { FillOutSurveyComponent } from './fill-out-survey/fill-out-survey.component';
+import { PermisosVerObjetivosGuard } from '../shared/guards/permisos/permisosObjetivos/permisosVerObjetivo.guard';
+import { PermisosVerReconocimientosGuard } from '../shared/guards/permisos/permisosReconocimientos/permisosVerReconocimientos.guard';
+import { PermisosVerMisPendientes } from '../shared/guards/permisos/permisosMisPendientes/permisosVerMisPendientes.guard';
 
 const routes: Routes = [
   {
@@ -17,22 +20,22 @@ const routes: Routes = [
         component: RecognitionComponent,
       },
       {
-        path: 'pendings',
-        component: PendingsComponent,
+        path:'recognition', component: RecognitionComponent,
+        canActivate: [PermisosVerReconocimientosGuard]
       },
       {
-        path: 'objectives',
-        loadChildren: () =>
-          import('./objectives/objectives.module').then(
-            (m) => m.ObjectivesModule
-          ),
+        path:'pendings', component: PendingsComponent,
+        canActivate: [PermisosVerMisPendientes]
       },
-      {
-        path: 'configuration',
-        loadChildren: () =>
-          import('./configuration/configuration.module').then(
-            (m) => m.ConfigurationModule
-          ),
+      { 
+        path: 'objectives', 
+        loadChildren: () => import('./objectives/objectives.module').then(m => m.ObjectivesModule),
+        canActivate: [PermisosVerObjetivosGuard]
+      },
+      { 
+        path: 'configuration', 
+        loadChildren: () => import('./configuration/configuration.module').then(m => m.ConfigurationModule),
+        
       },
       {
         path: 'encuesta/:id/:type',

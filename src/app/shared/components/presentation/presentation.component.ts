@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./presentation.component.scss']
 })
 export class PresentationComponent implements OnInit{
+  errorMessage: string = '';
+  showError: boolean = false;
   constructor() { }
 
   ngOnInit(): void {

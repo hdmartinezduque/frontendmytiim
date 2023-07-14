@@ -2,8 +2,9 @@ import { ContinuousSurveyComponent } from './components/follow-up/continuous-sur
 import { CloseSurveyComponent } from './components/follow-up/close-survey/close-survey/close-survey.component';
 import {  NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ConfigurationComponent } from './configuration.component';
 import { FollowUpComponent } from './components/follow-up/follow-up.component';
+import { PermisosVerEncuestaSeguimientoContinuo } from 'src/app/shared/guards/permisos/permisosConfiguraciones/permisosVerEncuestaSeguimientoContinuo.guard';
+import { PermisosVerEncuestaCierrePeriodo } from 'src/app/shared/guards/permisos/permisosConfiguraciones/permisosVerEncuestaCierrePeriodo.guard';
 
 
 
@@ -14,11 +15,13 @@ const routes: Routes = [
   },
   {
     path:'follow-up/continuous-survey',
-    component: ContinuousSurveyComponent
+    component: ContinuousSurveyComponent,
+    canActivate: [PermisosVerEncuestaSeguimientoContinuo]
   },
   {
     path: 'follow-up/close-survey',
-    component: CloseSurveyComponent
+    component: CloseSurveyComponent,
+    canActivate: [PermisosVerEncuestaCierrePeriodo]
   },
   { path: '**', redirectTo: '' }
 ];

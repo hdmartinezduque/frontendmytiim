@@ -1,187 +1,212 @@
-<header class="header-list">
-  <h1> Objetivos </h1>
-
-  <p>Consulta información y realiza acciones como editar y hacer seguimiento a tus objetivos.</p>
-
-  <div class="button-add">
-    <button mat-button routerLink="add" class="add-objetive">
-      <div class="flex-container">
-        <div>
-          <mat-icon class="button-icon">add_circle</mat-icon>
-        </div>
-        <div class="margin-text">
-          Agregar objetivo
-        </div>
-      </div>
-    </button>
-  </div>
-</header>
-  
-<mat-expansion-panel *ngIf="{listObjetives:listObjetives$ | async, groupObjetives:groupObjetives$ | async, statusObjectives:statusObjectives$ | async } as data">
-  
-  <mat-expansion-panel-header>
-    <mat-panel-title>
-      <mat-icon>tune</mat-icon> Filtrar búsquedas
-    </mat-panel-title>
-  </mat-expansion-panel-header>
-  
-  <form [formGroup]="filterObjective" (ngSubmit)="applyFilters() ">
+<mat-drawer-container class="example-container" [hasBackdrop]="true">
+  <mat-drawer #drawer (openedChange)="openedChange($event)" mode="over" style="max-width: 80%;">
+    <app-my-compromises *ngIf="sidenavOpened" [disabledCrud]="true" [objectiveId]="objectiveId"></app-my-compromises>
+  </mat-drawer>
+  <mat-drawer-content>
+    <ng-content *ngTemplateOutlet="contentListObjective">
+    </ng-content>
     
-    <div class="fields">
-      <div class="field">
-        <label for="category">Categoría del objetivo</label>
-        
-        <mat-form-field>
-          <mat-select id="category" formControlName="objectiveTypeId">
-            <mat-option>-- Seleccione una categoría --</mat-option>
-            <mat-option *ngFor="let listObjetive of data.listObjetives" [value]="listObjetive.objectiveTypeId">
-              {{listObjetive.objectiveTypeDescribe}}               
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      
-      <div class="field">
-        <label for="team">Equipo</label>
-        
-        <mat-form-field>
-          <mat-select id="team" formControlName="groupId">
-            <mat-option>-- Seleccione un equipo --</mat-option>
-            <mat-option *ngFor="let groupObjetive of data.groupObjetives" [value]="groupObjetive.groupId">
-              {{groupObjetive.groupDescribe}}               
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      
-      <div class="field">
-        <label for="author">Creador</label>
-        
-        <mat-form-field>
-          <input matInput id="author" formControlName="userId" type="text"
-          [matAutocomplete]="auto">
+  </mat-drawer-content>
+</mat-drawer-container>
+
+
+
+<ng-template #contentListObjective>
+  <header class="header-list">
+    <h1> Objetivos </h1>
   
-          <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayAutocomplete" >
-            <mat-option *ngIf="userCounts?.length == 0; else list">
-              No se encuentra ningún usuario
-            </mat-option>
-          
-            <ng-template #list>
-              <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-                  {{ option.userFullname }}
-              </mat-option>
-            </ng-template>
-          </mat-autocomplete>
+    <p>Consulta información y realiza acciones como editar y hacer seguimiento a tus objetivos.</p>
   
-          <span matSuffix>
-            <mat-icon>arrow_drop_down</mat-icon>
-          </span>
-        </mat-form-field>
-      </div>
-      
-      <div class="field">
-        <label for="status">Estado del objetivo</label>
-        
-        <mat-form-field>
-          <mat-select id="status" formControlName="statusId">
-            <mat-option>-- Seleccione un estado --</mat-option>
-            <mat-option *ngFor="let statusObjective of data.statusObjectives" [value]="statusObjective.statusId">
-              {{statusObjective.statusDescribe}}               
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-    </div>
-    
-    <div class="buttons">
-      <button mat-raised-button (click)="applyFilterReset()" type="reset" class="btn-cancel">
-        Limpiar filtro
-      </button>
-      
-      <button mat-raised-button type="submit" color="primary" class="btn btn-primary">
-        Aplicar filtro
-      </button>
-    </div>
-  </form>
-  
-</mat-expansion-panel>
-
-
-<section class="header-list">
-
-  <div class="input-search-container">
-    <mat-form-field class="custom-search">
-      <input matInput [(ngModel)]="searchTerm" (input)="applySearchFilter()" placeholder="Buscar...">
-    </mat-form-field>
-  </div>
-
-  <div class="row-list">
-
-    <!-- Tabla -->
-    <table mat-table [dataSource]="tbDataSource" matSort matSortActive="objectiveId" matSortDirection="desc">
-
-      <!-- Id Column -->
-      <ng-container matColumnDef="id">
-        <mat-header-cell *matHeaderCellDef>
-          <p class="text-header"> Id </p>
-        </mat-header-cell>
-        <mat-cell *matCellDef="let objective"> {{ objective.objectiveId }} </mat-cell>
-      </ng-container>
-
-      <!-- Description Column -->
-      <ng-container matColumnDef="description">
-        <mat-header-cell *matHeaderCellDef mat-sort-header="objectiveDescribe">
-          <p class="text-header"> Descripción del objetivo </p>
-        </mat-header-cell>
-        <mat-cell *matCellDef="let objective"> {{ objective.objectiveDescribe }} </mat-cell>
-      </ng-container>
-
-      <!-- Category Column -->
-      <ng-container matColumnDef="category">
-        <mat-header-cell *matHeaderCellDef mat-sort-header="objectiveType.objectiveTypeDescribe">
-          <p class="text-header"> Categoría </p>
-        </mat-header-cell>
-        <mat-cell *matCellDef="let objective"> {{ objective.objectiveType.objectiveTypeDescribe }} </mat-cell>
-      </ng-container>
-
-      <!-- State Column -->
-      <ng-container matColumnDef="state" >
-        <mat-header-cell *matHeaderCellDef mat-sort-header="status.statusDescribe">
-          <p class="text-header"> Estado </p>
-        </mat-header-cell>
-        <mat-cell *matCellDef="let objective" > {{ objective.status.statusDescribe }} </mat-cell>
-      </ng-container>
-
-      <!-- Actions -->
-      <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef>
-          <p class="text-header"> Acciones </p>
-        </mat-header-cell>
-        <mat-cell *matCellDef="let objective">
-          <div class="actions">
-            <button mat-icon-button routerLink="edit/{{objective.objectiveId}}" matTooltip="Editar objetivo">
-              <mat-icon>edit</mat-icon>
-            </button>
-
-            <button mat-icon-button routerLink="progress/{{objective.objectiveId}}" matTooltip="Registrar avance del objetivo">
-              <mat-icon>auto_graph</mat-icon>
-            </button>
+    <div class="button-add">
+      <button mat-button routerLink="add" class="add-objetive">
+        <div class="flex-container">
+          <div>
+            <mat-icon class="button-icon">add_circle</mat-icon>
           </div>
-
-        </mat-cell>
-      </ng-container>
-
-      <mat-header-row *matHeaderRowDef="displayedColumns" class="container-list"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-
-      <div *matNoDataRow>
-        No hay datos disponibles para mostrar
+          <div class="margin-text">
+            Agregar objetivo
+          </div>
+        </div>
+      </button>
+    </div>
+  </header>
+    
+  <mat-expansion-panel *ngIf="{listObjetives:listObjetives$ | async, groupObjetives:groupObjetives$ | async, statusObjectives:statusObjectives$ | async } as data">
+    
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-icon>tune</mat-icon> Filtrar búsquedas
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    
+    <form [formGroup]="filterObjective" (ngSubmit)="applyFilters() ">
+      
+      <div class="fields">
+        <div class="field">
+          <label for="category">Categoría del objetivo</label>
+          
+          <mat-form-field>
+            <mat-select id="category" formControlName="objectiveTypeId">
+              <mat-option>-- Seleccione una categoría --</mat-option>
+              <mat-option *ngFor="let listObjetive of data.listObjetives" [value]="listObjetive.objectiveTypeId">
+                {{listObjetive.objectiveTypeDescribe}}               
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        
+        <div class="field">
+          <label for="team">Equipo</label>
+          
+          <mat-form-field>
+            <mat-select id="team" formControlName="groupId">
+              <mat-option>-- Seleccione un equipo --</mat-option>
+              <mat-option *ngFor="let groupObjetive of data.groupObjetives" [value]="groupObjetive.groupId">
+                {{groupObjetive.groupDescribe}}               
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        
+        <div class="field">
+          <label for="author">Creador</label>
+          
+          <mat-form-field>
+            <input matInput id="author" formControlName="userId" type="text"
+            [matAutocomplete]="auto">
+    
+            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete" [displayWith]="displayAutocomplete" >
+              <mat-option *ngIf="userCounts?.length == 0; else list">
+                No se encuentra ningún usuario
+              </mat-option>
+            
+              <ng-template #list>
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                    {{ option.userFullname }}
+                </mat-option>
+              </ng-template>
+            </mat-autocomplete>
+    
+            <span matSuffix>
+              <mat-icon>arrow_drop_down</mat-icon>
+            </span>
+          </mat-form-field>
+        </div>
+        
+        <div class="field">
+          <label for="status">Estado del objetivo</label>
+          
+          <mat-form-field>
+            <mat-select id="status" formControlName="statusId">
+              <mat-option>-- Seleccione un estado --</mat-option>
+              <mat-option *ngFor="let statusObjective of data.statusObjectives" [value]="statusObjective.statusId">
+                {{statusObjective.statusDescribe}}               
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
       </div>
+      
+      <div class="buttons">
+        <button mat-raised-button (click)="applyFilterReset()" type="reset" class="btn-cancel">
+          Limpiar filtro
+        </button>
+        
+        <button mat-raised-button type="submit" color="primary" class="btn btn-primary">
+          Aplicar filtro
+        </button>
+      </div>
+    </form>
+    
+  </mat-expansion-panel>
+  
+  
+  <section class="header-list">
+  
+    <div class="input-search-container">
+      <mat-form-field class="custom-search">
+        <input matInput [(ngModel)]="searchTerm" (input)="applySearchFilter()" placeholder="Buscar...">
+      </mat-form-field>
+    </div>
+  
+    <div class="row-list">
+  
+      <!-- Tabla -->
+      <table mat-table [dataSource]="tbDataSource" matSort matSortActive="objectiveId" matSortDirection="desc">
+  
+        <!-- Id Column -->
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef>
+            <p class="text-header"> Id </p>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let objective"> {{ objective.objectiveId }} </mat-cell>
+        </ng-container>
+  
+        <!-- Description Column -->
+        <ng-container matColumnDef="description">
+          <mat-header-cell *matHeaderCellDef mat-sort-header="objectiveDescribe">
+            <p class="text-header"> Descripción del objetivo </p>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let objective"> {{ objective.objectiveDescribe }} </mat-cell>
+        </ng-container>
+  
+        <!-- Category Column -->
+        <ng-container matColumnDef="category">
+          <mat-header-cell *matHeaderCellDef mat-sort-header="objectiveType.objectiveTypeDescribe">
+            <p class="text-header"> Categoría </p>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let objective"> {{ objective.objectiveType.objectiveTypeDescribe }} </mat-cell>
+        </ng-container>
+  
+        <!-- State Column -->
+        <ng-container matColumnDef="state" >
+          <mat-header-cell *matHeaderCellDef mat-sort-header="status.statusDescribe">
+            <p class="text-header"> Estado </p>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let objective" > {{ objective.status.statusDescribe }} </mat-cell>
+        </ng-container>
+  
+        <!-- Actions -->
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef>
+            <p class="text-header"> Acciones </p>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let objective">
+            <div class="actions">
+              <button mat-icon-button routerLink="edit/{{objective.objectiveId}}" matTooltip="Editar objetivo">
+                <mat-icon>edit</mat-icon>
+              </button>
+  
+              <button mat-icon-button routerLink="progress/{{objective.objectiveId}}" matTooltip="Registrar avance del objetivo">
+                <mat-icon>auto_graph</mat-icon>
+              </button>
 
-    </table>
-  </div>
+              <button mat-icon-button  matTooltip="Ver detalle del objetivo" (click)="onDetailsOpen(objective); drawer.toggle()">
+                <mat-icon>visibility</mat-icon>
+              </button>
+            </div>
+  
+          </mat-cell>
+        </ng-container>
+  
+        <mat-header-row *matHeaderRowDef="displayedColumns" class="container-list"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  
+        <div *matNoDataRow>
+          No hay datos disponibles para mostrar
+        </div>
+  
+      </table>
+    </div>
+  
+    <!-- Mat Paginator -->
+    <mat-paginator [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons></mat-paginator>
+  
+  </section>
+</ng-template>
 
-  <!-- Mat Paginator -->
-  <mat-paginator [pageSizeOptions]="[10, 20, 50, 100]" showFirstLastButtons></mat-paginator>
+  <!-- <mat-sidenav #sidenav>
+    <p><button mat-button>Toggle</button></p>
+  </mat-sidenav> -->
+  
 
-</section>

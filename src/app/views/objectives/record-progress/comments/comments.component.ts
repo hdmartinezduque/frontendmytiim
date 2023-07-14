@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommentServicesService } from 'src/app/shared/services/comment-services/comment-services.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 
 
@@ -26,11 +26,16 @@ export class CommentsComponent implements OnInit {
 
   objectiveId: string | undefined;
   userId: string | null | undefined;
+  
+  commentList: CommentView[]  | undefined;
+  commentFilterList: CommentView[]  | undefined;
+  commentPaginatorFilter: CommentView[]  | undefined;
+
   errorMessage: string = '';
   successMessage: string = '';
   showSucces: boolean = false;
   showError: boolean = false;
-  
+
   public commentType$: Observable<CommentType[]> | undefined;
   public commentType: CommentType[] | undefined;
   public commentCreate$: Observable<CommentCreate> | undefined;
@@ -70,10 +75,13 @@ export class CommentsComponent implements OnInit {
         }
       })),
     );
-    this.commentView$.subscribe((res) => 
-      this.dataSource = new MatTableDataSource(res));
-      this.dataSource.paginator = this.paginator;
-      this.paginator.pageSize = 5;
+
+      this.commentView$.subscribe((res) => {
+      this.commentList = res
+      this.commentFilterList = res
+      this.applyFilters(1)
+      });
+
   }
 
   onSumit() {
@@ -87,7 +95,7 @@ export class CommentsComponent implements OnInit {
     }
 
     this.commentCreate$ = this.commentService.createComment({ ...this.commentForm.value, userId: this.userId, objectiveId: this.objectiveId, statusId: 1, commentType: true });
-    console.log('comment :', commentForm)
+    
     this.commentCreate$.subscribe((res) => {
       if (res) {
         this.showSucces = true;
@@ -99,6 +107,22 @@ export class CommentsComponent implements OnInit {
     });
     return;
   }
+
+  public applyFilters(typeId: number) {
+    let objectiveFilter: CommentView[] = JSON.parse(JSON.stringify(this.commentList))
+      objectiveFilter = objectiveFilter.filter((objective) => objective.commentTypeId === typeId)
+      this.commentFilterList = objectiveFilter;
+      this.commentPaginatorFilter = this.commentFilterList?.slice(0, 5);
+  }
+
+  handlePageEvent(event: PageEvent) {
+    this.commentPaginatorFilter = this.commentFilterList?.slice(
+      event.pageIndex * event.pageSize,
+      event.pageIndex * event.pageSize + event.pageSize
+    );
+  }
+
+  
 }
 
 

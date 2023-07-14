@@ -12,7 +12,6 @@ import { ValidateFechaCumplimientoPipe } from './pipe/validateFechaCumplimiento/
 import { ValidateRiskDatetoAchivePipe } from './pipe/validateRiskDatetoAchive/validate-risk-dateto-achive.pipe';
 
 import { ChooseRecognitionPipe } from './chooseRecognition/choose-recognition.pipe';
-import { NgChartsModule } from 'ng2-charts';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 
 @NgModule({

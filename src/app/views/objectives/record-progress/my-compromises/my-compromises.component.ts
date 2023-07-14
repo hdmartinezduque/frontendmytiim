@@ -4,11 +4,12 @@ import { MatPaginator } from '@angular/material/paginator';
 import { CompromiseServicesService } from '../../../../shared/services/compromise-services/compromise-services.service';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { HttpRequestService } from '../../../../shared/services/http-request/http-request.service';
-import { Compromise, Metrica } from '../../../../shared/interfaces/objectives/objective.interface';
+import { Compromise, Metrica, Objective } from '../../../../shared/interfaces/objectives/objective.interface';
 import { BehaviorSubject, exhaustMap, map, Observable, shareReplay } from 'rxjs';
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { DialogFormCompromisoComponent } from './dialog-form-compromiso/dialog-form-compromiso.component';
 import { DataDialogFormCompromisos } from 'src/app/shared/interfaces/comments/comment.interface';
+import { ObjetiveServicesService } from 'src/app/shared/services/objetive-services/objetive-services.service';
 
 @Component({
   selector: 'app-my-compromises',
@@ -16,7 +17,9 @@ import { DataDialogFormCompromisos } from 'src/app/shared/interfaces/comments/co
   styleUrls: ['./my-compromises.component.scss']
 })
 export class MyCompromisesComponent implements OnInit{
+  @HostListener('window:resize', ['$event'])
   @Input() type?: string = 'services';
+  @Input()disabledCrud: boolean = false;
   @Input() objectiveId?: string;
   @Output() onAddCompromise= new EventEmitter<Array<Compromise>>();
   // dataSource = new MatTableDataSource<any>(this.);
@@ -25,33 +28,50 @@ export class MyCompromisesComponent implements OnInit{
   public messageSuccess: string = '';
   public showSuccess: boolean = false;
   public dataSource: any;
-
+  public progress: number = 0;
   public dataTableMyCompromises$: Observable<Array<Compromise>> | undefined;
   public loadDataTable$ = new BehaviorSubject<void>(undefined);
   public metricas$: Observable<Array<Metrica>> | undefined;
   public dataSourceStorage: Array<Compromise> = []
+  public widthChip: string = '';
+
+  public progress$: Observable<Objective> | undefined;
 
   constructor(
+    private objectiveService: ObjetiveServicesService,
     private compromiseService: CompromiseServicesService,
     private dialog: MatDialog,
     private router: Router
   ) {}
 
+  onResize() {
+  }
+
   ngOnInit(): void {
     this.metricas$ = this.compromiseService.getMetricas({endpoint: 'metricas'})
     if (this.type === 'services') {
       const arrayUrl = this.router.url.split('/');
-      const objectiveId: any = arrayUrl[arrayUrl.length - 1];
+      const objectiveId: any = this.objectiveId || arrayUrl[arrayUrl.length - 1];
+     
       this.dataTableMyCompromises$ = this.loadDataTable$.pipe(
         exhaustMap(() => this.compromiseService.getCompromises(this.objectiveId || objectiveId)),
         shareReplay(),
         map((values: Array<Compromise>) => {
-          values.forEach(value => this.transformToPorcentaje(value));
-          return values;
+    
+          let sumPorcentage = 0;
+          return values.map((value: Compromise, index: number) => {
+            const finalValue: Compromise = this.transformToPorcentaje(value)
+            
+            sumPorcentage = sumPorcentage + (finalValue.percentageAvance || 0)
+            
+            this.progress = sumPorcentage/(index+1)
+            return finalValue
+          })
         })
       );
   
       this.dataTableMyCompromises$.subscribe((res) => this.createTable(res));
+      this.progress$ = this.objectiveService.getObjectivesById({endpoint:'objective/'+this.objectiveId});
     } else if (this.type === 'create') {
       this.createTable([]);
     }
@@ -109,5 +129,9 @@ export class MyCompromisesComponent implements OnInit{
     this.dataSourceStorage = this.dataSourceStorage.filter((compromise: Compromise) => compromise.commitmentDescribe !== compromiseToDelete.commitmentDescribe)
     this.createTable(this.dataSourceStorage)
     
+  }
+
+  public openedChange(event: any): void {
+    console.log('event: ', event)
   }
 }

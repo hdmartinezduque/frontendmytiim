@@ -95,6 +95,7 @@ export class MetricsComponent {
     }
   }
 
+
   filterUserCreateObjetives(filters: ChartFilter, index: number) {
     if (index == -1) {
       return;
@@ -268,7 +269,7 @@ export class MetricsComponent {
     if (
       data.table == 'tracing' && data.type == 'continuous-monitoring') {
       this.metricsService
-        .percentageUserPeriodTracingCSV()
+        .percentageUserPeriodTracingCSV(data.periodId)
         .subscribe((res) => {
           const blob = new Blob([res], { type: 'application/csv' });
 
@@ -280,20 +281,20 @@ export class MetricsComponent {
         });
     }
 
-    if (
-      data.table == 'period' && data.type == 'period-end') {
-      this.metricsService
-        .percentageUserPeriodEndCSV()
-        .subscribe((res) => {
-          const blob = new Blob([res], { type: 'application/csv' });
+    // if (
+    //   data.table == 'period' && data.type == 'period-end') {
+    //   this.metricsService
+    //     .percentageUserPeriodEndCSV()
+    //     .subscribe((res) => {
+    //       const blob = new Blob([res], { type: 'application/csv' });
 
-          const downloadURL = window.URL.createObjectURL(blob);
-          const link = document.createElement('a');
-          link.href = downloadURL;
-          link.download = `${data.title}.csv`;
-          link.click();
-        });
-    }
+    //       const downloadURL = window.URL.createObjectURL(blob);
+    //       const link = document.createElement('a');
+    //       link.href = downloadURL;
+    //       link.download = `${data.title}.csv`;
+    //       link.click();
+    //     });
+    // }
 
   }
 }

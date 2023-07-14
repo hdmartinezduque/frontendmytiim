@@ -76,7 +76,7 @@
       <div class="field" *ngIf="{periods : periods$ | async} as data">
         <mat-form-field appearance="fill" class="field">
           <mat-label> Período </mat-label>
-          <mat-select formControlName="periodId" class="line-select" (selectionChange)="onSelectChange($event)">
+          <mat-select formControlName="periodId" class="line-select">
             <mat-option>-- Selecciona una opción --</mat-option>
             <mat-option *ngFor="let period of data.periods" [value]="period.periodId">
               {{period.describe}}

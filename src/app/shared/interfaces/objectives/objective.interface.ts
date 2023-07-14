@@ -7,6 +7,9 @@ export interface Objective {
     periodId: number;
     status: Status;
     objectiveType: ObjectiveType;
+    alignGroupId: number;
+    alignUserId: number;
+    alignObjectiveId: number;
 }
 
 export interface ObjectiveRequest {
@@ -15,6 +18,9 @@ export interface ObjectiveRequest {
     userId: number;
     periodId: number;
     commitments: Array<Compromise>;
+    alignObjectiveId?: number;
+    alignGroupId?: number;
+    alignUserId?: number;
 }
 
 export interface Status {
@@ -135,6 +141,12 @@ export interface ListFilter {
     userId: number,
     groupId: number,
 
+}
+
+export interface AlignObjectiveForm {
+    grupo?: number;
+    creadorObjetivo?: number;
+    objetivo?: number;
 }
 
 

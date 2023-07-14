@@ -10,6 +10,7 @@ import {
   Compromise,
   ObjectiveRequest,
   ListFilter,
+  AlignObjectiveForm,
 } from '../../interfaces/objectives/objective.interface';
 
 import { Observable, of } from 'rxjs';
@@ -85,14 +86,18 @@ export class ObjetiveServicesService {
   /*
     Se crea un objetivo
   */
-  createObjective(form: ObjectiveForm, commitments: Array<Compromise>): Observable<any> {
+  createObjective(form: ObjectiveForm, commitments: Array<Compromise>, formAlingObjective: AlignObjectiveForm): Observable<any> {
     const endpoint = env.OBJECTIVES;
     const body: ObjectiveRequest = {
       objectiveTypeId: form.objectiveTypeId,
       objectiveDescribe: form.objectiveDescribe,
       periodId: form.periodId,
       userId: Number(sessionStorage.getItem("userId")),
-      commitments
+      commitments,
+      alignGroupId: formAlingObjective.grupo,
+      alignUserId: formAlingObjective.creadorObjetivo,
+      alignObjectiveId: formAlingObjective.objetivo
+      
     }
     console.log(body)
 
@@ -104,25 +109,15 @@ export class ObjetiveServicesService {
   /*
     Actualizar el objetivo
   */
-  updateObjective(id: string, form: ObjectiveForm): Observable<any> {
+  updateObjective(id: string, form: ObjectiveForm, formAlingObjective: AlignObjectiveForm): Observable<any> {
     const endpoint = `${env.OBJECTIVES}/${id}`;
     const body = {
-      objectiveId: Number(id),
       objectiveTypeId: form.objectiveTypeId,
       objectiveDescribe: form.objectiveDescribe,
       periodId: form.periodId,
-      status: {
-        statusId: 1,
-      },
-      user: {
-        userId: 1
-      },
-      group: {
-        groupId: 1
-      },
-      objectiveType: {
-        objectiveTypeId: form.objectiveTypeId
-      }
+      alignGroupId: formAlingObjective.grupo,
+      alignUserId: formAlingObjective.creadorObjetivo,
+      alignObjectiveId: formAlingObjective.objetivo
     }
 
     return this.http.put({ endpoint, body });

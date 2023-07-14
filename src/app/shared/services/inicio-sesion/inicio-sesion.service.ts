@@ -13,24 +13,18 @@ export class InicioSesionService {
   previousRoute: string = '';
 
   constructor(
-    private http: HttpRequestService,
-    private userService: UserService
+    private http: HttpRequestService
   ) { }
 
   login(body: LoginRequest): Observable<ResponseData> {
     return this.http.post({endpoint: 'auth/login', body, getCompleteResponse: true, headers: {}}).pipe(
       map((response: any) => {
-        if (response.data) {
-          const userId: string = response.data?.userId?.toString() || ''
-          const status: string = response.data?.status.statusId?.toString() || ''
-          const token: string = response.data?.token || '';
-          const userName: string = response.data?.userName;
-          this.userService.setToken(token);
-          sessionStorage.setItem('token', token)
-          sessionStorage.setItem('userId', userId)
-          sessionStorage.setItem('statusId', status)
-          sessionStorage.setItem('userName', userName)
-        }
+        (response.data?.roles.length === 0) && (response.data.roles = [
+          'empleado',
+          'lider',
+          'administrador'
+        ])
+        response.data && Object.keys(response.data).forEach( (key: string) =>  sessionStorage.setItem(key, response.data[key]?.toString() || '') )
         
         return response;
       })

@@ -25,7 +25,7 @@
                             <div class="container">
                                 <span class="color-text-code">({{follow.code}}) </span><span class="text-describe">{{follow.describe}}</span>
                                 <button mat-button class="btn-primary left-aligh" (click)="onClickedFollow(follow.pollId)" cdkTrapFocus>
-                                    ResponderEncuesta
+                                    Responder
                                 </button>
                               </div>
                         </mat-list-item>
@@ -38,7 +38,7 @@
                         <button class="button-counter" mat-mini-fab disabled >
                             {{data.pendingsSurvey?.closures?.length}}
                         </button>
-                        Cierre del periodo
+                        Cierre del período
                     </mat-panel-title>
                   </mat-expansion-panel-header>
                   <mat-list>
@@ -46,7 +46,7 @@
                         <div class="container">
                             <span class="color-text-code">({{closures.code}})</span> <span class="text-describe">{{closures.describe}}</span>
                             <button mat-button class="btn-primary left-aligh" (click)="onClickedClosures(closures.pollId)" cdkTrapFocus>
-                                ResponderEncuesta
+                                Responder
                             </button>
                         </div>
                         

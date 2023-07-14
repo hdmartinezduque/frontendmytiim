@@ -29,9 +29,6 @@ export class RecordProgressComponent implements OnInit {
     });
     
     this.progress$ = this.objectiveService.getObjectivesById({endpoint:'objective/'+this.objId});
-    this.progress$.subscribe((res) => {
-
-    });
   }
 
 

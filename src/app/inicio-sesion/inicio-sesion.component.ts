@@ -2,10 +2,11 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { InicioSesionService } from 'src/app/shared/services/inicio-sesion/inicio-sesion.service';
 import { ResponseData } from 'src/app/shared/interfaces/http-request';
 import { LoginRequest } from '../shared/interfaces/login/login';
+import { PermisosService } from '../shared/services/permisos/permisos.service';
+import { Permisos } from '../shared/interfaces/permisos/permisos.interface';
 
 
 @Component({
@@ -22,7 +23,7 @@ export class  InicioSesionComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private loginService: InicioSesionService,
-    private dialog: MatDialog,
+    private permisosService: PermisosService
   ) { }
 
   ngOnInit(): void {
@@ -52,25 +53,44 @@ export class  InicioSesionComponent implements OnInit {
     this.loginService.login(values).subscribe(
       (response: ResponseData) => {
         if (!!response?.message) {
-          this.showError = true;
-          this.errorMessage = response.message;
+          let msg = response.message;
+          this.messageSuccess(msg);
         } else if (!response?.data?.token) {
-          this.showError = true;
-          this.errorMessage = 'No se ha generado el token correctamente.';
+          let msg = 'No se ha generado el token correctamente.'; 
+          this.messageSuccess(msg);
         } else {
-          this.redirect()
+         this.getPermisons(values.username)
         }
+      },
+      () => {
+        let msg = 'Ocurrió un error al intentar iniciar sesión, por favor intentalo de nuevo';
+        this.messageSuccess(msg);
+      }
+    )
+  }
+
+  private getPermisons(username: string): void {
+    this.permisosService.getPermisosServidor(username).subscribe(
+      (permisos: Permisos) => {
+        this.permisosService.setPermisos(permisos)
+        this.redirect();
       },
       () => {
         this.showError = true;
         this.errorMessage = 'Ocurrió un error al intentar iniciar sesión, por favor intentalo de nuevo';
       }
     )
+    
   }
 
   private redirect() {
     const previousRoute = this.loginService.getPreviousRoute();
-    console.log('navigate to: ', previousRoute)
     this.router.navigate([previousRoute])
+  }
+
+  messageSuccess(message: string) {
+    this.showError = true;
+    this.errorMessage = message;
+    setTimeout(() => {this.showError = false}, 3000);
   }
 }

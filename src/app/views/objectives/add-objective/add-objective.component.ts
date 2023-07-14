@@ -104,7 +104,12 @@ export class AddObjectiveComponent implements OnInit {
         this.objectiveForm.reset({
           objectiveTypeId: obj.objectiveType.objectiveTypeId,
           objectiveDescribe: obj.objectiveDescribe,
-          periodId:obj.periodId,
+          periodId:obj.periodId
+        });
+        this.formAlinearObjetivo.reset({
+          grupo: obj.alignGroupId,
+          creadorObjetivo: obj.alignUserId,
+          objetivo: obj.alignObjectiveId
         })
       });
   }
@@ -112,6 +117,7 @@ export class AddObjectiveComponent implements OnInit {
   onSubmit() {
     const id = this.objId;
     const form = this.objectiveForm;
+    const formAlingObjective = this.formAlinearObjetivo;
     
     if (form.invalid) {
       window.confirm('El formulario es inválido, revise los campos');
@@ -122,7 +128,8 @@ export class AddObjectiveComponent implements OnInit {
 
     if (!id) {
 
-      this.objectiveService.createObjective({ ...form.value }, this.comprimisesAdded).subscribe(resp => {
+      this.objectiveService.createObjective({ ...form.value }, 
+        this.comprimisesAdded, { ...formAlingObjective.value }).subscribe(resp => {
         if (resp) {
           let message = 'Tu objetivo se ha creado con éxito';
           this.dialog.open(DialogSuccessComponent, {
@@ -135,7 +142,7 @@ export class AddObjectiveComponent implements OnInit {
       return;
     }
 
-    this.objectiveService.updateObjective(id, { ...form.value }).subscribe(resp => {
+    this.objectiveService.updateObjective(id, { ...form.value }, { ...formAlingObjective.value}).subscribe(resp => {
       if (resp) {
         let message = 'Se han guardado los cambios';
         this.dialog.open(DialogSuccessComponent, {

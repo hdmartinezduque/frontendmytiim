@@ -47,18 +47,20 @@
         </div>
     </form>
     <br>
-    <mat-card class="comments-list px-2 py-3" *ngIf="{CommentView:commentView$ | async} as data">
+    <mat-card class="comments-list px-2 py-3" *ngIf="commentFilterList">
         <mat-card-header class="pb-3">
             <mat-card-title class="title">Ver comentarios de:</mat-card-title>
+            
             <mat-radio-group aria-label="Select an option" color="primary" class="button-value">
-                <mat-radio-button value="1">Avance</mat-radio-button>
-                <mat-radio-button value="2">Retroalimentación</mat-radio-button>
+                <mat-radio-button  (click)="applyFilters(1)">Avance</mat-radio-button>
+                <mat-radio-button value="2" (click)="applyFilters(3)">Retroalimentación</mat-radio-button>
+                
             </mat-radio-group>
         </mat-card-header>
 
-        
-            <mat-card-content>
-                <mat-card class="comment my-3" *ngFor=" let comment of data.CommentView ">
+        <mat-card *ngIf="commentPaginatorFilter && commentList && commentFilterList">
+            <mat-card-content formControlName="commentTypeDescribe">
+                <mat-card class="comment my-3" *ngFor=" let comment of commentPaginatorFilter">
                     <mat-card-header>
                         <mat-card-title>
                             {{ comment.userName }} {{ comment.userLastName }}
@@ -70,8 +72,13 @@
                         <p class="pt-3">{{ comment.commentDescribe }}</p>
                     </mat-card-content>
                 </mat-card>
-                <mat-paginator [pageSizeOptions]="[ 5, 10, 15]" showFirstLastButtons></mat-paginator>
             </mat-card-content>
+            <mat-paginator [pageSizeOptions]="[ 5, 10, 15]" 
+                showFirstLastButtons 
+                [length]="commentFilterList.length" 
+                (page)="handlePageEvent($event)"></mat-paginator>
+        </mat-card>      
+            
         
 
 

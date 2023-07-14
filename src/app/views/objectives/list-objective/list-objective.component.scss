@@ -178,3 +178,11 @@ mat-expansion-panel {
 ::ng-deep .mat-mdc-select-arrow {
     color: #0067fd;
 }
+
+.example-container {
+    position: sticky;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }

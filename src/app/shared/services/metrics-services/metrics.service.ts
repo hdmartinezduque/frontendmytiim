@@ -25,21 +25,21 @@ export class MetricsService {
     });
   }
 
-  public percentageUserPeriodTracingCSV() {
+  public percentageUserPeriodTracingCSV(periodId: string | undefined) {
     return this.http.get({
-      endpoint: '',
+      endpoint: 'indicators/downloadPollContinues-csv/'+periodId,
       responseType: 'blob' as 'json',
       getCompleteResponse: true,
     });
   }
 
-  public percentageUserPeriodEndCSV() {
-    return this.http.get({
-      endpoint: '',
-      responseType: 'blob' as 'json',
-      getCompleteResponse: true,
-    });
-  }
+  // public percentageUserPeriodEndCSV() {
+  //   return this.http.get({
+  //     endpoint: '',
+  //     responseType: 'blob' as 'json',
+  //     getCompleteResponse: true,
+  //   });
+  // }
 
   public viewPercentagesPeriodCommitments(
     period?: string
@@ -61,7 +61,7 @@ export class MetricsService {
     period?: string
   ): Observable<ViewPercentages> {
     return this.http.get({
-      endpoint: '' + (period ? period : '1'),
+      endpoint: 'indicators/pollContinues/' + (period ? period : '1'),
     });
   }
 
@@ -69,7 +69,7 @@ export class MetricsService {
     period?: string
   ): Observable<ViewPercentages> {
     return this.http.get({
-      endpoint: '' + (period ? period : '1'),
+      endpoint: 'indicators/closedPeriod/' + (period ? period : '1'),
     });
   }
 }

@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { GrupoObjetivo, ListFilter, Objective, ObjectiveType, Status } from '../../../shared/interfaces/objectives/objective.interface';
 import { ObjetiveServicesService } from '../../../shared/services/objetive-services/objetive-services.service';
 import { MatSort } from '@angular/material/sort';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable, map, of, startWith, tap, filter } from 'rxjs';
 import { RecognitionServiceService } from 'src/app/shared/services/recognition/recognition-service.service';
 import { RecognitionUser } from 'src/app/shared/interfaces/recognition/recognition';
@@ -32,6 +32,7 @@ export class ListObjectiveComponent implements OnInit {
 
   listObjetives:ObjectiveType[] = [];
   objectiveId: string | undefined;
+  sidenavOpened: boolean = false;
 
   //userFilter = new FormControl();
   
@@ -85,7 +86,6 @@ export class ListObjectiveComponent implements OnInit {
         return name ? this._filter(name as string) : this.userCounts.slice()
       })
     )
-    
     this.getObjetives();
   }
 
@@ -178,7 +178,16 @@ export class ListObjectiveComponent implements OnInit {
     location.reload();
 
   }
+
+  public onDetailsOpen(objective: any) {
+    console.log('objective: ', objective)
+    this.objectiveId = objective.objectiveId
+    this.sidenavOpened = true;
+  }
   
+  public openedChange(event: any): void {
+    this.sidenavOpened = event
+  }
 }
 
 
